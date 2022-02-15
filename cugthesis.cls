@@ -542,13 +542,13 @@
 \NewDocumentCommand{\cugthesis}{}{CUGThesis}
 % 参考文献
 %\RequirePackage[super, sort&compress]{gbt7714}
-\RequirePackage[sort&compress]{natbib}
-\ifcug@bib@style@sec
-\bibliographystyle{gbt7714-2005-sec}
-\else
-\bibliographystyle{gbt7714-2005}
-\fi
-\bibpunct{[}{]}{,}{s}{}{;}
-\addtolength{\bibsep}{-1.5ex}
+%\RequirePackage[sort&compress]{natbib}
+%\ifcug@bib@style@sec
+\bibliographystyle{acm}
+%\else
+%\bibliographystyle{acm}
+%\fi
+%\bibpunct{[}{]}{,}{s}{}{;}
+%\addtolength{\bibsep}{-1.5ex}
 %--------------- Source Code ---------------
 \endinput 

@@ -5,30 +5,187 @@
 %!TEX encoding = UTF-8 Unicode 
 \documentclass[master]{cugthesis}
 
+% Some shortcuts
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\T{\ensuremath{\mathbb{T}}}
+\renewcommand\d{\ensuremath{\,\mathrm{d}}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+
+% Some theorem environment settings
+\usepackage{ntheorem}
+\theoremseparator{.}
+\newtheorem{theorem}{定理}[chapter]
+\newenvironment{proof}{{\noindent\itshape Proof}.}{\hfill $\square$\par}
+\theorembodyfont{\upshape}
+\newtheorem*{remark}{注}
+\newtheorem*{question}{Question}
+\newtheorem{definition}{定义}
+\newtheorem{proposition}{性质}
+\newtheorem{corollary}{推论}
+\newtheorem{lemma}{引理}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+\newtheorem{example}{Example}[section]
+
+
 \cugthesistitle{中国地质大学研究生学位论文 \LaTeXe{} 模板}{\cugthesis\ \LaTeXe{} 模板}
-\cugthesisauthor{王震宇}{Zhenyu Wang}
+\cugthesisauthor{王允磊}{Zhenyu Wang}
 \studentid{1201711347}
-\cugthesismajor{计算机科学与技术}{Computer Science}
-\cugthesisteacher{蔡之华}{Zhihua Cai}
-\educatingunit{计算机学院}
-\cugthesisdate{2018}{3}
+\cugthesismajor{数学与应用数学}{Mathematics and Applied Mathematics}
+\cugthesisteacher{王明}{Ming Wang}
+\educatingunit{数学与物理学院}
+\cugthesisdate{2022}{1}
 
 \cugabstract{中文摘要}{English Abstract}
 \cugkeywords{关键字}{Keywords} 
 \begin{document}
     \makefrontpages 
     % 你的正文
-    \chapter{这是第一章}
+    \chapter{前言}
+    本文主要研究线性KdV方程的定量唯一延拓性, 给出全空间和周期情形下新的能观测不等式, 并讨论其在控制理论中的应用.
+    \section{KdV方程概述}
+    1895年, Boussinesq\cite{Bouss1877}和 Korteweg-de Vries\cite{Kort1895} 为了描述管道中液体的浅水波, 建立了如下方程
+    \begin{equation}
+        \partial_t u +u \partial_x u +\partial_x^3 u =0,\label{kdv}
+    \end{equation}
+    其中 $u=u(t,x)$是一个关于时间变量 $t$和空间变量$x$ 的实值函数. 该方程被称为Korteweg-de Vries (KdV) 方程. 它同时包含了色散项和非线性项, 是人们研究色散与非线性之间的相互作用的重要模型. 特别地, KdV方程常被用作描述非线性色散系统中单向传播小振幅长波的数学模型.
+    
+    KdV方程自发现以来便被广泛研究, 在方程的适定性, 孤立波的存在性和稳定性, 可积性, 长时间性态上都有丰富的结果. 
+    
+    \section{能观测不等式}
+    能观测不等式的研究源于人们对方程唯一延拓性的研究, 为了理解两者之间的关系, 我们首先介绍唯一延拓性. 早在0000年,xxx就发现一个调和函数如果在一点的任意阶导数存在且为零, 则函数在整个与该点的连通区域内都为零. 后来人们发现许多方程的解都具有类似的性质, 就把这些由局部解推出整体解的性质称为唯一延拓性.
+    
+    \subsection{全空间情形}
+    对于薛定谔方程
+    \begin{equation}
+        i\partial_t u +\Delta u =0,\quad u(0,x)=u_0\in L^2(\R^n)\label{sch}
+    \end{equation}
+    的解 $u(t,x)$, 其能观测不等式形式为
+    \begin{equation}
+        \int_{\R^n}|u_0(x)|^2\d x\le C(n,T,E)\int_0^T\int_E|u(t,x)|^2\d x\mathrm{d}t,\label{schobs-g}
+    \end{equation}
+    其中 $T>0$, $E$是 $\R^n$中的子集, $C(n,T,E)>0$是仅依赖于 $n,T,E$ 的常数. 实际上, 不等式(\ref{schobs-g}) 在任意的 $n\ge 1$ 中都可以取 $E=\left\lbrace x\in \R^n: |x|\ge r\right\rbrace$\cite{Rosier2009ExactBC}, 并且在 $n=1$ 时可取 $E$ 为厚集\cite{Huang2020ObservableSP} (一种更为一般的集合类). 利用HUM方法\cite{Lions1988ControlabiliteEP}可知不等式 (\ref{schobs-g})成立当且仅当(\ref{sch})被限制在 $E\times (0, T)$上的控制项所精确控制.
+    
+     Gengsheng Wang, Ming Wang 和 Yubiao Zhang在2019年发表的文章\cite{Wang2019ObservabilityAU}中证明了下述新的能观测不等式: 存在一个常数 $C=C(n)>0$ 使得对于所有的 $t>0$, 所有的 $r_1,r_2>0$ 以及所有满足 \ref{sch}的解 $u(t,x)$, 都有
+    \begin{equation}
+        \int_{\R^n}|u_0(x)|^2\d x\le C e^{\frac{Cr_1r_2}{t}}\left(\int_{|x|\ge r_1}|u_0(x)|^2\d x+\int_{|x|\ge r_2}|u(t,x)|^2\d x\right).\label{schobs}
+    \end{equation}这一结果将不等式(\ref{schobs-g})右边的观测时间从一段时间改进到两点时刻,    因此我们称不等式(\ref{schobs})为两点能观测不等式. 另外, 在\cite[5.2节]{Wang2019ObservabilityAU}中还得到了不等式(\ref{schobs}) 与两点时刻限制在球外的脉冲控制的精确控制性. 进一步地, Ming Wang, Ze Li 和 Shanlin Huang\cite{Wang2021Indiana}得到了带有某种位势项的非线性薛定谔方程两点能观测不等式.
+    
+    不等式(\ref{schobs})的证明基于调和分析中的不确定性原理, 该原理描述的是任意一个非零函数和它的傅里叶变换不可能同时具有紧支撑, 它的一个定量版本是下述的不等式: 对任意的 $r_1,r_2>0$和任意的 $f\in L^2(\R^n)$, 都存在一个只依赖于 $n$ 的常数 $C=C(n)>0$ 使得
+    \begin{equation}
+        \int_{\R^n}|f(x)|^2\d x\le C e^{Cr_1r_2}\left(\int_{|x|\ge r_1}|f|^2\d x+\int_{|x|\ge r_2}|\widehat{f}(\xi)|^2\d \xi\right)\label{uncertainty}
+    \end{equation}
+    成立, 更详细的介绍见\cite{Havin2012, Jaming2007NazarovsUP,Nazarov1993}. 注意到薛定谔方程(\ref{sch})的解满足关系式\cite{Linares2014Ponce}
+    \begin{equation}
+        (2it)^{\frac{n}{2}}e^{-i|x|^2 / 4t} u(x,t) = \widehat{e^{i|\cdot|^2 /4t}u_0}(x /2t), \quad\text{任意 }t>0.\label{idn}
+    \end{equation}
+    该等式说明解函数 $u(t,x)$ 在 $t$ 时刻与初始函数 $u_0$的傅里叶变换只相差一个模为 $1$ 的因子. 有了(\ref{idn})式, 能观测不等式(\ref{schobs})可以由(\ref{uncertainty})推出. 同样的方法可以得到如下观测区域为可测集外的能观测不等式: 设 $A,B\subset \R^n$为测度有限的可测集, 即 $|A|,|B|<\infty$, 则对任意的 $t>0$和任意满足方程 (\ref{sch})的解都有
+    \begin{equation}
+        \int_{\R^n}|u_0(x)|^2\d x\le C(t,|A|,|B|)\left(\int_{A^c}|u_0(x)|^2\d x+\int_{B^c}|u(t,x)|^2\d x\right)\label{schobs-2}
+    \end{equation}
+    成立, 其中 $A^c$表示集合 $A$ 在全空间 $\R^n$ 中的补集, $C(t,|A|,|B|)$ 是常数.
+    
+    因为KdV方程是最重要的色散方程之一, 一个自然的想法便是对于下述的线性KdV方程
+    \begin{equation}
+        \partial_t u+\partial_x^3 u=0,\quad u(0,x)=u_0(x)\in L^2(\R),\label{kdv-r}
+    \end{equation} 
+    尝试建立能观测不等式(\ref{schobs-2}). 但是KdV方程(\ref{kdv-r}) 不同于薛定谔方程, 没有类似于式(\ref{idn}) 的关系式, 所以上述关于薛定谔方程的能观测不等式 (\ref{schobs}) (亦或(\ref{schobs-2}))对KdV方程不适用. 然而就在不久之前, Ze Li 和 Ming Wang 证明了下述关于线性KdV方程\ref{kdv-r}形如式(\ref{schobs-2})能观测不等式: 存在一个常数 $C>0$ 使得对于任意的 $r_1,r_2,t>0$ 和任意满足方程\ref{kdv-r}的解 $u(t,x)\in C([0,\infty);L^2(\R))$, 都有
+    \begin{equation}
+        \int_{\R}|u_0(x)|^2\d x\le Ce^{Ct^{-\frac{4}{3}}\left(r_1^4+r_2^4\right)}\left(\int
+        _{|x|\ge r_1}|u_0(x)|^2\d x+\int _{|x|\ge r_2}|u(t,x)|^2\d x\right).\label{kdvobs-1}
+    \end{equation}
+    该能观测不等式的证明利用了初始函数为紧支撑的KdV方程解的定量解析光滑效应和解析函数的某种定量唯一延拓不等式.
+    \subsection{周期情形}
+    
+    
+    \section{主要结果}
+    本论文的主要目的就是对线性KdV方程建立更加广泛的类似于式(\ref{schobs-2}的能观测不等式, 以及对周期情形下的线性KdV方程建立观测点随时间移动的能观测不等式.
+    
+    论文的第一部分(第二章)考虑全空间 $\R $上的线性KdV方程
+    并建立相应的能观测不等式. 下述定理是该部分的第一个结果.
+    \begin{theorem}\label{thm-1}
+     设 $A, B$为 $\R$ 上的测度有限可测集. 则对任意 $t>0$以及任意满足方程(\ref{kdv-r})的解$u(t,x)$, 存在常数 $C=C(t,|A|,|B|)>0$使得
+     \begin{equation}
+         \int_{\R} |u_0|^2 \d x\le C\left(\int_{A^c}|u_0|^2\d x+\int_{B^c}|u(t,x)|^2\d x\right)\label{kdvobs-2}
+     \end{equation}
+     成立.
+    \end{theorem}
+    显然, 同不等式(\ref{sch})相比, 定理\ref{thm-1}在适用范围上显然更加广泛, 即去掉了集合 $A$和$B$有界的限制, 只要求测度有限. 另一方面, 我们注意到这里的常数 $C$与它的相关项$t$, $A$和$B$之间没有显式的依赖关系, 原因在于我们的证明方法不同于(\ref{kdvobs-1})中的解析估计, 而是反证法. 该方法受到\cite{Amrein1977OnSP}中 Amerin-Berthier 不确定性原理证明的启发. 证明总共分成三步:
+    \begin{enumerate}
+        \item[(1)] 证明不等式(\ref{kdvobs-2})在
+        \begin{equation}
+            \|T\|_{L^{2}(\R)\to L^2(\R)}<1\label{sl1}
+        \end{equation}
+        时成立, 其中 $T=\chi_BS(t)\chi_A$, $S(t)=e^{-t\partial_x^3}$ 表示由式(\ref{kdv-r})生成的群.
+        \item[(2)] 证明算子 $T$ 是从 $L^2(\R)$ 到 $L^2(\R)$ 的紧算子.
+        \item[(3)] 利用(2) 的结论将式(\ref{sl1}) 的证明归结为证明 $\| T\|_{L^2(\R)\to L^2(\R)}\neq 1$.
+    \end{enumerate}
+    
+    在定理\ref{thm-1}的证明中, $A$ 和 $B$ 均为测度有限的可测集这一假设在步骤(2)和(3)的证明中都被用到. 通过对步骤(2) 更进一步地观察, 我们发现, 如果 $A$ 和 $B$ 满足某种密度条件, 算子 $T$ 仍然可以是紧的. 由于在该密度条件下, $A$ 和 $B$ 的测度可以不是有限的, 我们便可以建立KdV方程新的两点能观测不等式. 为了陈述该结果, 我们需要下述关于集合密度的定义.
+    \begin{definition}
+    设 $A\subset \R$ 是一个Lebesgue 可测集, 若其满足
+    \begin{equation*}
+         \varlimsup_{x\to \infty}|A\bigcap[x,x+1]|\cdot|x|^{\alpha}\lesssim 1,
+    \end{equation*}
+    则称 $A$ 具有 $|x|^{-\alpha}$密度.
+    \end{definition}
+    \begin{remark}
+    该定义可以等价为下述陈述: 存在常数 $L>0$ 使得对于任意的 $|x|\ge L$, 都有
+    \begin{equation*}
+        |A\cap [x,x+1]|\cdot |x|^\alpha\lesssim |x|^{-\alpha}.
+    \end{equation*}
+    \end{remark}
+    
+    有了上述定义, 就可以将第二个结果陈述为下述定理.
+    \begin{theorem}\label{thm-2}
+     设 $A$ 和 $B$ 都是密度 $|x|^{-\alpha}, \alpha>\frac{5}{6}$的可测集, 并且对某个常数 $c\in\R$ 我们有 $A, B \subset (c,\infty)$ 或者 $A, B\subset (-\infty ,c)$. 则对任意 $t>0$以及任意满足方程(\ref{kdv-r})的解 $u(t,x)$, 存在常数 $C=C(t,A,B)>0$ 使得不等式 (\ref{kdvobs-2}) 在新给定的集合条件下仍然成立.
+    \end{theorem}
+    在定理\ref{thm-2}中, 最有趣的情形是 $\alpha\in \left(\frac{5}{6},1\right]$. 实际上, 当 $\alpha>1$ 的时候 $A$和$B$ 都是具有有限测度的可测集, 相应的能观测不等式可以直接由定理\ref{thm-1}得到. 设 $\alpha\in \left(\frac{5}{6},1\right]$ 并取
+    \begin{equation*}
+        A=B=\bigcup_{k=1}^\infty [k,k+k^{-\alpha}].
+    \end{equation*}
+    该取法下 $A$ 和 $B$ 满足定理\ref{thm-2}的假设, 然而它们都具有无限测度. 因此, 相较于定理\ref{thm-1}, 定理\ref{thm-2}给出了新的两点时刻能观测集. 另一方面, 定理\ref{thm-2} 中$A$和$B$ 被限制在半直线上, 该限制来源于KdV方程的一个唯一延拓性. 目前我们还不知道该条件是否可以去掉. 
+    
+    由定理\ref{thm-1} 和定理\ref{thm-2} 是下述KdV方程唯一延拓性的定量版本: 若 $u(0,\cdot)$ 在 $A^c$上恒为零并且 $u(t,\cdot),t\neq 0$在 $B^c$上恒为零, 则 $u(t,x)\equiv 0$. 类似的唯一延拓性结果见 Bingyu Zhang 的文章
+    
+    \iffalse 论文的第二部分考虑圆周 $\T:= \R / \Z$ 上的线性KdV方程.\cite{Ionescu2006UniquenessPO}
+    \fi
+    \section{符号说明}
+    
+    考虑薛定谔方程
+    \begin{equation}
+        i\partial_t u+\Delta u=0,\quad (x,t)\in \omega\times (0,1)
+    \end{equation}
+    的解$u(x,t)$, 
     % 更多内容
-    \section{这是一级标题}
+    \chapter{在$\R$上的情形}
+    \section{一般判据}
+    \section{定理1的证明}
+    \section{定理2的证明}
+   
+    \chapter{在 $\T$ 上的情形}
+    \section{Ingham不等式}
+    \section{定理3的证明}
+    
+    \chapter{控制论中的应用}
+    \section{HUM方法}
+    \section{系统的可控性}
+    在本节中, 我们给出线性KdV方程两点可观测性的一般判据. 该判据源于希尔伯特空间方法在傅里叶变换下不确定性原理的应用.
+    
+    设 $S(t)=e^{-t\partial_x^3}$ 为线性KdV方程的算子群,
+    
     % 更多内容
-    \subsection{这是二级标题}
+    %\subsection{这是二级标题}
     % 更多内容
 
     \backmatter
     \chapter{致谢}
     % 致谢内容
-    %\cugthesisbib{参考文献数据库文件名}
+    \cugthesisbib{refs}
 
     \appendix
     \chapter{这是附录A}
