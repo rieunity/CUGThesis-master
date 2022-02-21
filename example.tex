@@ -16,20 +16,20 @@
 \newcommand\C{\ensuremath{\mathbb{C}}}
 
 % Some theorem environment settings
-\usepackage{ntheorem}
+\usepackage{ntheorem,tikz,mathabx}
 \theoremseparator{.}
 \newtheorem{theorem}{定理}[chapter]
-\newenvironment{proof}{{\noindent\itshape Proof}.}{\hfill $\square$\par}
+\newenvironment{proof}{{\noindent\itshape 证明}.}{\hfill $\Box$\par}
 \theorembodyfont{\upshape}
-\newtheorem*{remark}{注}
+\newtheorem{remark}{注}
 \newtheorem*{question}{Question}
-\newtheorem{definition}{定义}
-\newtheorem{proposition}{性质}
-\newtheorem{corollary}{推论}
-\newtheorem{lemma}{引理}
+\newtheorem{definition}{定义}[chapter]
+\newtheorem{proposition}{性质}[chapter]
+\newtheorem{corollary}{推论}[chapter]
+\newtheorem{lemma}{引理}[chapter]
 \newtheorem{exercise}{Exercise}[section]
 \newtheorem*{solution}{Solution}
-\newtheorem{example}{Example}[section]
+\newtheorem{example}{例}
 
 
 \cugthesistitle{中国地质大学研究生学位论文 \LaTeXe{} 模板}{\cugthesis\ \LaTeXe{} 模板}
@@ -46,18 +46,55 @@
     \makefrontpages 
     % 你的正文
     \chapter{前言}
-    本文主要研究线性KdV方程的定量唯一延拓性, 给出全空间和周期情形下新的能观测不等式, 并讨论其在控制理论中的应用.
+    本文主要研究线性KdV方程, 给出全空间和周期情形下新的能观测不等式, 并讨论其在控制理论中的应用.
     \section{KdV方程概述}
-    1895年, Boussinesq\cite{Bouss1877}和 Korteweg-de Vries\cite{Kort1895} 为了描述管道中液体的浅水波, 建立了如下方程
+    Korteweg-de Vries 方程, 简称 KdV方程于1877年 Boussinesq\cite{Bouss1877} 首先给出, 并在1895年 Korteweg-de Vries\cite{Kort1895} 研究管道中液体浅水波时被重新发现. 该方程可写作
     \begin{equation}
         \partial_t u +u \partial_x u +\partial_x^3 u =0,\label{kdv}
     \end{equation}
-    其中 $u=u(t,x)$是一个关于时间变量 $t$和空间变量$x$ 的实值函数. 该方程被称为Korteweg-de Vries (KdV) 方程. 它同时包含了色散项和非线性项, 是人们研究色散与非线性之间的相互作用的重要模型. 特别地, KdV方程常被用作描述非线性色散系统中单向传播小振幅长波的数学模型.
+    其中 $u=u(t,x)$是一个关于时间变量 $t$和空间变量$x$ 的实值函数. 它同时包含了色散项和非线性项, 是人们研究色散与非线性之间的相互作用的重要模型. 特别地, KdV方程常被用作描述非线性色散系统中单向传播小振幅长波的数学模型.
     
-    KdV方程自发现以来便被广泛研究, 在方程的适定性, 孤立波的存在性和稳定性, 可积性, 长时间性态上都有丰富的结果. 
+    KdV方程自发现以来便被广泛研究, 在方程的适定性, 孤立波的存在性和稳定性, 可积性, 唯一延拓性, 长时间性态上都有丰富的结果. 
     
-    \section{能观测不等式}
-    能观测不等式的研究源于人们对方程唯一延拓性的研究, 为了理解两者之间的关系, 我们首先介绍唯一延拓性. 早在0000年,xxx就发现一个调和函数如果在一点的任意阶导数存在且为零, 则函数在整个与该点的连通区域内都为零. 后来人们发现许多方程的解都具有类似的性质, 就把这些由局部解推出整体解的性质称为唯一延拓性.
+    本论文所研究的能观测不等式便属于唯一延拓性这一范畴.
+    
+    \section{唯一延拓性}
+    
+    \section{从唯一延拓性到能观测不等式}
+    对于一般的定义在区域 $\Omega$ 上的发展方程, 可写作
+    \begin{equation}\label{evo}
+        \partial_t u = A u, \quad u(0,x)=u_0\in D(A).
+    \end{equation}
+    很多时候, 存在 $\omega\subset \Omega$, $T>0$, 以及相应的常数 $C(T,\omega)>0$, 使得对任意满足方程 \eqref{evo} 的解 $u(t,x)$ 都有下述不等式成立
+    \begin{equation}\label{init}
+        \int_{\Omega}|u_0(x)|^2\d x\le C(T,\omega)\int_0^T\int_\omega|u(t,x)|^2\d x\d t.
+    \end{equation}
+    这样的不等式称为发展方程 \eqref{evo} 的能观测不等式. 
+
+    
+    由能观测不等式 \eqref{init} 的形式得到唯一延拓性: 当解函数 $u(t,x)$ 在 $(0,T)\times \omega$ 上为零时, $u(t,x)\equiv 0$, 见图 \ref{fig2}. 因此能观测不等式是某种唯一延拓性的定量描述.
+    \begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[scale=1.3]
+      \fill[blue!10!white] plot[smooth cycle] coordinates{(0,0) (4,0) (2.5,2.5) (-1,2.5)};
+      \fill[magenta] (0.5,0.5) ellipse (0.5 and 0.375);
+      \fill[magenta] (0.9,2.1) ellipse (0.5 and 0.375);
+      \fill[magenta] (2.5,0.8) ellipse (0.5 and 0.375);
+      \draw (2,-0.3) node[below]{$\Omega$};
+      \draw[->] (4-0.15,2) to[out=180,in=40]  (0.5,0.5);
+      \draw[->] (4-0.1,2+0.1) to[out=150, in=30] (0.9,2.1);
+      \draw[->] (4-0.15,2-0.1) to[out=-120, in=10] (2.5,0.8);
+      \draw (4.1,2) node{$\color{magenta}{\omega}$};
+      \fill[blue!10!white] (-0.8,-1.5)--(-0.3,-1.5)--(-0.3,-1)--(-0.8,-1)--cycle;
+      \draw (-0.3,-1.25) node[right]{\small 非观测区域};
+      \fill[magenta] (-0.8+3.5,-1.5)--(-0.3+3.5,-1.5)--(-0.3+3.5,-1)--(-0.8+3.5,-1)--cycle;
+      \draw (-0.3+3.5,-1.25) node[right]{\small 观测区域$\color{magenta}\omega$};
+    \end{tikzpicture}
+    \caption{唯一延拓性: 若$u(t,x)$ 在时间 $0$到 $T$, 区域$\omega$ 内为零, 则$u(t,x)\equiv 0$.}
+    \label{fig2}
+  \end{figure}
+    
+    人们在对色散方程唯一延拓性的研究中, 发现了形如式 \eqref{init} 的能观测不等式. 进而, 薛定谔方程和KdV方程这两大类色散方程, 在不同条件下的能观测不等式被逐渐发现. 许多时候, 建立能观测不等式的方法在不同的空间情形下可以完全不同. 所以接下来本文将分别介绍全空间和周期情形下该不等式的发展历史和主要结果.
     
     \subsection{全空间情形}
     对于薛定谔方程
@@ -68,22 +105,22 @@
     \begin{equation}
         \int_{\R^n}|u_0(x)|^2\d x\le C(n,T,E)\int_0^T\int_E|u(t,x)|^2\d x\mathrm{d}t,\label{schobs-g}
     \end{equation}
-    其中 $T>0$, $E$是 $\R^n$中的子集, $C(n,T,E)>0$是仅依赖于 $n,T,E$ 的常数. 实际上, 不等式(\ref{schobs-g}) 在任意的 $n\ge 1$ 中都可以取 $E=\left\lbrace x\in \R^n: |x|\ge r\right\rbrace$\cite{Rosier2009ExactBC}, 并且在 $n=1$ 时可取 $E$ 为厚集\cite{Huang2020ObservableSP} (一种更为一般的集合类). 利用HUM方法\cite{Lions1988ControlabiliteEP}可知不等式 (\ref{schobs-g})成立当且仅当(\ref{sch})被限制在 $E\times (0, T)$上的控制项所精确控制.
+    其中 $T>0$, $E$是 $\R^n$中的子集, $C(n,T,E)>0$是仅依赖于 $n,T,E$ 的常数. 实际上, 不等式 \eqref{schobs-g} 在任意的 $n\ge 1$ 中都可以取 $E=\left\lbrace x\in \R^n: |x|\ge r\right\rbrace$\cite{Rosier2009ExactBC}, 并且在 $n=1$ 时可取 $E$ 为厚集\cite{Huang2020ObservableSP} (一种更为一般的集合类). 利用HUM方法\cite{Lions1988ControlabiliteEP}可知不等式 \eqref{schobs-g} 成立当且仅当 \eqref{sch} 被限制在 $E\times (0, T)$上的控制项所精确控制.
     
-     Gengsheng Wang, Ming Wang 和 Yubiao Zhang在2019年发表的文章\cite{Wang2019ObservabilityAU}中证明了下述新的能观测不等式: 存在一个常数 $C=C(n)>0$ 使得对于所有的 $t>0$, 所有的 $r_1,r_2>0$ 以及所有满足 \ref{sch}的解 $u(t,x)$, 都有
+     Gengsheng Wang, Ming Wang 和 Yubiao Zhang在2019年发表的文章\cite{Wang2019ObservabilityAU}中证明了下述新的能观测不等式: 存在一个常数 $C=C(n)>0$ 使得对于所有的 $t>0$, 所有的 $r_1,r_2>0$ 以及所有满足 \eqref{sch} 的解 $u(t,x)$, 都有
     \begin{equation}
         \int_{\R^n}|u_0(x)|^2\d x\le C e^{\frac{Cr_1r_2}{t}}\left(\int_{|x|\ge r_1}|u_0(x)|^2\d x+\int_{|x|\ge r_2}|u(t,x)|^2\d x\right).\label{schobs}
-    \end{equation}这一结果将不等式(\ref{schobs-g})右边的观测时间从一段时间改进到两点时刻,    因此我们称不等式(\ref{schobs})为两点能观测不等式. 另外, 在\cite[5.2节]{Wang2019ObservabilityAU}中还得到了不等式(\ref{schobs}) 与两点时刻限制在球外的脉冲控制的精确控制性. 进一步地, Ming Wang, Ze Li 和 Shanlin Huang\cite{Wang2021Indiana}得到了带有某种位势项的非线性薛定谔方程两点能观测不等式.
+    \end{equation}这一结果将不等式 \eqref{schobs-g} 右边的观测时间从一段时间改进到两点时刻,    因此我们称不等式 \eqref{schobs} 为两点能观测不等式. 另外, 在\cite[5.2节]{Wang2019ObservabilityAU}中还得到了不等式 \eqref{schobs} 与两点时刻限制在球外的脉冲控制的精确控制性. 进一步地, Ming Wang, Ze Li 和 Shanlin Huang\cite{Wang2021Indiana}得到了带有某种位势项的非线性薛定谔方程两点能观测不等式.
     
-    不等式(\ref{schobs})的证明基于调和分析中的不确定性原理, 该原理描述的是任意一个非零函数和它的傅里叶变换不可能同时具有紧支撑, 它的一个定量版本是下述的不等式: 对任意的 $r_1,r_2>0$和任意的 $f\in L^2(\R^n)$, 都存在一个只依赖于 $n$ 的常数 $C=C(n)>0$ 使得
+    不等式 \eqref{schobs} 的证明基于调和分析中的不确定性原理, 该原理描述的是任意一个非零函数和它的傅里叶变换不可能同时具有紧支撑, 它的一个定量版本是下述的不等式: 对任意的 $r_1,r_2>0$和任意的 $f\in L^2(\R^n)$, 都存在一个只依赖于 $n$ 的常数 $C=C(n)>0$ 使得
     \begin{equation}
         \int_{\R^n}|f(x)|^2\d x\le C e^{Cr_1r_2}\left(\int_{|x|\ge r_1}|f|^2\d x+\int_{|x|\ge r_2}|\widehat{f}(\xi)|^2\d \xi\right)\label{uncertainty}
     \end{equation}
-    成立, 更详细的介绍见\cite{Havin2012, Jaming2007NazarovsUP,Nazarov1993}. 注意到薛定谔方程(\ref{sch})的解满足关系式\cite{Linares2014Ponce}
+    成立, 更详细的介绍见\cite{Havin2012, Jaming2007NazarovsUP,Nazarov1993}. 注意到薛定谔方程 \eqref{sch} 的解满足关系式\cite{Linares2014Ponce}
     \begin{equation}
         (2it)^{\frac{n}{2}}e^{-i|x|^2 / 4t} u(x,t) = \widehat{e^{i|\cdot|^2 /4t}u_0}(x /2t), \quad\text{任意 }t>0.\label{idn}
     \end{equation}
-    该等式说明解函数 $u(t,x)$ 在 $t$ 时刻与初始函数 $u_0$的傅里叶变换只相差一个模为 $1$ 的因子. 有了(\ref{idn})式, 能观测不等式(\ref{schobs})可以由(\ref{uncertainty})推出. 同样的方法可以得到如下观测区域为可测集外的能观测不等式: 设 $A,B\subset \R^n$为测度有限的可测集, 即 $|A|,|B|<\infty$, 则对任意的 $t>0$和任意满足方程 (\ref{sch})的解都有
+    该等式说明解函数 $u(t,x)$ 在 $t$ 时刻与初始函数 $u_0$的傅里叶变换只相差一个模为 $1$ 的因子. 有了 \eqref{idn} 式, 能观测不等式 \eqref{schobs} 可以由 \eqref{uncertainty} 推出. 同样的方法可以得到如下观测区域为可测集外的能观测不等式: 设 $A,B\subset \R^n$为测度有限的可测集, 即 $|A|,|B|<\infty$, 则对任意的 $t>0$和任意满足方程 \eqref{sch} 的解都有
     \begin{equation}
         \int_{\R^n}|u_0(x)|^2\d x\le C(t,|A|,|B|)\left(\int_{A^c}|u_0(x)|^2\d x+\int_{B^c}|u(t,x)|^2\d x\right)\label{schobs-2}
     \end{equation}
@@ -93,87 +130,928 @@
     \begin{equation}
         \partial_t u+\partial_x^3 u=0,\quad u(0,x)=u_0(x)\in L^2(\R),\label{kdv-r}
     \end{equation} 
-    尝试建立能观测不等式(\ref{schobs-2}). 但是KdV方程(\ref{kdv-r}) 不同于薛定谔方程, 没有类似于式(\ref{idn}) 的关系式, 所以上述关于薛定谔方程的能观测不等式 (\ref{schobs}) (亦或(\ref{schobs-2}))对KdV方程不适用. 然而就在不久之前, Ze Li 和 Ming Wang 证明了下述关于线性KdV方程\ref{kdv-r}形如式(\ref{schobs-2})能观测不等式: 存在一个常数 $C>0$ 使得对于任意的 $r_1,r_2,t>0$ 和任意满足方程\ref{kdv-r}的解 $u(t,x)\in C([0,\infty);L^2(\R))$, 都有
+    尝试建立能观测不等式 \eqref{schobs-2}. 但是KdV方程 \eqref{kdv-r} 不同于薛定谔方程, 没有类似于式 \eqref{idn} 的关系式, 所以上述关于薛定谔方程的能观测不等式 \eqref{schobs} (亦或 \eqref{schobs-2})对KdV方程不适用. 然而就在不久之前, Ze Li 和 Ming Wang 证明了下述关于线性KdV方程 \eqref{kdv-r} 形如式 \eqref{schobs-2} 能观测不等式: 存在一个常数 $C>0$ 使得对于任意的 $r_1,r_2,t>0$ 和任意满足方程 \eqref{kdv-r} 的解 $u(t,x)\in C([0,\infty);L^2(\R))$, 都有
     \begin{equation}
         \int_{\R}|u_0(x)|^2\d x\le Ce^{Ct^{-\frac{4}{3}}\left(r_1^4+r_2^4\right)}\left(\int
         _{|x|\ge r_1}|u_0(x)|^2\d x+\int _{|x|\ge r_2}|u(t,x)|^2\d x\right).\label{kdvobs-1}
     \end{equation}
     该能观测不等式的证明利用了初始函数为紧支撑的KdV方程解的定量解析光滑效应和解析函数的某种定量唯一延拓不等式.
+   
     \subsection{周期情形}
     
+
+
     
-    \section{主要结果}
-    本论文的主要目的就是对线性KdV方程建立更加广泛的类似于式(\ref{schobs-2}的能观测不等式, 以及对周期情形下的线性KdV方程建立观测点随时间移动的能观测不等式.
     
-    论文的第一部分(第二章)考虑全空间 $\R $上的线性KdV方程
-    并建立相应的能观测不等式. 下述定理是该部分的第一个结果.
+
+    \iffalse 论文的第二部分考虑圆周 $\T:= \R / \Z$ 上的线性KdV方程.\cite{Ionescu2006UniquenessPO}
+    \fi
+    
+    
+    \section{符号说明}
+    
+    本文中所提到的可测概念均为勒贝格可测, 例如可测函数即勒贝格可测函数, 可测集即勒贝格可测集. 
+    
+    在全空间 $\R$ 中, 可测函数 $f\in L^1(\R)$, 其傅里叶变换表示为
+    \begin{equation*}
+        \widehat{f}(\xi)=\int_{\R} e^{-i\xi x} f(x)\d x,
+    \end{equation*}
+    对可测函数 $g\in L^1(\widehat{\R}) $, 其傅里叶逆变换表示为
+    \begin{equation*}
+        \widecheck{g}(x)=\frac{1}{2\pi}\int_{\R} e^{i\xi x} g(\xi) \d \xi.
+    \end{equation*}
+    
+    \begin{definition}
+    设 $f$ 为 $\R$ 上的可测函数, 则定义集合
+    \begin{equation*}
+        \mathrm{supp}\, f= \lbrace x: f(x)\neq 0 \rbrace,
+    \end{equation*}
+    并称 $\mathrm{supp}\, f$ 为可测函数 $f$ 的支撑.
+    \end{definition}
+    
+    设 $A, B$ 为两个表达式, 我们规定:
+    \begin{enumerate}
+        \item 若存在一个正常数 $\alpha$ 使得 $A\le \alpha B$, 则记 $A\lesssim B$.
+        \item 若 $A\lesssim B$ 和 $B\lesssim A$ 均成立, 则记 $A\asymp B$.
+    \end{enumerate}
+    
+    
+    
+
+
+    % 更多内容
+    \chapter{在$\R$上的情形}
+    本章考虑全空间 $\R $上的线性KdV方程
+    并建立相应的两点时刻能观测不等式能观测不等式. 
+    \section{能观测不等式}
+  由于本章的两个结果所用的证明方法在结构上相同, 我们在本节先陈述这两个结果, 比较他们的异同, 它们的证明被放在本章的第二, 三, 四节. 
+  
+  下述定理是全空间情形的第一个结果.
     \begin{theorem}\label{thm-1}
-     设 $A, B$为 $\R$ 上的测度有限可测集. 则对任意 $t>0$以及任意满足方程(\ref{kdv-r})的解$u(t,x)$, 存在常数 $C=C(t,|A|,|B|)>0$使得
+     设 $A, B$为 $\R$ 上的测度有限可测集. 则对任意 $t>0$以及任意满足方程 \eqref{kdv-r} 的解$u(t,x)$, 存在常数 $C=C(t,|A|,|B|)>0$使得
      \begin{equation}
          \int_{\R} |u_0|^2 \d x\le C\left(\int_{A^c}|u_0|^2\d x+\int_{B^c}|u(t,x)|^2\d x\right)\label{kdvobs-2}
      \end{equation}
      成立.
     \end{theorem}
-    显然, 同不等式(\ref{sch})相比, 定理\ref{thm-1}在适用范围上显然更加广泛, 即去掉了集合 $A$和$B$有界的限制, 只要求测度有限. 另一方面, 我们注意到这里的常数 $C$与它的相关项$t$, $A$和$B$之间没有显式的依赖关系, 原因在于我们的证明方法不同于(\ref{kdvobs-1})中的解析估计, 而是反证法. 该方法受到\cite{Amrein1977OnSP}中 Amerin-Berthier 不确定性原理证明的启发. 证明总共分成三步:
+    显然, 同不等式 \eqref{sch} 相比, 定理 \ref{thm-1} 在适用范围上显然更加广泛, 即去掉了集合 $A$和$B$有界的限制, 只要求测度有限. 具体地, 取$E=F=\bigcup_{k\in \Z,k\neq 0} \left[k,k+\frac{1}{2k^2}\right]$, 该集合是无界且测度有限的, 见图 \ref{fig3}.
+    \begin{figure}
+    \centering
+   \begin{tikzpicture}
+     \draw [very thick] (-3.5,0) -- (3.5,0);
+     \draw (3.6,0) node[right] {$\cdots $} ;
+     \draw [very thick,->] (4.5,0) -- (7.0,0) node [right] {$x$};
+     \draw (-3.6,0) node[left] {$\cdots $};
+     \draw [very thick] (-5.5,0) -- (-4.5,0);
+     \foreach \x in {-3,...,3} \draw (\x,0.05) -- (\x,-0.05) node[below] {\x};
+     \draw (5,0.05) -- (5,-0.05) node[below] {$k$};
+     \draw (-5,0.05) -- (-5, -0.05) node[below] {$-k$};
+     \draw (6,0.05) -- (6, -0.05) node[below] {$k+1$};
+     \draw [ultra thick,color = magenta] (1,0) -- (1.5,0);
+     \draw [ultra thick,color =magenta] (-1,0) -- (-0.5,0);
+     \draw [ultra thick,color =magenta] (2,0) -- (2+1/4,0);
+     \draw [ultra thick,color = magenta] (-2,0) -- (-2+1/4,0);
+     \draw [ultra thick,color =magenta] (3,0) -- (3+1/8,0);
+     \draw [ultra thick,color =magenta] (-3,0) -- (-3+1/8,0);
+     \draw [ultra thick,color =magenta] (5,0)--(5.2,0);
+     \draw [ultra thick,color =magenta] (-5,0) -- (-4.8,0);
+     \draw [ultra thick,color =magenta] (6,0) -- (6.1,0);
+     \foreach \x in {-3, -2,-1,1,2,3} \draw[->,rounded corners] (0,1.4) --(0,1+\x*\x /50) -- (\x,1+\x*\x /50) -- (\x, 0.1);
+     \draw (0,1.4) node[above] {$\color{magenta}{A=B}$};
+     \draw[->,rounded corners] (0,1.4) -- (0,1+4*4 /50) -- (5,1+4*4/50) -- (5,0.1);
+     \draw[->,rounded corners] (0,1.4) -- (0,1+4*4/50)--(-5, 1+4*4/50) -- (-5,0.1);
+   \end{tikzpicture}
+   \caption{$A=B=\bigcup_{k\in \Z,k\neq 0} \left[k,k+\frac{1}{2k^2}\right]$}
+   \label{fig3}
+ \end{figure}
+ 该条件满足定理 \ref{thm-1} 但不满足Ze Li和Ming Wang关于 $A$ 和 $B$ 取有界集的结果 \eqref{kdvobs-1}.
+    另一方面, 我们注意到这里的常数 $C$与它的相关项$t$, $A$和$B$之间没有显式的依赖关系, 原因在于我们的证明方法不同于 \eqref{kdvobs-1} 中利用解析估计, 而是用反证法进行了存在性证明. 证明定理 \ref{thm-1} 的核心思路最初\cite{Amrein1977OnSP}被用于 Amrein-Berthier 不确定性原理的证明, 这是该方法第一次被用来证明色散方程的能观测不等式. 证明总共分成三个步骤:
     \begin{enumerate}
-        \item[(1)] 证明不等式(\ref{kdvobs-2})在
+        \item[(1)] 证明不等式 \eqref{kdvobs-2} 在
         \begin{equation}
             \|T\|_{L^{2}(\R)\to L^2(\R)}<1\label{sl1}
         \end{equation}
-        时成立, 其中 $T=\chi_BS(t)\chi_A$, $S(t)=e^{-t\partial_x^3}$ 表示由式(\ref{kdv-r})生成的群.
+        时成立, 其中 $T=\chi_BS(t)\chi_A$, $S(t)=e^{-t\partial_x^3}$ 表示由式 \eqref{kdv-r} 生成的群.
         \item[(2)] 证明算子 $T$ 是从 $L^2(\R)$ 到 $L^2(\R)$ 的紧算子.
-        \item[(3)] 利用(2) 的结论将式(\ref{sl1}) 的证明归结为证明 $\| T\|_{L^2(\R)\to L^2(\R)}\neq 1$.
+        \item[(3)] 利用(2) 的结论将式 \eqref{sl1} 的证明归结为 $\| T\|_{L^2(\R)\to L^2(\R)}\neq 1$ 的证明.
     \end{enumerate}
     
-    在定理\ref{thm-1}的证明中, $A$ 和 $B$ 均为测度有限的可测集这一假设在步骤(2)和(3)的证明中都被用到. 通过对步骤(2) 更进一步地观察, 我们发现, 如果 $A$ 和 $B$ 满足某种密度条件, 算子 $T$ 仍然可以是紧的. 由于在该密度条件下, $A$ 和 $B$ 的测度可以不是有限的, 我们便可以建立KdV方程新的两点能观测不等式. 为了陈述该结果, 我们需要下述关于集合密度的定义.
+    在定理 \ref{thm-1} 的证明中, $A$ 和 $B$ 均为测度有限可测集这一假设是必要的, 它在步骤(2)和(3)的证明中都需要被用到. 通过对步骤(2) 
+    
+    更进一步地观察, 我们发现, 如果 $A$ 和 $B$ 满足某种密度条件, 仍然可以保证算子 $T$ 是紧算子. 由于在该密度条件下, $A$ 和 $B$ 的测度可以不是有限的, 我们便可以建立KdV方程新的两点能观测不等式, 这就得到了我们的第二个主要结果. 为了陈述该结果, 我们首先给出关于一个关于集合密度的新定义.
     \begin{definition}
-    设 $A\subset \R$ 是一个Lebesgue 可测集, 若其满足
+    设 $A\subset \R$ 为可测集, 若其满足条件
     \begin{equation*}
          \varlimsup_{x\to \infty}|A\bigcap[x,x+1]|\cdot|x|^{\alpha}\lesssim 1,
     \end{equation*}
     则称 $A$ 具有 $|x|^{-\alpha}$密度.
     \end{definition}
-    \begin{remark}
-    该定义可以等价为下述陈述: 存在常数 $L>0$ 使得对于任意的 $|x|\ge L$, 都有
+    \begin{remark}\label{rem-1}
+    该集合密度的定义可以等价地陈述为: 存在常数 $L>0$ 使得对于任意满足 $|x|\ge L$ 的 $x$, 都有
     \begin{equation*}
         |A\cap [x,x+1]|\cdot |x|^\alpha\lesssim |x|^{-\alpha}.
+     \end{equation*}
+    在第二个结果亦即定理 \ref{thm-2} 的证明中(第二章, 第三节), 我们主要利用该集合密度定义的等价陈述.
+    \end{remark}
+    
+    有了上述定义, 我们就可以将第二个结果陈述为下述定理.
+    \begin{theorem}\label{thm-2}
+     设 $A$ 和 $B$ 为密度 $|x|^{-\alpha}, \alpha>\frac{5}{6}$的可测集, 并且对某个常数 $c\in\R$ 我们有 $A, B \subset (c,\infty)$ 或者 $A, B\subset (-\infty ,c)$. 则存在常数 $C=C(t,A,B)>0$, 使得对任意的 $t>0$以及任意满足方程 \eqref{kdv-r} 的解 $u(t,x)$,  不等式 \eqref{kdvobs-2} 仍然成立.
+    \end{theorem}
+    在定理 \ref{thm-2} 的条件中, 我们最感兴趣的情形是 $\alpha\in \left(\frac{5}{6},1\right]$. 事实上, 当 $\alpha>1$ 时 $A$和$B$ 都是具有有限测度的可测集, 相应的能观测不等式可以直接由定理 \ref{thm-1} 得到. 为了说明定理 \ref{thm-2} 与定理 \ref{thm-1} 的区别, 我们令 $\alpha\in \left(\frac{5}{6},1\right]$ 并取
+    \begin{equation*}
+        A=B=\bigcup_{k=1}^\infty [k,k+2k^{-\alpha}].
+    \end{equation*}
+    该情形下 $A$ 和 $B$ 满足定理 \ref{thm-2} 的假设,  然而它们都具有无限测度, 见图 \ref{fig4}.
+    \begin{figure}[ht]
+    \centering
+   \begin{tikzpicture}
+     \draw [very thick] (-0.5,0) -- (3.5,0);
+     \draw (3.6,0) node[right] {$\cdots $};
+     \draw [very thick,->] (4.5,0) --(7,0) node [right] {$x$};
+     \foreach \x in {0,1,2,3} \draw (\x,0.05) -- (\x,-0.05) node[below] {\x};
+     \draw (5,0.05)--(5,-0.05) node[below]{$k$};
+     \draw (6,0.05)--(6,-0.05) node[below]{$k+1$};
+     \draw [ultra thick,color=magenta] (1,0) -- (1.5,0);
+     \draw [ultra thick, color=magenta] (2,0) -- (2.4,0);
+     \draw [ultra thick,color=magenta] (3,0) -- (3.2,0);
+     \draw [ultra thick,color=magenta] (5,0) -- (5.15,0);
+     \draw [ultra thick,color=magenta] (6,0) -- (6.1,0);
+     \draw [->, rounded corners] (2.5,1.4) -- (2.5,1+16 /50) -- (1,1+16/50) -- (1,0.1);
+     \draw [->,rounded corners] (2.5,1.4) -- (2.5,1+8 /50) -- (2,1+8/50) -- (2,0.1);
+     \draw [->, rounded corners] (2.5, 1.4) -- (2.5,1+4/50)--(3,1+4/50)--(3,0.1);
+     \draw [->,rounded corners] (2.5,1.4) -- (2.5,1+9/50)--(5,1+9/50)--(5,0.1);
+     \draw [->,rounded corners] (2.5,1.4)--(2.5,1+16/50)--(6,1+16/50)--(6,0.1);
+     \draw (2.5,1.4) node[above] {$\color{magenta}{A=B}$};
+   \end{tikzpicture}
+   \caption{$A=B=\bigcup_{k=1}^\infty [k,k+2k^{-\alpha}]$}
+   \label{fig4}
+ \end{figure}
+    因此, 相较于定理 \ref{thm-1}, 定理 \ref{thm-2} 给出了全新的两点时刻能观测不等式. 另一方面, 定理 \ref{thm-2} 中$A$和$B$ 被限制在半直线上, 这一限制条件来源于我们的证明中需要用到KdV方程在两点时刻半轴上的唯一延拓性. 目前我们还不知道去掉该条件后, 定理 \ref{thm-2} 是否仍然成立. 
+    
+    显然, 定理 \ref{thm-1} 和定理 \ref{thm-2} 都是下述KdV方程唯一延拓性的定量版本: 若 $u(0,\cdot)$ 在 $A^c$上恒为零并且 $u(t,\cdot),t\neq 0$在 $B^c$上恒为零, 则 $u(t,x)\equiv 0$. 类似的唯一延拓性结果见 Bingyu Zhang 的文章\cite{Zhang1992UniqueCF,Zhang1997Unique}. 另一种假设$u(0,x)$ 和 $u(t,x)$ 具有某种指数衰减的唯一延拓性, 在薛定谔方程情形下被 Escauriaza, Kenig, Ponce 和 Vega \cite{Escauriaza2007OnUP}证明.
+    
+    实际上, 证明上述两个主要结果的方法具有一般性, 它可用来处理其它不同类型的色散方程, 例如更高阶的KdV方程以及薛定谔方程. 
+
+    \section{一般判据}
+    本节中, 我们给出线性KdV方程两点时刻能观测不等式的一般判定方法. 
+    设$S(t)=e^{-t\partial^3_x}$ 为线性KdV方程 \eqref{kdv-r} 生成的群. 则方程 \eqref{kdv-r} 的解可写作
+    \begin{align}\label{equ-kdv-solu}
+    u(t)=S(t)u_0=\int_\R G(t,x-y)u_0(y)\d y,
+    \end{align}
+    其中 $G$是线性KdV方程 \eqref{kdv-r} 的基本解, 其具体形式为
+    \begin{align}\label{equ-kdv-ker}
+    G(t,x)= \left\{
+        \begin{array}{ll}
+        \frac{1}{(3t)^{\frac{1}{3}}}\operatorname{Ai}(\frac{x}{(3t)^{\frac{1}{3}}}), & \hbox{ }t> 0, \\
+        \delta(x), & \hbox{ }t=0.
+        \end{array}
+        \right.
+    \end{align}
+    这里, $\operatorname{Ai}(x)$是 Airy函数, 其具体形式为
+    \begin{align*}
+    \operatorname{Ai}(x)= \frac{1}{2\pi}\int^{\infty}_{-\infty}e^{i(xz+\frac{1}{3}z^3)}\d z.
+    \end{align*}
+    根据\cite[p.~330]{SteinShakarchi2010}, 存在常数 $C>0$ 使得
+    \begin{align}\label{equ-Ai}
+|\operatorname{Ai}(x)| \leq
+\left\{
+\begin{array}{ll}
+C(1+|x|)^{-\frac{1}{4}}, &   x<0, \\
+ Ce^{-\frac{2}{3}|x|^{\frac{3}{2}}}, &  x\geq 0.
+\end{array}
+\right.
+\end{align}
+本章的第2节和第3节将用到式 \eqref{equ-kdv-ker} -- 式 \eqref{equ-Ai}. 线性KdV方程 \eqref{kdv-r} 的解是$L^2$范数守恒的, 即 
+\begin{align}\label{equ-conservation-law}
+\|S(t)u_0\|_{L^2(\R)}=\|u(t,\cdot)\|_{L^2(\R)}=\|u_0\|_{L^2(\R)}, \quad t\in \R,
+\end{align}
+我们把这一性质称为线性KdV方程的守恒律.
+
+设$A$和$B$为$\R$中的可测子集, 固定 $t\in \R$, 定义线性算子 $T:L^2(\R)\mapsto L^2(\R)$
+\begin{align}\label{equ-T-def}
+Tf = \chi_BS(t)\big( \chi_A f \big), \quad f\in L^2(\R).
+\end{align}
+在这里, 示性函数$\chi_A(x)$ 满足 $\chi_A(x)=1$ 若 $x\in A$ 及 $\chi_A(x)=0$ 若 $x\notin A$. 利用守恒律 \eqref{equ-conservation-law}, 易得
+\begin{align}\label{equ-T-norm}
+\|T\|_{L^2(\R)\to L^2(\R)}\leq 1.
+\end{align}
+
+\begin{proposition}\label{prop-T}
+设 $\|T\|_{L^2(\R)\to L^2(\R)}< 1$. 则存在常数 $C>0$ 使得对方程 \eqref{kdv-r} 所有的解 $u(t,x)$ 都有
+$$
+    \int_\R |u_0|^2\d x \leq C\left( \int_{A^c}|u_0|^2\d x + \int_{B^c}|u(t,x)|^2\d x \right).
+$$
+\end{proposition}
+\begin{proof}
+假设 $\|T\|_{L^2(\R)\to L^2(\R)}=c_1$, 其中 $c_1$ 满足 $0\leq c_1<1$. 由定义式 \eqref{equ-T-def} 可得
+$$
+\|\chi_B(x)S(t)(\chi_Au_0)\|_{L^2(\R)}\leq c_1\|u_0\|_{L^2(\R)}, \quad \forall u_0\in L^2(\R).
+$$
+从而
+ $$
+\|\chi_B(x)S(t) \chi_Au_0\|_{L^2(\R)}\leq c_1\|\chi_Au_0\|_{L^2(\R)}=c_1\|S(t) (\chi_Au_0)\|_{L^2(\R)}, \quad \forall u_0\in L^2(\R),
+$$
+上述最后一步用到了  $\|\chi_Au_0\|_{L^2(\R)}=\|S(t) (\chi_Au_0)\|_{L^2(\R)}$ (利用守恒律 \eqref{equ-conservation-law}). 由此我们可以得到
+\begin{align*}
+\|S(t) (\chi_Au_0)\|_{L^2(\R)}&\leq \|\chi_B(x)S(t) (\chi_Au_0)\|_{L^2(\R)}+\|\chi_{B^c}(x)S(t) (\chi_Au_0)\|_{L^2(\R)}\\
+&\leq c_1\|S(t) (\chi_Au_0)\|_{L^2(\R)}+\|\chi_{B^c}(x)S(t) (\chi_Au_0)\|_{L^2(\R)}.
+\end{align*}
+设  $c_2=1/(1-c_1)$, 则由上式进一步可得
+\begin{align}\label{equ-5}
+ \|S(t) (\chi_Au_0)\|_{L^2(\R)}\leq c_2\|S(t) (\chi_Au_0)\|_{L^2(B^c)}, \quad \forall u_0\in L^2(\R).
+\end{align}
+现在我们可以由式 \eqref{equ-5} 得
+\begin{align*}
+\|u_0\|_{L^2(\R)} &= \|S(t)u_0\|_{L^2(\R)}\leq \|S(t) (\chi_Au_0)\|_{L^2(\R)}+\|S(t) (\chi_{A^c}u_0)\|_{L^2(\R)}\\
+&\leq c_2\|S(t) (\chi_Au_0)\|_{L^2(B^c)}+\|S(t) (\chi_{A^c}u_0)\|_{L^2(\R)}\\
+&\leq c_2\|S(t)u_0\|_{L^2(B^c)}+(1+c_2)\|S(t) (\chi_{A^c}u_0)\|_{L^2(\R)}\\
+&=c_2\|u(t,\cdot)\|_{L^2(B^c)}+(1+c_2)\|u_0\|_{L^2(A^c)}.
+\end{align*}
+证明完毕 .
+\end{proof}
+
+
+
+    \section{定理 \ref{thm-1} 的证明}
+    由性质 \ref{prop-T} 可知, 线性KdV方程两点时刻能观测不等式可由不等式 $\|T\|_{L^2(\R)\to L^2(\R)}< 1$推出. 为了便于后面证明叙述, 我们先证明不等式
+\begin{align}\label{equ-ST-0}
+\|S(-t)T\|_{L^2(\R)\to L^2(\R)}<1,
+\end{align}
+再利用
+\begin{align}\label{equ-ST}
+\|T\|_{L^2(\R)\to L^2(\R)}=\|S(-t)T\|_{L^2(\R)\to L^2(\R)},
+\end{align}
+得到 $\|T\|_{L^2(\R)\to L^2(\R)}< 1$. 这里等式 \eqref{equ-ST} 再次用到了守恒律 \eqref{equ-conservation-law}. 
+
+本节主要目的是证明在$A$ 和 $B$均为有限测度可测集的条件下, 式 \eqref{equ-ST-0} 成立. 我们采用 Amrein 和 Berthier 在 \cite{Amrein1977OnSP}中所用到的方法, 由性质 \ref{prop-T} 和式 \eqref{equ-ST} 易知, 定理  \ref{thm-1} 可归结为对下述性质的证明.
+\begin{proposition}\label{prop-3}
+设 $A$, $B$ 为 $\R$ 中具有有限测的可测集, 即 $|A|,|B|<\infty$.  再设 $S(t)$ 和 $T$ 分别由式 \eqref{equ-kdv-solu} 和式 \eqref{equ-T-def} 给出. 则对任意的 $t>0$ 我们有
+$$
+\|S(-t)T\|_{L^2(\R)\to L^2(\R)}<1.
+$$
+\end{proposition}
+为了证明性质 \ref{prop-3}, 首先我们需要先证明一些引理.
+
+\begin{lemma}\label{lem-T-comp}
+对任意的 $t>0$, $T$ 是从 $L^2(\R^n)$ 到 $L^2(\R^n)$ 上的紧算子.
+\end{lemma}
+\begin{proof}
+根据式 \eqref{equ-kdv-solu} 和式 \eqref{equ-T-def}, 算子$T$ 可以被重写为积分的形式:
+$$
+(Tf)(x)=\int_{\R }\chi_A(x)G(t,x-y)\chi_B(y)f(y)\d y:=\int_{\R } K(t,x,y)f(y)\d y.
+$$
+若对任意的 $t>0$, 都有
+\begin{align}\label{equ-10}
+ \int_{\R }\int_{\R } K^2(t,x,y)\d x \d y<\infty.
+\end{align}
+则算子 $T$ 是在 $L^2(\R )$上的 Hilbert-Schmidt 算子, 进而由\cite[p.~277]{Yosida1999}可得其为紧算子.
+
+剩下的只需要说明式 \eqref{equ-10} 成立. 事实上, 对任意的 $t>0$, 由式 \eqref{equ-kdv-ker} 和 式\eqref{equ-Ai} 可得 $|G(t,x-y)|\leq C(t)$, 这里 $C(t)>0$ 是一个仅仅依赖于$t$ 的常数. 进而有
+\begin{align*}
+ \int_\R\int_\R K^2(t,x,y)\d x \d y\leq  C^2(t) \int_\R\int_\R \chi_A(x)\chi_B(y)d x \d y=C^2(t)|A||B|<\infty.
+\end{align*}
+由此我们便证明了式 \eqref{equ-10}.
+\end{proof}
+
+设 $f$ 为 $\R$ 上的可测函数, $A$ 为可测集. 若
+$$
+f(x)=0, \quad a.e. \, x\in A^c,
+$$
+则我们称支撑 $\mathrm{supp } \, f\subset A$. 
+
+\begin{lemma}\label{lem-2}
+设函数$f\in L^2(\R)$ 且$\|\chi_BS(t)(\chi_Af)\|_{L^2(\R)}=\|f\|_{L^2(\R)}$,  则有 $\mathrm{supp } \, f\subset A$
+且 $\mathrm{supp } \, S(t)f \subset B$.
+\end{lemma}
+\begin{proof}
+第一步先证明
+\begin{align}\label{equ-425-1}
+\mathrm{supp }  \, f\subset A.
+\end{align}
+这里我们用反证法, 假设
+$$
+\Big|\{x\in \R: |f(x)|>0\} \backslash A \Big|>0
+$$
+成立, 则
+\begin{align}\label{equ-425-2}
+\|f\|_{L^2(A^c)}>0.
+\end{align}
+根据引理假设可得
+$$
+\|f\|_{L^2(\R)}=\|\chi_BS(t)(\chi_Af)\|_{L^2(\R)}\leq \|\chi_Af\|_{L^2(\R)},
+$$
+从而 $\|f\|_{L^2(A^c)}=0$. 但这与式 \eqref{equ-425-2} 矛盾. 所以式 \eqref{equ-425-1} 成立.
+
+第二步再证明
+\begin{equation}\label{equ-4225-3}
+    \mathrm{supp}\, S(t)f\subset B.
+\end{equation}
+利用式 \eqref{equ-425-1} 及引理假设, 可得
+$$
+\|\chi_BS(t)f\|_{L^2(\R)}=\|\chi_BS(t)(\chi_Af)\|_{L^2(\R)}=\|f\|_{L^2(\R)}=\|S(t)f\|_{L^2(\R)}.
+$$
+上式可推出式 \eqref{equ-4225-3}.
+\end{proof}
+
+设 $\lambda\in \R$ 和 $A\subset\mathbb{R}$, 我们对集合 $A$ 定义集合
+$$A+\lambda=\{x\in \mathbb{R}\lvert x+\lambda \in A\}.$$
+上述集合的定义表示对集合 $A$ 作大小为 $\lambda$ 的平移之后的新集合.
+\begin{lemma}\label{lem-3}
+设 $C_0$ 和 $C$ 是 $\R$ 中两个可测集, 并且满足 $0<|C_0|,|C|<\infty$ 和 $C_0\subset C$. 定义函数
+$$
+h_C(\lambda)=|C\cup (C_0+\lambda)|, \quad \lambda\geq 0.
+$$
+则 $h_C$ 是关于 $\lambda$ 的连续函数, $h(0)=|C|$ 且  $\lim_{\lambda\to \infty}\limits h_C(\lambda)=|C|+|C_0|$.
+\end{lemma}
+\begin{proof}
+见 \cite[p.~99]{Havin2012}.
+\end{proof}
+
+我们还需要下述引理, 它关于一个集合的版本见 \cite[定理 1]{Amrein1977OnSP}.
+
+\begin{lemma}\label{lem-4}
+设 $C_0,C,D_0,D$为 $\R$ 上的四个可测集,且满足条件$C_0\subset C, D_0\subset D$ 和 $0<|C_0|, |C|$, $|D_0|, |D|<\infty$. 则对任意的 $\varepsilon>0$, 存在一个大小为 $\lambda>0$ 的平移 使得
+\begin{align}\label{equ-426-1}
+   |C\cup (C_0+\lambda)|\leq|C|+\varepsilon, \quad    |D\cup (D_0+\lambda)|\leq|D|+\varepsilon
+\end{align}
+成立, 并且
+\begin{align}\label{equ-426-2}
+  |C|<|C\cup (C_0+\lambda)|
+\end{align}
+和
+\begin{align}\label{equ-426-3}
+ |D|< |D\cup (D_0+\lambda)|
+\end{align}
+两者至少有一个严格不等式成立.
+\end{lemma}
+\begin{proof}
+定义下述两个函数
+$$
+h_C=|C\cup (C_0+\lambda)|, \quad h_D=|D\cup (D_0+\lambda)|, \quad \lambda\geq 0.
+$$
+固定 $\varepsilon>0$, 不失一般性, 设 
+$$0<\varepsilon<\min \lbrace|C|+|C_0|, |D|+|D_0|\rbrace.$$ 考虑集合
+$$
+\{h_C=|C|+\varepsilon\}=\{\lambda\geq 0: h_C(\lambda)=|C|+\varepsilon\}.
+$$
+由引理 \ref{lem-3} 可得, $h_C$ 是一个关于 $\lambda$ 的连续函数, 且满足$h(0)=|C|$ 和 $\lim_{\lambda\to \infty}\limits h_C(\lambda)=|C|+|C_0|$. 从而 $\{h_C=|C|+\varepsilon\}$ 是非空闭集. 令
+$$
+\lambda'=\min_{\lambda\in h_C=|C|+\varepsilon} \lambda.
+$$
+再次利用函数 $h_C$ 的连续性, 可得
+\begin{align}\label{equ-426-4}
+|C|\leq h_C(\lambda)\leq|C|+\varepsilon, \quad \forall \lambda\in[0,\lambda'].
+\end{align}
+接下来我们分成两种情形讨论.
+
+{\bf 情形 1:} $h_D(\lambda')\leq |D|+\varepsilon$. 该情形下由 $h_C(\lambda')=|C|+\varepsilon$, 可得式 \eqref{equ-426-1} 和式 \eqref{equ-426-2} 在$\lambda=\lambda'$时成立.
+
+{\bf 情形 2:} $h_D(\lambda')>|D|+\varepsilon$. 对函数 $h_D$ 用引理 \ref{lem-3}, 可得对某个 $\lambda''\in(0,\lambda')$ 有
+$$
+ h_D(\lambda'')=|D|+\varepsilon.
+$$
+ 再利用式 \eqref{equ-426-4} 可得
+$$
+|C|\leq h_C(\lambda'')\leq|C|+\varepsilon.
+$$
+因此, 该情形下式 \eqref{equ-426-1} 和式 \eqref{equ-426-3} 在 $\lambda=\lambda''$ 时成立.
+\end{proof}
+
+有了上述引理, 我们便可以完成性质 \ref{prop-3} 的证明.\\
+{\bf {性质 \ref{prop-3} 的证明}.} 
+首先, 由守恒律 \eqref{equ-conservation-law} 和式 \eqref{equ-T-norm}, 可得
+$$
+\|S(-t)T\|_{L^2(\R)\to L^2(\R)}\leq 1.
+$$
+因此只要说明对任意的 $t>0$ 都有
+\begin{align}\label{equ-4-23-1}
+\|S(-t)T\|_{L^2(\R)\to L^2(\R)}\neq 1,
+\end{align}
+便可以完成性质 \ref{prop-3} 的证明.
+
+
+为了证明式 \eqref{equ-4-23-1}, 下面我们使用反证法. 固定 $t>0$, 
+假设我们有
+\begin{equation}\label{assum}
+    \|S(-t) T \|_{L^2(\R)\to L^2(\R)}=1.
+\end{equation}
+由 $\|S(-t)\|_{L^2(\R)\to L^2(\R)}=1$ 以及由引理 \ref{lem-T-comp} 得到的$T$ 是 $L^2(\R)$ 上的紧算子这一事实, 易得 $S(-t)T$ 也是  $L^2(\R)$上的紧算子. $S(-t)T$是紧算子的事实再加上反证假设 \eqref{assum}, 可得存在一个函数 $f\in L^2(\R)$ 使得
+\begin{align}\label{equ-425-3}
+\|S(-t)Tf\|_{L^2(\R)}=\|f\|_{L^2(\R)}=1
+\end{align}
+成立.
+上式以及 $\|S(-t)Tf\|_{L^2(\R)}=\|Tf\|_{L^2(\R)}$可得 $\|Tf\|_{L^2(\R)}=\|f\|_{L^2(\R)}$. 进而再由引理 \ref{lem-2} 可得
+\begin{align}\label{equ-425-4}
+\mathrm{supp }\, f\subset A, \quad \mathrm{supp }\,  S(t)f\subset B.
+\end{align}
+设
+$$
+A_0=\mathrm{supp }\, f, \quad B_0=\mathrm{supp }\,  S(t)f.
+$$
+根据引理中 $A,B$ 测度有限的假设和式 \eqref{equ-425-4}, 易知
+\begin{align}\label{equ-425-10}
+0<|A_0|, |B_0|<\infty.
+\end{align}
+ 由此我们可以利用引理 \ref{lem-4} 得到一组序列 $\{\lambda_i\}_{i=1}^\infty\subset(0,\infty)$ 以及集合序列 $\lbrace A_i\rbrace_{i=1}^\infty$ 和 $\lbrace B_i\rbrace_{i=1}^\infty$, 使其满足
+\begin{align}\label{equ-425-5}
+|A_{i-1}\cup (A_0+\lambda_i)|\leq |A_{i-1}|+\frac{1}{2^i}, \quad   |B_{i-1}\cup (B_0+\lambda_i)|<|B_{i-1}|+\frac{1}{2^i},
+\end{align}
+且有
+\begin{align}\label{equ-425-6}
+|A_{i-1}|< |A_{i-1}\cup (A_0+\lambda_i)|  \quad  \mbox{ 或 } \quad |B_{i-1}|< |B_{i-1}\cup (B_0+\lambda_i)|
+\end{align}
+二者之一成立. 其中 $i=1,2,\cdots$, 集合序列 $\lbrace A_i\rbrace_{i=1}^\infty$ 和 $\lbrace B_i\rbrace_{i=1}^\infty$ 通过下述的递归定义得到 
+\begin{align}\label{equ-425-7}
+A_i=A_{i-1}\cup  (A_0+\lambda_i), \quad B_i=B_{i-1}\cup (B_0+\lambda_i).
+\end{align}
+由式 \eqref{equ-425-5} -- 式 \eqref{equ-425-7} 可得
+\begin{align}\label{equ-425-8}
+|\bigcup_{i=0}^{\infty}A_i|\leq |A|+1,\quad |\bigcup_{i=0}^{\infty}B_i|\leq|B|+1.
+\end{align}
+令 $f_0=f$ 以及
+$$
+f_i=\mathcal{T}_{\lambda_i}f, \quad i=1,2,\cdots.
+$$
+这里$\mathcal{T}_\lambda$ 表示平移算子, 即
+\begin{equation*}
+    \mathcal{T}_{\lambda}f(x)=f(x-\lambda).
+\end{equation*}
+易知   $\mathrm{supp}\, f_\lambda=A_0+\lambda$ 且 $S(t)f_\lambda=\mathcal{T}_{\lambda}(S(t)f)$, 从而  $\mathrm{supp}\,S(t)f_\lambda= B_0+\lambda$. 进而对所有的 $i=1,2,\cdots$, 我们有
+\begin{align}\label{equ-426-5}
+\mathrm{supp }\,f_i=A_0+\lambda_i\subset A_i, \quad \mathrm{supp}\,S(t)f_i =B_0+\lambda_i\subset B_i.
+\end{align}
+令 $\mathcal {A}=\bigcup_{i=0}^{\infty}A_i$ 以及 $\mathcal {B}=\bigcup_{i=0}^{\infty}B_i$. 我们接下来说明下述三个结论:
+\begin{itemize}
+  \item [(i)] 序列 $\{ f_i\}_{i=0}^{\infty}$ 是线性无关的.
+  \item [(ii)]  算子 $S(-t)\chi_\mathcal {B}S(t)\chi_\mathcal {A}$ 是 $L^2(\R)$ 上的紧算子.
+  \item [(iii)]  对每一个 $i=0,1,\cdots,$ $f_i$ 是算子 $S(-t)\chi_\mathcal {B}S(t)\chi_\mathcal {A}$ 关于特征值 $1$ 的特征函数.
+\end{itemize}
+
+对于 (i), 首先固定 $m\in \mathbb{N}$. 由式 \eqref{equ-425-6} 和式 \eqref{equ-426-5} 可得 $\chi_{A_m\setminus A_{m-1}}f_m\neq 0$ 和 $\chi_{B_m\setminus B_{m-1}}S(t)f_m\neq 0$ 中至少有一个成立. 不论何种情况成立,  $f_m$ 都不可能是 $f_0,f_1,\cdots,f_{m-1}$ 的线性组合. 这说明对任意的 $m\in \N$, 序列 $\{f_i\}_{i=0}^{m}$ 是线性无关的, 所以 (i) 成立.
+
+对于 (ii), 我们首先注意到 $|\mathcal {A}|,|\mathcal {B}|<\infty$. 再由引理 \ref{lem-T-comp} 可得算子 $S(-t)\chi_\mathcal {B}S(t)\chi_\mathcal {A}$ 为紧算子.
+
+对于 (iii),  由式 \eqref{equ-426-5}, 以及 $\mathcal {A}$ 和 $\mathcal {B}$ 的定义, 可得对所有的$i=0,1,\cdots$都有
+$$
+\mathrm{supp }\, f_i\subset \mathcal {A}, \quad \mathrm{supp }\,  S(t)f_i\subset \mathcal {B}.
+$$
+因此
+$$
+S(-t)Tf_i=S(-t)\chi_{\mathcal {B}}S(t)(\chi_{\mathcal {A}}f_i)=S(-t)\chi_{\mathcal {B}}S(t)f_i=S(-t)S(t)f_i=f_i.
+$$
+亦即, 对任意的 $i$, $f_i$ 是算子 $S(-t)\chi_\mathcal {B}S(t)\chi_\mathcal {A}$ 关于特征值 $1$ 的特征函数. 所以 (iii) 成立.
+
+最后, (i) 和 (iii) 说明算子 $S(-t)\chi_\mathcal {B}S(t)\chi_\mathcal {A}$  关于特征值 $1$ 有无穷多个线性无关的特征函数, 这和 (ii), 也就是算子的紧性相矛盾. 这说明假设  \eqref{assum} 不成立. 从而 式 \eqref{equ-4-23-1} 成立. $\hfill\Box$
+
+
+
+
+
+    \section{定理 \ref{thm-2} 的证明}
+    本节中我们会证明一个比定理 \ref{thm-2} 更加广泛的定理. 事实上, 若 $\alpha=\beta>\frac{5}{6}$, 则 $(\alpha,\beta)$ 满足不等式组
+$$
+  ({\bf H}) \qquad   \qquad \qquad   \begin{cases}
+          \alpha+\beta>\frac{5}{3}&\\
+          \alpha+3\beta>3&\\
+          3\alpha+\beta>3&\\
+          \alpha,\beta>\frac{1}{2}&
+       \end{cases}.
+        \qquad \qquad \qquad
+$$
+因此定理 \ref{thm-2} 是下述定理的直接推论.
+
+\begin{theorem}\label{thm-4}
+设 $(\alpha,\beta)$ 满足条件 $({\bf H})$. 再设  $A$ 和 $B$ 分别是具有密度 $|x|^{-\alpha}$ 和 $|x|^{-\beta}$的可测集, 并且对某个常数$c\in \R$ 有  $A,B\subset (c,\infty)$ 或者 $A,B\subset (-\infty,c)$. 则对任意 $t>0$, 存在常数 $C=C(t,A,B)>0$ 使得对所有满足KdV方程 \eqref{kdv-r} 的解$u(t,x)$都有下述连点时刻能观测不等式成立
+$$
+    \int_\R |u_0|^2\d x \leq C\left( \int_{A^c}|u_0|^2\d x + \int_{B^c}|u(t,x)|^2\d x \right).
+$$
+\end{theorem}
+
+证明该定理的核心思想依然是利用性质 \ref{prop-T}, 即证明 $\|T\|_{L^2(\R)\to L^2(\R)}<1$, 其中
+\begin{align}\label{equ-51-1}
+Tf=\chi_BS(t)\chi_A f = \int_\R K(t,x,y)f(y)\d y, \quad f\in L^2(\R)
+\end{align}
+以及
+\begin{align}\label{equ-51-2}
+K(t,x,y)=\chi_B(x)G(t,x-y)\chi_A(y)f(y).
+\end{align}
+这里 $S(t)=e^{-t\partial_x^3}$, $G$ 由式 \eqref{equ-kdv-ker} 给出.
+
+\begin{lemma}\label{lem-comp-2}
+设 $(\alpha,\beta)$ 满足条件 $({\bf H})$. 再设集合  $A$ 和 $B$ 分别是具有密度 $|x|^{-\alpha}$ 和 $|x|^{-\beta}$的可测集. 则由式 \eqref{equ-51-2} 给出的核函数 $K$ 满足
+    $$
+       \int_{\mathbb{R}}\int_{\mathbb{R}}K^2(t,x,y)\d x\d y<\infty.
+    $$
+ \end{lemma}
+
+\begin{proof}
+由式 \eqref{equ-51-2}, 估计式 \eqref{equ-kdv-ker} 和 \eqref{equ-Ai} 可知, 我们只需要证明
+    \begin{equation}
+       \int_{\mathbb{R}}\int_{\mathbb{R}}\chi_B(x)\langle|x-y|\rangle^{-\frac{1}{2}}\chi_A(y)\d x\d y<\infty.\label{eqn1-1}
+    \end{equation}
+这里以及往后的论述中, $\langle x \rangle = 1+|x|$.
+    将式 \eqref{eqn1-1} 左边改写为
+    \begin{equation}
+       \sum_{j\in \mathbb{Z}}\sum_{k\in\mathbb{Z}}\int_j^{j+1}\int_k^{k+1}\chi_B(x)\langle|x-y|\rangle^{-\frac{1}{2}}\chi_A(y)\d x\d y.\label{eqn1-2}
+    \end{equation}
+    然而当 $x\in [k,k+1]$, $y\in[j,j+1]$ 时, 有
+    $$
+       \langle|x-y|\rangle\sim \langle|j-k|\rangle.
+    $$
+这里 $A\sim B$ 表示 $A\lesssim B$ 和 $B\lesssim A$ 均成立.
+    现在对式 \eqref{eqn1-2} 的上界进行估计可得
+    \begin{align}
+       &\sum_{j\in \mathbb{Z}}\sum_{k\in\mathbb{Z}}\int_j^{j+1}\int_k^{k+1}\chi_B(x)\langle|j-k|\rangle^{-\frac{1}{2}}\chi_A(y)\d x\d y\notag\\
+       =&\sum_{j\in\mathbb{Z}}\sum_{k\in\mathbb{Z}}|B\cap [k,k+1]|\cdot \langle|j-k|\rangle^{-\frac{1}{2}}\cdot |A\cap [j,j+1]|\notag\\
+       \lesssim & 1+\sum_{j,k\in\mathbb{Z},|j|,|k|\ge L} |B\cap[k,k+1]|\cdot \langle|j-k|\rangle^{-\frac{1}{2}}\cdot|A\cap [j,j+1]|\notag\\
+       \lesssim & \sum_{j,k\in\mathbb{Z},|j|,|k|\ge L} |j|^{-\alpha}|k|^{-\beta}\langle |j-k|\rangle^{-\frac{1}{2}}.\label{eqn1-3}
+    \end{align}
+在式 \eqref{eqn1-3} 的最后一行中, 我们用到了注 \ref{rem-1} 中的等价定义.
+ 将式 \eqref{eqn1-3} 的最后一行和式分为两部分
+ \begin{align}\label{equ-426-10}
+ \sum_{j,k\in\mathbb{Z},|j|,|k|\ge L} |j|^{-\alpha}|k|^{-\beta}\langle |j-k|\rangle^{-\frac{1}{2}}:= I+II,
+ \end{align}
+ 其中 $I, II$ 分别取  $|j|\leq |k|$ 和 $|j|>|k|$ 两种情况下的和式.
+
+{\bf 式 $I$ 的估计.} 设 $\delta\in (0,1)$, 它的值在稍后确定. 进一步把和式分解成
+$I:=I_1+I_2$,  其中
+ \begin{align}
+I_1 &= \sum_{|j|,|k|\ge L, |k|-|k|^\delta\leq |j|\leq |k|} |j|^{-\alpha}|k|^{-\beta}\langle |j-k|\rangle^{-\frac{1}{2}},\label{equ-426-14}\\
+I_2 &= \sum_{|j|,|k|\ge L, |j|> |k|-|k|^\delta} |j|^{-\alpha}|k|^{-\beta}\langle |j-k|\rangle^{-\frac{1}{2}}.\label{equ-426-15}
+ \end{align}
+对于式 $I_1$,  因为 $|k|-|k|^\delta\le |j|\le |k|$, 我们有
+\begin{align}\label{equ-426-16}
+       I_1       \le  \sum_{|k|\ge L,|k|-|k|^\delta\le|j|\le |k|}|j|^{-\alpha}|k|^{-\beta}
+       \lesssim  \sum_{|k|\ge L}|k|^{\delta-\alpha}|k|^{-\beta}=\sum_{|k|\ge L}|k|^{\delta-\alpha-\beta}.
+\end{align}
+对于式 $I_2$, 因为 $|j|<|k|-|k|^\delta$, 我们有 $|k-j|\ge |k|-|j|\ge |k|^\delta$, 进而  $\langle |j-k| \rangle^{-1}\lesssim|k|^{-\delta}$. 在这里我们分成两种情况进行讨论:
+     \begin{itemize}
+        \item  $0<\alpha\leq 1$ 时, 我们有
+     \begin{align}
+        I_2&= \sum_{|k|\ge L,|j|<|k|-|k|^\delta}|j|^{-\alpha}|k|^{-\beta}\langle |j-k|\rangle^{-\frac{1}{2}}\lesssim \sum_{|k|\ge L,|j|<|k|-|k|^{\delta}}|j|^{-\alpha}|k|^{-\beta-\frac{1}{2}\delta}\nonumber\\
+        &\lesssim
+     \left\{
+     \begin{array}{ll}
+     \sum_{|k|\ge L }\limits|k|^{1-\alpha}|k|^{-\beta-\frac{1}{2}\delta}=\sum_{|k|\ge L}\limits|k|^{1-\frac{1}{2}\delta-\alpha-\beta}, \quad & 0<\alpha<1, \vspace{1ex}\\
+      \sum_{|k|\ge L }\limits\ln|k|\cdot|k|^{-\beta-\frac{1}{2}\delta}, \quad & \alpha=1.
+     \end{array}
+     \right. \label{equ-426-17}
+     \end{align}
+
+       \item $\alpha>1$时, 我们有
+    \begin{align}\label{equ-426-18}
+          I_2&= \sum_{|k|\ge L,|j|<|k|-|k|^\delta}|j|^{-\alpha}|k|^{-\beta}\langle |j-k|\rangle^{-\frac{1}{2}}\lesssim \sum_{|k|\ge L,|j|<|k|-|k|^{\delta}}|j|^{-\alpha}|k|^{-\beta-\frac{1}{2}\delta}\nonumber\\
+          &\lesssim \sum_{|k|\ge L }|L|^{1-\alpha}|k|^{-\beta-\frac{1}{2}\delta}\lesssim\sum_{|k|\ge L}|k|^{-\frac{1}{2}\delta-\beta}.
+    \end{align}
+     \end{itemize}
+结合式 \eqref{equ-426-14} -- 式 \eqref{equ-426-18}, 我们可得
+\begin{align*}
+I\lesssim
+\left\{
+\begin{array}{ll}
+\sum_{|k|\geq L}\limits|k|^{\delta-\alpha-\beta}+ |k|^{1-\frac{1}{2}\delta-\alpha-\beta}, &  \quad 0<\alpha<1,\vspace{1ex}\\
+\sum_{|k|\geq L}\limits|k|^{\delta-\alpha-\beta}+ \ln|k|\cdot|k|^{-\beta-\frac{1}{2}\delta}, & \quad \alpha=1,\vspace{1ex}\\
+\sum_{|k|\geq L}\limits|k|^{\delta-\alpha-\beta}+|k|^{-\frac{1}{2}\delta-\beta}, & \quad \alpha>1.
+\end{array}
+\right.
+\end{align*}
+为了使得 $I<\infty$ 成立, 只需要说明存在 $\delta\in(0,1)$ 使得下述三组不等式中的一组成立即可:
+\begin{align}
+\delta-\alpha-\beta<-1, 1-\frac{1}{2}\delta-\alpha-\beta<-1,0<\alpha<1; \label{equ-426-19}\\
+\delta-\alpha-\beta<-1,-\beta-\frac{1}{2}\delta<-1,\alpha=1; \label{equ-426-20}\\
+\delta-\alpha-\beta<-1, -\frac{1}{2}\delta-\beta<-1, \alpha>1. \label{equ-426-21}
+\end{align}
+一方面, 易知当 $\alpha,\beta,\delta$ 满足
+$$
+0<\alpha\leq 1, \quad \alpha+\beta>1+\delta, \quad \alpha+\beta>2-\frac{1}{2}\delta
+$$
+时, 式 \eqref{equ-426-19} -- 式 \eqref{equ-426-20} 成立. 
+通过选取 $\delta=\frac{2}{3}$, 可得当
+\begin{align} \label{equ-426-22}
+0<\alpha\leq 1, \quad \alpha+\beta>\frac{5}{3},
+\end{align}时, $I<\infty$ 成立.
+另一方面, 若存在 $\delta\in(0,1)$ 使得
+$$
+\alpha>1, \quad \alpha+\beta-1>\delta>2(1-\beta),
+$$
+则式 \eqref{equ-426-20} 成立.
+进而在
+$$
+\alpha>1, \quad \alpha+\beta-1>2(1-\beta), \quad 1>2(1-\beta)
+$$
+条件下式 \eqref{equ-426-20} 成立.
+ 这说明当 $\alpha,\beta$满足条件
+\begin{align} \label{equ-426-23}
+\alpha>1, \quad \beta>\frac{1}{2}, \quad \alpha+3\beta>3
+\end{align}
+时, $I<\infty$成立.
+
+{\bf 式 $II$ 的估计.} 类似的, 我们可以用同样的论证说明当 $\alpha,\beta$ 满足条件
+\begin{align} \label{equ-426-24}
+0<\beta\leq 1, \quad \alpha+\beta>\frac{5}{3}
+\end{align}
+或者条件
+\begin{align} \label{equ-426-25}
+\beta>1, \quad \alpha>\frac{1}{2}, \quad \beta+3\alpha>3
+\end{align}
+时, $II<\infty$ 成立.
+
+
+
+ 为了让式 $I$ 和 $II$ 都有限, $\alpha,\beta$ 只需要满足下述四种情形之一即可:
+ \begin{equation*}
+ \begin{array}{ll}
+\eqref{equ-426-22}+\eqref{equ-426-24}
+ \begin{cases}
+  0< \alpha,\beta\le 1  \\
+  \alpha+\beta>\frac{5}{3}
+ \end{cases},
+ &
+ \eqref{equ-426-22}+\eqref{equ-426-25}
+ \begin{cases}
+  \frac{1}{2}<\alpha\leq 1\\
+  \beta>1 \\
+  \alpha+\beta>\frac{5}{3}\\
+  3\alpha+\beta>3
+  \end{cases},\\
+
+ \eqref{equ-426-23}+\eqref{equ-426-24}
+ \begin{cases}
+  \alpha>1\\
+  \frac{1}{2}<\beta\leq 1 \\
+  \alpha+\beta>\frac{5}{3}\\
+  \alpha+3\beta>3
+ \end{cases},
+ &
+ \eqref{equ-426-23}+\eqref{equ-426-25}
+ \begin{cases}
+  \alpha>1 \\
+  \beta>1
+ \end{cases}.
+ \end{array}
+\end{equation*}
+这四种情况的并等价于 $(\alpha,\beta)$ 满足条件 $({\bf H})$, 见图 \ref{fig1}. 这样我们就完成了证明 \end{proof}
+
+\begin{figure}
+    \begin{tikzpicture}[scale=1.8]
+       % axes
+       \draw[very thick,->] (-0.3,0) -- (3.5,0) node[right] {$\alpha$};
+       \draw[very thick,->] (0,-0.3) -- (0,3.5) node[above] {$\beta$};
+       % regions and boundaries
+       \foreach \x in {1,...,3} \draw (\x, 0.05) -- (\x, -0.05) node[below] {\tiny \x};
+       \foreach \y in {1,...,3} \draw (-0.05, \y) node[left] {\tiny \y} -- (0.05, \y);
+       \fill[red!30] (1,1) -- (1,3.5) -- (3.5,3.5) -- (3.5,1) --cycle;
+       \fill[yellow!30] (1/2,3/2) -- (2/3,1) -- (1,1) -- (1,3.5) --(1/2,3.5)--cycle;
+       \fill[green!30] (3/2,1/2) -- (1,2/3) -- (1,1) -- (3.5,1) --(3.5,1/2)--cycle;
+       \fill[blue!30] (2/3,1) -- (1, 2/3) -- (1,1) --cycle;
+       \draw (-0.2,-0.01) node[below] {\tiny $O$};
+       \draw[yellow!80, very thick] (1,1) -- (1,3.5);
+       \draw[green!50, very thick] (1,1) -- (3.5,1);
+       \draw[blue!50, very thick] (2/3,1)--(1,1)--(1,2/3);
+       % labels
+       \fill[blue!30] (4,3.25-0.625)--(4.25,3.25-0.625)--(4.25,3.5-0.625)--(4,3.5-0.625);
+       \draw (4.25,3.375-0.625) node[right] {\tiny$0<\alpha,\beta\le 1,\alpha+\beta>\frac{5}{3}$};
+       \fill[yellow!30] (4,2.25-0.625) -- (4.25,2.25-0.625) -- (4.25, 2.5-0.625) -- (4,2.5-0.625);
+       \draw (4.25, 2.375-0.625) node[right] {\tiny$\frac{1}{2}<\alpha\le 1,\beta>1,\alpha+\beta>\frac{5}{3},3\alpha+\beta>3$};
+       \fill[green!30] (4,2.75-0.625) -- (4.25, 2.75-0.625) -- (4.25,3-0.625)--(4,3-0.625);
+       \draw (4.25,2.875-0.625) node[right] {\tiny$\alpha>1,\frac{1}{2}<\beta\le 1,\alpha+\beta>\frac{5}{3},\alpha+3\beta>3$};
+       \fill[red!30] (4,1.75-0.625) -- (4.25, 1.75-0.625) -- (4.25,2-0.625) -- (4,2-0.625);
+       \draw (4.25,1.875-0.625) node[right] {\tiny $\alpha>1,\beta>1$};
+       % lines and equations
+       \draw[dashed] (-1/5,18/5)node[below left]{\tiny $3\alpha+\beta=3$} --(1.1,-0.3);
+       \draw[dashed] (-0.3,1.1)  --(18/5,-1/5);
+       \draw (-1/5,1.1) node[below left]{\tiny $\alpha+3\beta=3$};
+       \draw[dashed] (-1/5,28/15) node[below left]{\tiny $\alpha+\beta=\frac{5}{3}$}-- (28/15,-1/5);
+    \end{tikzpicture}
+    \caption{ 确保 $\int _{\R^2}K^2\,\d x \mathrm{d}y<\infty$ 成立的 $(\alpha,\beta)$ 范围.}
+    \label{fig1}
+    \end{figure}
+    
+     为了得到定理 \ref{thm-4}, 我们需要下述的唯一延拓性结果.
+\begin{lemma}\label{lem-ucp}
+    设 $u(t,x)\in C(\R, L^2(\R))$ 为线性KdV方程 \eqref{kdv-r} 的解. 若存在两点时刻 $t_1\neq t_2$ 以及常数 $c\in\R$ 使得
+    \begin{equation}
+        \mathrm{supp }\, u(t_j,\cdot)\subset (-\infty,c),\quad j=1,2
+    \end{equation}
+    或者
+    \begin{equation}
+        \mathrm{supp }\, u(t_j,\cdot)\subset (c,\infty),\quad j=1,2
+    \end{equation}
+    成立, 则
+    $$
+        u(t,x)\equiv 0,\quad -\infty <t,x<\infty.
+    $$
+\end{lemma}
+\begin{proof}
+ 见 \cite[p.~60]{Zhang1992UniqueCF} 中定理 3.1 的证明.
+\end{proof}
+
+{\bf {定理 \ref{thm-2}} 的证明} 固定 $t>0$. 类似定理 \ref{thm-1}, 只需要证明 $$
+\|T\|_{L^2(\R)\to L^2(\R)}\neq 1
+$$
+即可.
+
+我们仍然用反证法, 假设 $\|T\|_{L^2(\R)\to L^2(\R)}= 1$. 利用引理 \ref{lem-comp-2}, 可知 $T$ 是从 $L^2(\R)$ 到 $L^2(\R)$ 上的紧算子. 因此, 存在函数 $f\in L^2(\R)$ 使得
+\begin{align}\label{equ-51-5}
+\|Tf\|_{L^2(\R)}=\|\chi_BS(t)\chi_Af\|_{L^2(\R)}=\|f\|_{L^2(\R)}=1.
+\end{align}
+有了式 \eqref{equ-51-5}, 便可由引理 \ref{lem-2} 得到
+$$\mathrm{supp }\, f\subset A\quad \text{ 和 }\quad \mathrm{supp }\, S(t)f \subset B.$$
+令 $u(\tau,\cdot)=S(\tau)f$. 则 $u(\tau,\cdot)$ 是方程
+$$
+\partial_\tau u+\partial_x^3u=0
+$$
+的解.
+由定理 \ref{thm-2} 关于 $A$ 和 $B$ 的假设: 对于 $\tau=0,t$, $\mathrm{supp }\,u(\tau,\cdot)\subset (-\infty,c)$ 或 $(c,\infty)$ 成立. 从而可以利用引理 \ref{lem-ucp}, 得到 $u(\tau,\cdot)\equiv 0$. 特别地, 这说明 $f=0$. 但这与 $\|f\|_{L^2(\R)}=1$ (见 \eqref{equ-51-5}) 矛盾. 这样我们便完成了定理的证明. $\hfill\Box$
+%
+   
+    \chapter{在 $\T$ 上的情形}
+    
+     本章我们考虑周期情形的线性KdV方程
+    \begin{align}\label{kdv-l}
+        \left\lbrace \begin{array}{ll}\partial_t u +\partial_x^3u=0, & (t,x)\in \R\times (0,2\pi), \\
+        \partial_x^ku(t,0)=\partial_x^k u(t,2\pi), & 0\le k\le 2,\\
+        u(0,x)=u_0(x), & x\in (0,2\pi).
+        \end{array}\right.
+    \end{align}
+    本章的主要结果是给出方程 \eqref{kdv-l} 新的能观测不等式.
+    \section{Ingham不等式}
+    设 $I$ 为一区间, 且 $|I|=2\pi$, 则我们可以将著名的Parseval公式写作
+    \begin{equation*}
+        \frac{1}{|I|} \int_I \left| \sum_{k\in \Z} c_k e^{ikx}\right|^2 \d x = \sum_{k\in \Z} |c_k|^2.
+    \end{equation*}
+    该公式对于 $|I|=2k\pi, k\in \N$ 也正确, 由此易知, 对于任意满足 $2k\pi <|I|<(2k+2)\pi,k\in\N$ 的区间 $I$, 都有
+    \begin{equation*}
+        2k\pi \sum_{k\in \Z}|c_k|^2 \le \int _I \left| \sum_{k\in \Z}c_ke^{ikx} \right|^2\d x \le (2k+2)\pi  \sum_{k\in\Z }|c_k|^2. 
+    \end{equation*}
+    自然地, 给定一个区间 $I$, 是否存在常数 $c,C>0$, 使得对任意的平方可和序列 $\left\{c_k\right\}_{k\in \Z}$都有关系式
+    \begin{equation}
+        c \sum_{k\in \Z} |c_k|^2 \le \int _I \left| \sum_{k\in \Z} c_k e^{ikx} \right|^2 \d x \le C \sum_{k\in \Z}|c_k|^2
+    \end{equation}
+    或其等价形式
+    \begin{equation}\label{3-1-2}
+        \int _I \left| \sum_{k\in \Z} c_k e^{ikx} \right|^2 \d x\asymp \sum_{k\in \Z}|c_k|^2
+    \end{equation}
+    成立呢? 若成立, 则上式可看作Parseval公式在区间 $I$ 上的推广. 
+    
+    为了建立上述Parseval公式的推广, Ingham \cite{Ingham1936} 证明了下述定理
+    \begin{theorem}\label{thm-ingham}
+    设 $\Lambda$ 为一族实数集, 且该实数族满足条件
+    \begin{equation}\label{3-1-1}
+        \gamma(\Lambda)=\inf\lbrace |\lambda_1-\lambda_2|: \lambda_1\neq \lambda_2, \lambda_1,\lambda_2\in \Lambda\rbrace>0,
+    \end{equation}
+     则对任意满足 $|I|>2\pi /\gamma$ 的区间 $I$都有关系式 \eqref{3-1-2} 成立.
+
+我们称满足条件 \eqref{3-1-1} 的实数集为一致分离集.
+    \end{theorem}
+    
+    条件 $|I|> 2\pi /\gamma$ 是对所有满足 \eqref{3-1-1} 实数族的一致最佳条件, 但在某些特殊情形下, 这一条件可以被改进. Haraux \cite{Haraux1989} 给出了下述定理.
+    
+    \begin{theorem}\label{thm-haraux}
+    设 $\Lambda$ 为一致分离集, 且 $F\subset \Lambda$ 为有限子集, 则关系式 \eqref{3-1-2} 在 $|I|> \frac{2\pi}{\gamma(\Lambda \backslash F)}$ 的条件下也成立.
+    \end{theorem}
+    
+    \section{能观测不等式}
+    
+    \begin{theorem}\label{thm3-2-1}
+    设 $(t_0,x_0)\in \R\times \T$, $a\in \R$. 则方程 \eqref{kdv-l} 的解满足:
+    \begin{enumerate}
+        \item[\rm{(1)}] 对任意的 $T>0$, 存在常数 $c>0$ 使得不等式
+        \begin{equation}\label{3-2-1}
+            c\int_0^T\left| u(t_0+t,x_0-at) \right|^2\d t \le  \sum_{k\in \Z} |c_k|^2
+        \end{equation}
+        成立.
+        \item[\rm{(2)}] 定义集合
+        \begin{equation*}
+            \Gamma=\lbrace n:n=k^2+mk+m^2, m\neq k\in \Z \rbrace.
+        \end{equation*}
+        则对任意的 $T>0$ 以及 $a\notin \Gamma$, 存在常数 $C>0$ 使得不等式
+        \begin{equation}\label{3-2-2}
+            \sum_{k\in\Z} |c_k|^2 \le C \int_0^T |u(t_0+t,x_0-at)|^2 \d t
+        \end{equation}
+        成立.
+        \item[\rm{(3)}] 若 $a\in \Gamma$, 其中 $\Gamma$ 定义同上, 则 $a>0$ 且
+        \begin{equation}\label{3-2-3}
+            \int_0^T |u(t_0+t,x_0-at)|^2\d t\asymp \sum_{k\in\Z}^\infty|d_k|^2,
+        \end{equation}
+        其中
+        \begin{equation*}
+            d_k=\sum_{\substack{
+                m\in \Z,  \\
+                k^2+mk+m^2 = a }} 
+             c_me^{i(m^3t_0+mx_0)},\quad k\in \Z.
+        \end{equation*}
+        实际上, 当 $|k|> 2\left(\frac{a}{3}\right)^{1 /2}$ 时, 有 $d_k=c_k e^{i (k^3t_0+kx_0)}$.
+    \end{enumerate}
+    \end{theorem}
+    
+    \begin{proof}
+     (1) 固定 $a\in\R$, 简单计算可得
+     \begin{equation}\label{3-2-4}
+         u(t_0+t,x_0-at)=\sum_{k\in \Z} c_k e^{i(k^3(t_0+t)+k(x_0-at))}=\sum_{k\in \Z}c_k  e^{i (k^3t_0+kx_0)} e^{i(k^3-ak)t}.
+     \end{equation}
+    令 $\Lambda=\lbrace k^3-ak: k\in \Z\rbrace$, 若 $a<0$, 则有
+    \begin{equation*}
+        ((k+1)^3-a(k+1))-(k^3-ak)=3k^2+3k+1-a>1,\quad k\in \Z.
+    \end{equation*}
+    因此 $\Lambda$ 是一致分离集, 故由定理 \ref{thm-ingham} 知不等式 \eqref{3-2-1} 成立. 若 $a>0$, 设 $\sigma=2\left(\frac{a}{3}\right)^{3 /2}$, 集合 $\Lambda$ 可分为下述三个集合的并:
+    \begin{equation*}
+        \Lambda_-=\lbrace k\in \Lambda : k<-\sigma\rbrace, \Lambda_0=\lbrace k\in \Lambda : -\sigma\le k\le \sigma\rbrace,\Lambda_+=\lbrace k\in\Lambda: k>\sigma\rbrace.
+    \end{equation*}
+    易知三个集合关于 $k$ 都是单调的, 所以三个集合都是一致分离集, 它们分别都满足不等式 \eqref{3-2-1}, 对着三个不等式求和, 再由不等式
+    \begin{equation*}
+        (x_1+x_2+\cdots+x_m)^2\le m (x_1^2+x_2^2+\cdots+x_m^2)
+    \end{equation*}
+    可得集合 $\Lambda$ 满足不等式 \eqref{3-2-1}.
+    
+    (2) 设 $a\notin \Gamma$, 则集合 $\Lambda$ 是一致分离的. 事实上, 对于两个不同的整数 $k$ 和 $m$, 我们有
+    \begin{equation*}
+        |(k^3-ak)-(m^3-am)|=|k-m||k^2+mk+m-a|\ge d(a,\Z):=\max(a-\lfloor a\rfloor,\lfloor a\rfloor +1-a). 
+    \end{equation*}
+    
+    若 $a\le 0$, 取正整数 $N$, $k\neq m$ 且 $k,m\notin\lbrace-N,\cdots, N\rbrace$. 则利用等式
+    \begin{equation*}
+        (k^3-ak)-(m^3-am)=(k-m)(k^2+mk+m^2-a)
+    \end{equation*}
+    及简单的计算可得
+    \begin{equation}\label{3-22-3}
+        \left| (k^3-ak)-(m^3-am) \right|\ge \left\lbrace\begin{array}{ll}
+            3N^2-a & k,m> N \text{ 或 } k,m <-N, \\
+             2N^3-2aN  & km<0.
+        \end{array}\right.
+    \end{equation}
+    所以
+    \begin{equation*}
+        \gamma\left(\Lambda \backslash \lbrace-N,\cdots,N\rbrace\right)\ge N^2.
+    \end{equation*}
+    令 $N\to \infty$, 则由定理 \ref{thm-haraux} 可得对任意的 $T>0$ 都有不等式 \eqref{3-2-2} 成立.
+    
+    若 $a>0$, 取 $N>\max\lbrace\sigma^3-a\sigma, a\rbrace$, $k\neq m, k,m\notin \lbrace-N,\cdots, N\rbrace$, 类似地我们也有估计 \eqref{3-22-3}. 同样令 $N\to \infty$ 可得对任意 $T>0$ 都有不等式 \eqref{3-2-2} 成立. 
+    
+    (3) 若 $a\in \Z$, 易知 $a>0$. 序列 $\lbrace k^3-ak\rbrace$ 在 $k<-\sigma$ 和 $k>\sigma$ 时单调递增, 在 $-\sigma\le k\le \sigma$ 时单调递减. 令
+    \begin{equation*}
+        \sigma^3-a\sigma=t^3-at,
+    \end{equation*}
+    解得较大的根 $t=2\left(\frac{a}{3}\right)^{1 /2}$,
+    所以当 $|k|> 2\left(\frac{a}{3}\right)^{1 /2}$ 时, $k=m^3-am$ 的解 $m$ 只有一个. 这说明此时有 $d_k=c_k e^{i(k^3t_0+kx_0)}$. 记
+    \begin{equation*}
+        \Pi_a:=\lbrace k\in \Z : \forall m\in \Z, m\neq k, k^2+mk+m^2\neq a \rbrace.
+    \end{equation*}
+    则式 \eqref{3-2-4}可写作
+    \begin{equation*}
+        u(t_0+t,x_0-at)=\sum_{l\in \lbrace j^3-aj:j\in \Z  \rbrace}e_l e^{ilt}=\sum_{k\in \Pi_a} d_k e^{i(k^3-ak)t}+\sum_{l\in \lbrace j^3-aj: j\notin \Pi_a, j\in \Z\rbrace} e_l e^{ilt},
+    \end{equation*}  
+    其中
+    \begin{equation*}
+        e_l=d_k, \quad \forall k \text{ s.t. } k^3-ak=l.
+    \end{equation*}
+    因为 $\lbrace l: l=k^3-ak \rbrace \subset \Z $ 为一致分离集, 则由类似 (2) 的方法可得对任意的 $T$, 有关系式
+    \begin{equation}\label{3-2-5}
+        \int_0^T|u(t_0+t,x_0-t)|^2\d t\asymp \sum_{k\in \Pi_a}|d_k|^2+\sum_{l\in \lbrace j^3-aj: j \notin \Pi_a,j\in\Z\rbrace }|e_l|^2.
+    \end{equation}
+    由 $\lbrace k^3-ak:k\in \Z\rbrace$ 关于 $k$ 的单调性可知, 对任意一个 $l\in \lbrace k^3-ak; k\in \Z\rbrace$, 至多有 3 个 不同的 $k$, 且至少有一个 $k$  满足 $l=k^3-ak$. 这说明 对某个 $l$, $\sum_{k\in\Z} |d_k|^2$ 中 $d_k=e_l$ 的项至多有 3 个, 至少有一个, 则有关系式
+    \begin{equation}\label{3-2-6}
+        \sum_{k\in \Z}|d_k|^2\asymp  \sum_{k\in \Pi_a}|d_k|^2+\sum_{l\in \lbrace j^3-aj: j \notin \Pi_a,j\in\Z\rbrace }|e_l|^2.
+    \end{equation}
+    由式 \eqref{3-2-5} 和式 \eqref{3-2-6} 可得关系式 \eqref{3-2-3}.
+    \end{proof}
+    
+    \begin{remark}
+    式 \eqref{3-2-2} 可等价地写作
+    \begin{equation*}
+        \int_{\T}|u_0(x)|^2\d x\le C\int_0^T\int_{\T}\delta(x-at)|u(t,x)|^2\d x\d t.
+    \end{equation*}
+    该式可看作KdV方程 \eqref{kdv-l} 的解关于观测点随时间移动的能观测不等式. 例如, 令 $a=0\notin \Gamma$, 则有
+    \begin{equation*}
+        \int_{\T}|u_0(x)|^2\d x\le C\int_{t_0}^{t_0+T} |u(t,x_0)|^2\d t.
     \end{equation*}
     \end{remark}
     
-    有了上述定义, 就可以将第二个结果陈述为下述定理.
-    \begin{theorem}\label{thm-2}
-     设 $A$ 和 $B$ 都是密度 $|x|^{-\alpha}, \alpha>\frac{5}{6}$的可测集, 并且对某个常数 $c\in\R$ 我们有 $A, B \subset (c,\infty)$ 或者 $A, B\subset (-\infty ,c)$. 则对任意 $t>0$以及任意满足方程(\ref{kdv-r})的解 $u(t,x)$, 存在常数 $C=C(t,A,B)>0$ 使得不等式 (\ref{kdvobs-2}) 在新给定的集合条件下仍然成立.
-    \end{theorem}
-    在定理\ref{thm-2}中, 最有趣的情形是 $\alpha\in \left(\frac{5}{6},1\right]$. 实际上, 当 $\alpha>1$ 的时候 $A$和$B$ 都是具有有限测度的可测集, 相应的能观测不等式可以直接由定理\ref{thm-1}得到. 设 $\alpha\in \left(\frac{5}{6},1\right]$ 并取
+    定理 \ref{thm3-2-1} 是KdV方程 \eqref{kdv-l} 关于一个线段的能观测性, 接下来我们讨论两个或多个线段的可观测性.
+    
+    \begin{theorem}
+    给定任意的 $T>0$, 考虑方程 \eqref{kdv-l} 的解.
+\begin{enumerate}
+    \item [\rm{(1)}] 设 $(t_1,x_1), (t_2,x_2)\in \R\times \T$, $a_1,a_2$ 为两个不同的实数且 $a_2>4a_1>0$ . 若对所有 $t\in (0,T)$ 都有
     \begin{equation*}
-        A=B=\bigcup_{k=1}^\infty [k,k+k^{-\alpha}].
+        u(t_1+t,x_1-a_1t)=u(t_2+t,x_2-a_2t)=0,
     \end{equation*}
-    该取法下 $A$ 和 $B$ 满足定理\ref{thm-2}的假设, 然而它们都具有无限测度. 因此, 相较于定理\ref{thm-1}, 定理\ref{thm-2}给出了新的两点时刻能观测集. 另一方面, 定理\ref{thm-2} 中$A$和$B$ 被限制在半直线上, 该限制来源于KdV方程的一个唯一延拓性. 目前我们还不知道该条件是否可以去掉. 
+    则 $u$ 是平凡解, 即 $u_0=0$. 
+    \item [\rm{(2)}] 
+\end{enumerate}
+    \end{theorem}
     
-    由定理\ref{thm-1} 和定理\ref{thm-2} 是下述KdV方程唯一延拓性的定量版本: 若 $u(0,\cdot)$ 在 $A^c$上恒为零并且 $u(t,\cdot),t\neq 0$在 $B^c$上恒为零, 则 $u(t,x)\equiv 0$. 类似的唯一延拓性结果见 Bingyu Zhang 的文章
+    \section{常数估计}
+    \section{经典结果的新证明}
     
-    \iffalse 论文的第二部分考虑圆周 $\T:= \R / \Z$ 上的线性KdV方程.\cite{Ionescu2006UniquenessPO}
-    \fi
-    \section{符号说明}
-    
-    考虑薛定谔方程
-    \begin{equation}
-        i\partial_t u+\Delta u=0,\quad (x,t)\in \omega\times (0,1)
-    \end{equation}
-    的解$u(x,t)$, 
-    % 更多内容
-    \chapter{在$\R$上的情形}
-    \section{一般判据}
-    \section{定理1的证明}
-    \section{定理2的证明}
-   
-    \chapter{在 $\T$ 上的情形}
-    \section{Ingham不等式}
-    \section{定理3的证明}
     
     \chapter{控制论中的应用}
+    \section{基本定义}
+    admissible, observable
     \section{HUM方法}
-    \section{系统的可控性}
+    \section{能观测不等式到可控性}
+    
     在本节中, 我们给出线性KdV方程两点可观测性的一般判据. 该判据源于希尔伯特空间方法在傅里叶变换下不确定性原理的应用.
     
     设 $S(t)=e^{-t\partial_x^3}$ 为线性KdV方程的算子群,
