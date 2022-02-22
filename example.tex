@@ -242,7 +242,7 @@
     \begin{definition}
     设 $A\subset \R$ 为可测集, 若其满足条件
     \begin{equation*}
-         \varlimsup_{x\to \infty}|A\bigcap[x,x+1]|\cdot|x|^{\alpha}\lesssim 1,
+         \varlimsup_{x\to \infty}|A\cap[x,x+1]|\cdot|x|^{\alpha}\lesssim 1,
     \end{equation*}
     则称 $A$ 具有 $|x|^{-\alpha}$密度.
     \end{definition}
@@ -657,9 +657,8 @@ K(t,x,y)=\chi_B(x)G(t,x-y)\chi_A(y)f(y).
     \end{equation}
     然而当 $x\in [k,k+1]$, $y\in[j,j+1]$ 时, 有
     $$
-       \langle|x-y|\rangle\sim \langle|j-k|\rangle.
+       \langle|x-y|\rangle\asymp \langle|j-k|\rangle.
     $$
-这里 $A\sim B$ 表示 $A\lesssim B$ 和 $B\lesssim A$ 均成立.
     现在对式 \eqref{eqn1-2} 的上界进行估计可得
     \begin{align}
        &\sum_{j\in \mathbb{Z}}\sum_{k\in\mathbb{Z}}\int_j^{j+1}\int_k^{k+1}\chi_B(x)\langle|j-k|\rangle^{-\frac{1}{2}}\chi_A(y)\d x\d y\notag\\
@@ -955,7 +954,7 @@ $$
     \begin{equation*}
         ((k+1)^3-a(k+1))-(k^3-ak)=3k^2+3k+1-a>1,\quad k\in \Z.
     \end{equation*}
-    因此 $\Lambda$ 是一致分离集, 故由定理 \ref{thm-ingham} 知不等式 \eqref{3-2-1} 成立. 若 $a>0$, 设 $\sigma=2\left(\frac{a}{3}\right)^{3 /2}$, 集合 $\Lambda$ 可分为下述三个集合的并:
+    因此 $\Lambda$ 是一致分离集, 故由定理 \ref{thm-ingham} 知不等式 \eqref{3-2-1} 成立. 若 $a>0$, 设 $\sigma=\left(\frac{a}{3}\right)^{1 /2}$, 集合 $\Lambda$ 可分为下述三个集合的并:
     \begin{equation*}
         \Lambda_-=\lbrace k\in \Lambda : k<-\sigma\rbrace, \Lambda_0=\lbrace k\in \Lambda : -\sigma\le k\le \sigma\rbrace,\Lambda_+=\lbrace k\in\Lambda: k>\sigma\rbrace.
     \end{equation*}
@@ -987,7 +986,7 @@ $$
     \end{equation*}
     令 $N\to \infty$, 则由定理 \ref{thm-haraux} 可得对任意的 $T>0$ 都有不等式 \eqref{3-2-2} 成立.
     
-    若 $a>0$, 取 $N>\max\lbrace\sigma^3-a\sigma, a\rbrace$, $k\neq m, k,m\notin \lbrace-N,\cdots, N\rbrace$, 类似地我们也有估计 \eqref{3-22-3}. 同样令 $N\to \infty$ 可得对任意 $T>0$ 都有不等式 \eqref{3-2-2} 成立. 
+    若 $a>0$, 取 $N>\max\lbrace 2\sigma, a\rbrace$, $k\neq m, k,m\notin \lbrace-N,\cdots, N\rbrace$, 类似地我们也有估计 \eqref{3-22-3}. 同样令 $N\to \infty$ 可得对任意 $T>0$ 都有不等式 \eqref{3-2-2} 成立. 
     
     (3) 若 $a\in \Z$, 易知 $a>0$. 序列 $\lbrace k^3-ak\rbrace$ 在 $k<-\sigma$ 和 $k>\sigma$ 时单调递增, 在 $-\sigma\le k\le \sigma$ 时单调递减. 令
     \begin{equation*}
@@ -1028,33 +1027,202 @@ $$
     \end{equation*}
     \end{remark}
     
-    定理 \ref{thm3-2-1} 是KdV方程 \eqref{kdv-l} 关于一个线段的能观测性, 接下来我们讨论两个或多个线段的可观测性.
+    定理 \ref{thm3-2-1} 是KdV方程 \eqref{kdv-l} 关于一个线段的能观测性, 接下来我们讨论两个或多个线段的可观测性. 当 $a\le 0$ 时, 线段的能观测性已经被定理 \ref{thm3-2-1} 证明, 在接下来对多线段的讨论中, 我们只需要考虑 $ a>0 $, 或者更准确地说, 讨论 $a\in \Z \backslash \Pi_a$ 的情形. 
+    
+    在定理 \ref{thm3-2-1} 中, 我们对序列 $\lbrace k^3-ak\rbrace$ 进行过讨论, 为方便后续的讨论, 我们将函数 $y=x^3-ax$ 的性质整理如下:
+    \begin{enumerate}
+        \item [(1)] 该函数有两个极值点, 分别是 $x=-\left(\frac{a}{3}\right)^{1 /2}$ 和 $x=\left(\frac{a}{3}\right)^{1 /2}$, 极值分别是 $2\left(\frac{a}{3}\right)^{3 /2}$ 和 $-2\left(\frac{a}{3}\right)^{3 /2}$. 
+        \item[(2)] 该函数与 $y=2\left(\frac{a}{3}\right)^{3 /2}$ 轴有两个交点, 分别是 $\left(-\left(\frac{a}{3}\right)^{1 /2},2\left(\frac{a}{3}\right)^{3 /2}\right)$ 和 $\left(2\left(\frac{a}{3}\right)^{1 /2},2\left(\frac{a}{3}\right)^{3 /2}\right)$.
+        \item[(3)] 该函数与 $y=-2\left(\frac{a}{3}\right)^{3 /2}$ 轴有两个交点, 分别是 $\left(-2\left(\frac{a}{3}\right)^{1 /2},-2\left(\frac{a}{3}\right)^{3 /2}\right)$ 和 $\left(\left(\frac{a}{3}\right)^{1 /2},-2\left(\frac{a}{3}\right)^{3 /2}\right)$.
+    \end{enumerate}
+    \begin{figure}[ht]
+        \centering
+        \begin{tikzpicture}[scale=1.3]
+           % axes 
+           \draw[very thick,->] (-4,0) -- (4,0) node[right] {$x$};
+           \draw[very thick,->] (0,-3) -- (0,3) node[above] {$y$};
+           \draw (-0.2,-0.01) node[below] {\small $O$};
+           % function
+           \draw plot[domain=-2.1:2.1, smooth] (\x, \x*\x*\x-3*\x);
+           \draw[dashed] (-1,2)  -- (2,2) node[right] {$\left(2\left(\frac{a}{3}\right)^{1 /2}, 2\left(\frac{a}{3}\right)^{3 /2}\right)$};
+           \draw[dashed] (-2,-2) -- (1,-2);
+           \draw[dashed] (-1,0) -- (-1,2);
+           \draw[dashed] (1,0)  -- (1,-2);
+           \draw[dashed] (-2,-2)  -- (-2, 0);
+           \draw[dashed] (2,2) -- (2,0);
+           \draw (2.2,0) node[below]{$2\left(\frac{a}{3}\right)^{1 /2}$};
+           \draw (1.2,0) node[above] {$\left(\frac{a}{3}\right)^{1 /2}$};
+           \draw (0,2)node[above right] {$2\left(\frac{a}{3}\right)^{3 /2}$};
+        \end{tikzpicture}
+        \caption{函数 $y=x^3-ax$, $a>0$ 的图像.}
+        \label{fig5}
+    \end{figure}
+    上述性质具体可见图 \ref{fig5}. 
+
     
     \begin{theorem}
-    给定任意的 $T>0$, 考虑方程 \eqref{kdv-l} 的解.
-\begin{enumerate}
-    \item [\rm{(1)}] 设 $(t_1,x_1), (t_2,x_2)\in \R\times \T$, $a_1,a_2$ 为两个不同的实数且 $a_2>4a_1>0$ . 若对所有 $t\in (0,T)$ 都有
+    给定任意的 $T>0$, 考虑方程 \eqref{kdv-l} 的解. 设 $(t_1,x_1), (t_2,x_2)\in \R\times \T$, $0<a_1<a_2$ 为两个不同的实数, 且满足下述条件之一  
+\begin{itemize}
+    \item [\rm{(1)}] $a_2>4a_1$.
+    \item [\rm{(2)}] $a_2-a_1<\frac{L^2}{4}$, 其中 $L$ 是椭圆 $x^2+xy+y^2=a_1$ 外的整点离椭圆的最小距离.
+\end{itemize}
+ 若对所有 $t\in (0,T)$ 都有
     \begin{equation*}
         u(t_1+t,x_1-a_1t)=u(t_2+t,x_2-a_2t)=0,
     \end{equation*}
     则 $u$ 是平凡解, 即 $u_0=0$. 
-    \item [\rm{(2)}] 
-\end{enumerate}
+    
+    进一步地, 存在一个常数 $C>0$ 使得不等式
+    \begin{equation}\label{3-2-10}
+        \sum_{k\in\Z} |c_k|^2\le C\int_0^T|u(t_1+t,x_1-a_1t)|^2+|u(t_2+t,x_2-a_2t)|^2 \d t
+    \end{equation}
+    成立.
     \end{theorem}
+    \begin{proof}
+    首先我们注意到, 对任意给定的整数 $k$, 若对所有方程 \eqref{kdv-l} 的解都满足定理条件可推出 $c_k=0$, 则一定也可以推出 $c_{-k}=0$. 事实上, 若存在 $c_{-k}\neq 0$ 且满足定理条件的解 $u(t,x)$, 令 $v(t,x)=\overline{u(t,x)}$, 则可得 $v(t,x)$ 的第 $k$ 个傅里叶系数不为零.
+    所以, 我们只需要考虑 $k\ge 0$ 的情形.
     
-    \section{常数估计}
-    \section{经典结果的新证明}
+    定义
+    \begin{equation*}
+        \begin{array}{ll}
+                        d_{1,k}=\sum\limits_{\substack{
+                m\in \Z,  \\
+                k^2+mk+m^2 = a_1 }} 
+             c_me^{i(m^3t_1+mx_1)}, & k\in \Z, \\
+                        d_{2,k}=\sum\limits_{\substack{
+                m\in \Z,  \\
+                k^2+mk+m^2 = a_2 }} 
+             c_me^{i(m^3t_2+mx_2)}, & k\in \Z. 
+        \end{array}
+    \end{equation*}
+    由定理 \ref{thm3-2-1} 可得
+\begin{equation}\label{3-2-7}
+    \int_0^T |u(t_1+t,x_1-a_1t)|^2\d t\asymp \sum_{k\in\Z}^\infty|d_{1,k}|^2,
+\end{equation}
+以及
+\begin{equation}\label{3-2-8}
+    \int_0^T |u(t_2+t,x_2-a_2t)|^2\d t\asymp \sum_{k\in\Z}^\infty|d_{2,k}|^2.
+\end{equation}
+
+式 \eqref{3-2-7} 和 式 \eqref{3-2-8}相加可得
+\begin{equation}\label{3-2-9}
+  \sum_{k\in\Z}^\infty|d_{1,k}|^2+\sum_{k\in\Z}^\infty|d_{2,k}|^2\asymp \int_0^T |u(t_1+t,x_1-a_1t)|^2 + |u(t_2+t,x_2-a_2t)|^2\d t
+\end{equation}
+    
+     (1) $a_2>4a_1$. 我们需要证明对任意的 $k\in\Z$, 都有 $c_k=0$. 固定 $k\in \Z$, 若 $k\in \Pi_{a_1}\cup \Pi_{a_2}$, 则由定理 \ref{thm3-2-1} 可知 $c_k=0$. 因此在接下来的证明中我们设 $k\in \Z \backslash \left(\Pi_{a_1}\cup \Pi_{a_2}\right)$. 此时只需要考虑 $k\in \left[0, 2\left(\frac{a_1}{3}\right)^{1 /2}\right]$ 的情形, 见图 \ref{fig6}.
+          \begin{figure}[ht]
+        \centering
+         \begin{tikzpicture}[scale=1.3]
+           % axes 
+           \draw[very thick,->] (-3.5,0) -- (3.5,0) node[right] {$x$};
+           \draw[very thick,->] (0,-4) -- (0,4) node[above] {$y$};
+           \draw (-0.2,-0.01) node[below] {\small $O$};
+           % functions
+         \draw plot[domain=-1.8:1.8, smooth] (\x, \x*\x*\x-1*\x);
+         \draw plot[domain=-2.1:2.1, smooth] (\x, \x*\x*\x-4.2*\x);
+         \draw[dashed] (0.7,0) node[above] {$k$} -- (0.7,-2.62);
+         \draw[dashed] (-1.8,-2.62) -- (1.6,-2.62);
+         \draw[dashed] (1.6,-2.62) -- (1.6,2.53);
+         \draw (1.6,0) node[above right] {$k'$};
+        \end{tikzpicture}
+        \caption{函数$y=x^3-a_1x$ 和 $y=x^3-a_2 x$ 的图像.}
+        \label{fig6}
+    \end{figure}
+     因为 $k\notin \Pi_{a_2} $, 所以必然存在另一个不同的 $k'$ 使得 $k^3-a_2k={k'}^3-a_2k'$, 但是这样的 $|k'|\ge\left(\frac{a_2}{3}\right)^{1 /2}>2\left(\frac{a_2}{3}\right)^{1 /2}$, 所以 $k'\in \Pi_{a_1}$. 这说明使得 $k^3-a_2k=k'^3-a_2k'$ (或等价地, $k^2+k'k+k'^2=a_2$) 的 $k'$ 都有 $c_{k'}=0$, 而根据定理 \ref{thm3-2-1} 有
+     \begin{equation*}
+         d_{2,k}=\sum\limits_{\substack{k'\neq k\in \Z,\\ k^2+mk+m^2=a_2}} c_{k'}e^{i(k'^3t_2+k'x_0)}+c_k e^{i(k^3t_2+kt_2)}=0
+     \end{equation*}
+     上式的第一部分由 $c_{k'}=0$ 可得 $\sum_{\substack{k'\neq k\in \Z,\\ k^2+mk+m^2=a_2}} c_{k'}e^{i(k'^3t_2+k'x_0)}=0$, 进而 $c_k=0$. 所以 $u_0=0$.
+  
+  由上面的论证可知, 对任意的 $k\in \Z$, 有 $d_{1,k}=c_k^{i(k^3t_1+kx_1)}$ 或 $d_{2,k}=c_k^{i(k^3t_2+kx_2)}$ 成立, 所以 $|c_k|=|d_{1,k}|$ 或 $|c_k|=|d_{2,k}|$, 再结合式 \eqref{3-2-9} 即得不等式 \eqref{3-2-10} 成立.   
+  
+  (2) $a_2-a_1<\frac{L^2}{4}$. 给定椭圆 $l_1:x^2+xy+y^2=a_1$ 和椭圆 $l_2:x^2+xy+y^2=a_2$, 若 $k\notin \Pi_{a_1}$, 则存在 $k'\neq k,k\in \Z$ 使得 $k^2+kk'+k'^2=a_1$, 所以 $(k,k')$ 是椭圆 $l_1$ 的整数解.
+  
+       \begin{figure}[ht]
+        \centering
+        \begin{tikzpicture}[scale=1.3]
+           % axes 
+           \draw[very thick,->] (-4,0) -- (4,0) node[right] {$x$};
+           \draw[very thick,->] (0,-4) -- (0,4) node[above] {$y$};
+           \draw (-0.2,-0.01) node[below] {\small $O$};
+           \draw[rotate=-45] (0,0) ellipse (4 cm and 2.3094 cm);
+           \draw[rotate=-45] (0,0) ellipse (4.5 cm and 2.598076 cm);
+           \draw[dashed] (1.5,-4) -- (1.5,4);
+           \draw[dashed] (0,1.73)--(1.5,1.73);
+           \draw[dashed] (0,2.17)--(1.5,2.17);
+           \draw (1.5,0)node[below right] {$k$};
+           \draw (0,1.73)node[below right] {$k'$};
+           \draw (0,2.17)node[below right] {$k''$};
+        \end{tikzpicture}
+        \caption{椭圆 $x^2+xy+y^2=a_1$ 和 $x^2+xy+y^2=a_2$ 的图像.}
+        \label{fig7}
+    \end{figure}
+  
+  对任意的$x\in \left[2\left(\frac{a_1}{3}\right)^{1 /2}-,2\left(\frac{a_1}{3}\right)^{1 /2}\right]$, 反解等式得上半支函数 $y=\frac{-x+\sqrt{4a_1-3x^2}}{2}$ 和 $y=\frac{-x+\sqrt{4a_1-3x^2}}{2}$, 作差可得
+  \begin{equation}
+      d(x):=\frac{\sqrt{4a_2-3x^2}-\sqrt{4a_1-3x^2}}{2}.
+  \end{equation}
+  该函数是点 $(x,y)\in l_1$ 与 $(x,y')\in l_2, yy'>0$ 的距离, 易知 $d(x)$ 最大值为 $2\sqrt{a_2-a_1}$. 当 $2\sqrt{a_2-a_1}<L$ 时, 说明对任意的整点 $(k,k')\in l_1$, 满足 $(k,k'')\in l_2$ 的点都不是整点, 即 $k\in \Pi_{a_2}$ (见图 \ref{fig7}). 不等式 \eqref{3-2-10} 的证明同 (1).
+  
+  
+\iffalse  以及满足 $x^2+xy+y^2=a_1$ 的点 $A=(x,y)$, 作水平和竖直线段与 $x^2+xy+y^2=a_2$ 交于$B$ 和 $C$, 见图 \ref{fig7}. 设
+  $d_A=\min \lbrace|AB|,|AC|\rbrace$, 定义
+  \begin{equation*}
+      L:=\max\limits_{A\in l_1} d_A.
+  \end{equation*}
+  
+  下面我们说明, 当 $L<1$ 时定理的结论成立. 任取 $k\in \left[0,2\left(\frac{a}{3}\right)^{1 /2}\right]$ 且 $k\in \Z \backslash \left(\Pi_{a_1}\cup\Pi_{a_2}\right)$, 过点 $(k,0)$ 作竖直线交两个椭圆于 $E,F,G,H$, 如图 \ref{fig7} 所示. 由 $k\notin \Pi_{a_1}$ 知, $E$ 和 $G$ 至少有一个是整点, 同理 $F$ 和 $H$ 至少有一个整点. 但是由于 $|EF|,|GH|$ 的长度都小于 $1$, 所以整点只可能是仅有 $E$ 和 $H$ 或仅有 $F$ 和 $G$. 
+  \begin{enumerate}
+      \item [(i)] 若 $E$ 和 $H$ 为整点
+  \end{enumerate}
+  
+  则存在 $k'\neq k,k\in\Z$ 且 $(k,k')\in l_1$, 设 $E=(k,k')$. 过 $E$ 作竖直线交于 另一点 $G=(k,k'')$. 若 $|EF|<1$, 则说明 $F$ 的纵坐标不是整数, 此时若 $G$ 的纵坐标 $k''$ 也不是整点, 则说明
+  
+      \begin{figure}[ht]
+        \centering
+        \begin{tikzpicture}[scale=1.3]
+           % axes 
+           \draw[very thick,->] (-4,0) -- (4,0) node[right] {$x$};
+           \draw[very thick,->] (0,-4) -- (0,4) node[above] {$y$};
+           \draw (-0.2,-0.01) node[below] {\small $O$};
+           \draw[rotate=-45] (0,0) ellipse (4 cm and 2.3094 cm);
+           \draw[rotate=-45] (0,0) ellipse (4.5 cm and 2.598076 cm);
+           \draw[thick] (2.38,1.23) node[right]{$B$} -- (2,1.23)node[below]{$A$} -- (2,1.67) node[right]{$C$};
+           \draw (1.5,-4) -- (1.5,4);
+           \draw (-4,1.73)--(4,1.73);
+           \draw (1.5,1.73)node[below left] {$E$};
+           \draw (-4,2.17)--(4,2.17);
+           \draw (1.5,2.17)node[above right] {$F$};
+           \draw (1.5,0)node[below right] {$k$};
+           \draw (0,1.73)node[below right] {$k'$};
+           \draw (0,2.17)node[below right] {$?$};
+           \draw (-4,-3.27) -- (4,-3.27);
+           \draw (-4,-3.65)--(4,-3.65);
+           \draw (1.5,-3.27)node[above right]{$G$};
+           \draw (1.5,-3.68)node[above right]{$H$};
+        \end{tikzpicture}
+        \caption{椭圆 $x^2+xy+y^2=a_1$ 和 $x^2+xy+y^2=a_2$ 的图像.}
+        \label{fig7}
+    \end{figure}
+   \fi 
+
+     
+     
+    \end{proof}
+    
+   % \section{常数估计}
+    %\section{经典结果的新证明}
     
     
-    \chapter{控制论中的应用}
-    \section{基本定义}
-    admissible, observable
-    \section{HUM方法}
-    \section{能观测不等式到可控性}
+    %\chapter{控制论中的应用}
+    %\section{基本定义}
+    %admissible, observable
+    %\section{HUM方法}
+    %\section{能观测不等式到可控性}
     
-    在本节中, 我们给出线性KdV方程两点可观测性的一般判据. 该判据源于希尔伯特空间方法在傅里叶变换下不确定性原理的应用.
+    %在本节中, 我们给出线性KdV方程两点可观测性的一般判据. 该判据源于希尔伯特空间方法在傅里叶变换下不确定性原理的应用.
     
-    设 $S(t)=e^{-t\partial_x^3}$ 为线性KdV方程的算子群,
+    %设 $S(t)=e^{-t\partial_x^3}$ 为线性KdV方程的算子群,
     
     % 更多内容
     %\subsection{这是二级标题}
