@@ -16,7 +16,7 @@
 \newcommand\C{\ensuremath{\mathbb{C}}}
 
 % Some theorem environment settings
-\usepackage{ntheorem,tikz,mathabx}
+\usepackage{ntheorem,tikz,mathabx,tkz-euclide}
 \theoremseparator{.}
 \newtheorem{theorem}{定理}[chapter]
 \newenvironment{proof}{{\noindent\itshape 证明}.}{\hfill $\Box$\par}
@@ -48,64 +48,84 @@
     \chapter{前言}
     本文主要研究线性KdV方程, 给出全空间和周期情形下新的能观测不等式, 并讨论其在控制理论中的应用.
     \section{KdV方程概述}
-    Korteweg-de Vries 方程, 简称 KdV方程于1877年 Boussinesq\cite{Bouss1877} 首先给出, 并在1895年 Korteweg-de Vries\cite{Kort1895} 研究管道中液体浅水波时被重新发现. 该方程可写作
+    Korteweg-de Vries 方程 (简称 KdV方程), 于1877年 Boussinesq\cite{Bouss1877} 首先给出, 并在1895年 Korteweg-de Vries \cite{Kort1895} 研究管道中液体浅水波时被重新发现. 该方程写作
     \begin{equation}
         \partial_t u +u \partial_x u +\partial_x^3 u =0,\label{kdv}
     \end{equation}
-    其中 $u=u(t,x)$是一个关于时间变量 $t$和空间变量$x$ 的实值函数. 它同时包含了色散项和非线性项, 是人们研究色散与非线性之间的相互作用的重要模型. 特别地, KdV方程常被用作描述非线性色散系统中单向传播小振幅长波的数学模型.
+    其中 $u=u(t,x)$是一个关于时间变量 $t$和空间变量$x$ 的实值函数. 它同时包含了色散项和非线性项, 是人们研究色散与非线性之间的相互作用的重要模型.
+    
+    KdV 方程的非线性项 $u\partial_x u$让它在各个函数空间中适定性的证明变得不平凡. 关于 KdV 方程在Sobolev空间 $H^s(\R)$ 和 $H^s(\T)$ 中适定性的研究, 早期的结果见 \cite{bona1975initial, kato1979cauchy,cohen1979existence,ginibre1990existence,kenig1993well}. Bourgain 在1993年发表的论文\cite{bourgain1993fourier} 中, 利用新空间 $X^{s,b}$ 有效地刻画了方程的色散特性以及它与线性方程间的偏移量, 由此证明了方程在 $s\ge 0$ 时两种空间下的局部适定性. Kenig, Ponce 和 Vega 在此结果的基础上结合他们发现的双线性估计 \cite{kenig1996bilinear}, 将局部适定性在 $\R$ 和 $\T$ 情形下的范围分别扩大到 $s\ge -\frac{3}{4}$ 和 $s\ge -\frac{1}{2}$. Bourgain 建立了\cite{bourgain1997periodic} 初值具有有界傅里叶变换的全局适定性, 证明中用到了 KdV 系统的可积性.
+    
+    
+    
     
     KdV方程自发现以来便被广泛研究, 在方程的适定性, 孤立波的存在性和稳定性, 可积性, 唯一延拓性, 长时间性态上都有丰富的结果. 
     
     本论文所研究的能观测不等式便属于唯一延拓性这一范畴.
     
-    \section{唯一延拓性}
     
-    \section{从唯一延拓性到能观测不等式}
+    \section{能观测不等式与唯一延拓性}
     对于一般的定义在区域 $\Omega$ 上的发展方程, 可写作
     \begin{equation}\label{evo}
-        \partial_t u = A u, \quad u(0,x)=u_0\in D(A).
+        \partial_t u = L u, \quad u(0,x)=u_0\in D(L).
     \end{equation}
     很多时候, 存在 $\omega\subset \Omega$, $T>0$, 以及相应的常数 $C(T,\omega)>0$, 使得对任意满足方程 \eqref{evo} 的解 $u(t,x)$ 都有下述不等式成立
     \begin{equation}\label{init}
         \int_{\Omega}|u_0(x)|^2\d x\le C(T,\omega)\int_0^T\int_\omega|u(t,x)|^2\d x\d t.
     \end{equation}
-    这样的不等式称为发展方程 \eqref{evo} 的能观测不等式. 
+    这样的不等式称为色散方程 \eqref{evo} 的能观测不等式. 
 
     
-    由能观测不等式 \eqref{init} 的形式得到唯一延拓性: 当解函数 $u(t,x)$ 在 $(0,T)\times \omega$ 上为零时, $u(t,x)\equiv 0$, 见图 \ref{fig2}. 因此能观测不等式是某种唯一延拓性的定量描述.
+    由能观测不等式 \eqref{init} 的形式可得到相应的唯一延拓性: 当解函数 $u(t,x)$ 在 $(0,T)\times \omega$ 上为零时, $u(t,x)\equiv 0$, 见图 \ref{fig2}. 因此我们可以粗略地认为:
+    \begin{center}
+        \itshape 能观测不等式就是定量的唯一延拓性.
+    \end{center}
     \begin{figure}[ht]
     \centering
     \begin{tikzpicture}[scale=1.3]
-      \fill[blue!10!white] plot[smooth cycle] coordinates{(0,0) (4,0) (2.5,2.5) (-1,2.5)};
-      \fill[magenta] (0.5,0.5) ellipse (0.5 and 0.375);
-      \fill[magenta] (0.9,2.1) ellipse (0.5 and 0.375);
-      \fill[magenta] (2.5,0.8) ellipse (0.5 and 0.375);
+      \draw plot[smooth cycle] coordinates{(0,0) (4,0) (2.5,2.5) (-1,2.5)};
+      \draw[magenta] (0.5,0.5) ellipse (0.5 and 0.375);
+      \draw[magenta] (0.9,2.1) ellipse (0.5 and 0.375);
+      \draw[magenta] (2.5,0.8) ellipse (0.5 and 0.375);
       \draw (2,-0.3) node[below]{$\Omega$};
       \draw[->] (4-0.15,2) to[out=180,in=40]  (0.5,0.5);
       \draw[->] (4-0.1,2+0.1) to[out=150, in=30] (0.9,2.1);
       \draw[->] (4-0.15,2-0.1) to[out=-120, in=10] (2.5,0.8);
       \draw (4.1,2) node{$\color{magenta}{\omega}$};
-      \fill[blue!10!white] (-0.8,-1.5)--(-0.3,-1.5)--(-0.3,-1)--(-0.8,-1)--cycle;
-      \draw (-0.3,-1.25) node[right]{\small 非观测区域};
-      \fill[magenta] (-0.8+3.5,-1.5)--(-0.3+3.5,-1.5)--(-0.3+3.5,-1)--(-0.8+3.5,-1)--cycle;
-      \draw (-0.3+3.5,-1.25) node[right]{\small 观测区域$\color{magenta}\omega$};
     \end{tikzpicture}
     \caption{唯一延拓性: 若$u(t,x)$ 在时间 $0$到 $T$, 区域$\omega$ 内为零, 则$u(t,x)\equiv 0$.}
     \label{fig2}
   \end{figure}
     
-    人们在对色散方程唯一延拓性的研究中, 发现了形如式 \eqref{init} 的能观测不等式. 进而, 薛定谔方程和KdV方程这两大类色散方程, 在不同条件下的能观测不等式被逐渐发现. 许多时候, 建立能观测不等式的方法在不同的空间情形下可以完全不同. 所以接下来本文将分别介绍全空间和周期情形下该不等式的发展历史和主要结果.
+    近五十年来, 人们对色散方程唯一延拓性和能观测不等式的建立做了大量的研究, 并发展出许多方法. 特别地, 这些方法被广泛运用于两类最重要的色散方程 -- 薛定谔方程和 KdV 方程当中. 这两类方程, 在唯一延拓性和能观测不等式的研究进展中, 所运用的方法相互影响, 所得到的的结果亦有许多相似之处. 一方面, 由于两类方程有许多共同点, 同一种形式的唯一延拓性或能观测不等式往往能够同时对两类方程建立. 另一方面, 它们在色散程度以及非线性项上的区别, 使得即使我们建立的是形式上相同的结果, 有时却必须采用完全不同的方法. 
+    因此, 在接下来对唯一延拓性和能观测不等式发展历史的回顾中, 我们不仅讨论 KdV 方程, 也将薛定谔方程相应的发展历程一并对比讨论.
+\subsection{全空间情形}    
+    上世纪八十年代, Saut 和 Scheurer \cite{saut1980theoreme,Saut1987UniqueCF} 考虑了一维全空间中, 形如
+    \begin{equation*}
+        L=iD_t +\alpha i^{2k+1}D^{2k+1}+R(x,t,D)
+    \end{equation*}
+    的色散算子, 其中 $\alpha\neq 0, D=\frac{1}{i}\partial_x, D_t =\frac{1}{i}\partial_t$, 以及
+    \begin{equation*}
+        R(t,x,D)=\sum_{j=0}^{2k}r_j(t,x)D^j,\quad r_j\in L_{\rm{loc}}^\infty(R,L^2_{\rm{loc}}(\R)).
+    \end{equation*}
+    他们用 Carleman 估计证明了: 若 $u\in L^2_{\rm{loc}}(\R,H_{\rm{loc}}^{2k+1}(\R))$ 是方程 $Lu=0$ 的解, 且在 $\R_t\times\R_x $ 的一个开子集 $\Omega$ 内为零, 则其在 $\Omega$ 的纵向区域内均为零. 该结论用于 KdV 方程可得, 当 $u\in L_{\rm{loc}}^\infty (\R, H^3(\R))$ 是方程 \eqref{kdv} 的解且在 $\R_t\times \R_x$ 的开子集内为零时, $u$ 恒为零. 另一方面, Tataru \cite{tataru1995carleman} 也用 Carleman 估计证明了一定条件下薛定谔方程的唯一延拓性. 进一步地, Isakov \cite{isakov1993carleman} 用 Carleman 估计证明了一大类具有非齐次主项发展方程的唯一延拓性. 
+    1992 年, Zhang \cite{Zhang1992UniqueCF} 利用傅里叶变换的逆散射方法以及 Miura 变换证明了 KdV 方程在一定条件下两点时刻同一半轴上的唯一延拓性: $u(t,x)$ 在 $\lbrace t_0,t_1\rbrace\times (c,\infty)$ (或 $\lbrace t_0,t_1\rbrace \times (-\infty,c)$) 上为零, $c$ 为一常数, 则 $u$ 恒为零. 1997年, Bourgain \cite{bourgain1997compactness} 利用实轴上具有紧支撑函数的傅里叶变换在复平面的解析性质, 证明了形如 
+    \begin{equation*}
+        \partial_t u+ \partial_x^3u+\partial_x F(u) = 0, \quad F(u) \text{ 为多项式}
+    \end{equation*}
+  的方程不存在具有紧支撑的非平凡解, 即一段时间内解函数在一紧集外为零时, 解恒为零. 2002 年, Kenig, Ponce 和 Vega \cite{kenig2002support} 进一步完善 Zhang \cite{Zhang1992UniqueCF} 的结果并证明了: 对于广义 KdV 方程 $u(t,x)$, 若其足够光滑且满足一定指且在两个不同时刻只分布在同一半轴上, 则 $u$ 恒为零.
+  
+  以上关于唯一延拓性的进展均为定性结果.   
     
-    \subsection{全空间情形}
-    对于薛定谔方程
+    2009年, Rosier \cite{Rosier2009ExactBC} 对薛定谔方程
     \begin{equation}
         i\partial_t u +\Delta u =0,\quad u(0,x)=u_0\in L^2(\R^n)\label{sch}
     \end{equation}
-    的解 $u(t,x)$, 其能观测不等式形式为
+    的解 $u(t,x)$, 建立了能观测不等式
     \begin{equation}
         \int_{\R^n}|u_0(x)|^2\d x\le C(n,T,E)\int_0^T\int_E|u(t,x)|^2\d x\mathrm{d}t,\label{schobs-g}
     \end{equation}
-    其中 $T>0$, $E$是 $\R^n$中的子集, $C(n,T,E)>0$是仅依赖于 $n,T,E$ 的常数. 实际上, 不等式 \eqref{schobs-g} 在任意的 $n\ge 1$ 中都可以取 $E=\left\lbrace x\in \R^n: |x|\ge r\right\rbrace$\cite{Rosier2009ExactBC}, 并且在 $n=1$ 时可取 $E$ 为厚集\cite{Huang2020ObservableSP} (一种更为一般的集合类). 利用HUM方法\cite{Lions1988ControlabiliteEP}可知不等式 \eqref{schobs-g} 成立当且仅当 \eqref{sch} 被限制在 $E\times (0, T)$上的控制项所精确控制.
+    其中 $T>0$, $E$是 $\R^n$中的子集, $C(n,T,E)>0$是仅依赖于 $n,T,E$ 的常数. 实际上, 不等式 \eqref{schobs-g} 在任意的 $n\ge 1$ 中都可以取 $E=\left\lbrace x\in \R^n: |x|\ge r\right\rbrace, $ 并且在 $n=1$ 时可取 $E$ 为厚集\cite{Huang2020ObservableSP} (一种更为一般的集合类). 
     
      Gengsheng Wang, Ming Wang 和 Yubiao Zhang在2019年发表的文章\cite{Wang2019ObservabilityAU}中证明了下述新的能观测不等式: 存在一个常数 $C=C(n)>0$ 使得对于所有的 $t>0$, 所有的 $r_1,r_2>0$ 以及所有满足 \eqref{sch} 的解 $u(t,x)$, 都有
     \begin{equation}
@@ -126,7 +146,7 @@
     \end{equation}
     成立, 其中 $A^c$表示集合 $A$ 在全空间 $\R^n$ 中的补集, $C(t,|A|,|B|)$ 是常数.
     
-    因为KdV方程是最重要的色散方程之一, 一个自然的想法便是对于下述的线性KdV方程
+    KdV方程作为最重要的色散方程之一,  一个自然的想法便是对其也建立类似的能观测不等式. 特别地, 我们的前两个主要结果便是对下述的线性KdV方程
     \begin{equation}
         \partial_t u+\partial_x^3 u=0,\quad u(0,x)=u_0(x)\in L^2(\R),\label{kdv-r}
     \end{equation} 
@@ -135,9 +155,10 @@
         \int_{\R}|u_0(x)|^2\d x\le Ce^{Ct^{-\frac{4}{3}}\left(r_1^4+r_2^4\right)}\left(\int
         _{|x|\ge r_1}|u_0(x)|^2\d x+\int _{|x|\ge r_2}|u(t,x)|^2\d x\right).\label{kdvobs-1}
     \end{equation}
-    该能观测不等式的证明利用了初始函数为紧支撑的KdV方程解的定量解析光滑效应和解析函数的某种定量唯一延拓不等式.
+    该能观测不等式的证明利用了初始函数为紧支撑的KdV方程解的定量解析光滑效应, 以及解析函数的某种定量唯一延拓不等式.
    
-    \subsection{周期情形}
+   \subsection{周期情形}
+
     
 
 
@@ -175,7 +196,9 @@
         \item 若 $A\lesssim B$ 和 $B\lesssim A$ 均成立, 则记 $A\asymp B$.
     \end{enumerate}
     
+    对集合 $A$, $|A|$ 表示 $A$ 的测度或者元素个数, 可结合上下文确定. 
     
+    Sobolev 空间. s
     
 
 
@@ -916,14 +939,14 @@ $$
     \begin{theorem}\label{thm3-2-1}
     设 $(t_0,x_0)\in \R\times \T$, $a\in \R$. 则方程 \eqref{kdv-l} 的解满足:
     \begin{enumerate}
-        \item[\rm{(1)}] 对任意的 $T>0$, 存在常数 $c>0$ 使得不等式
+        \item[\rm{(1)}] 对任意的 $T>0$, 存在常数 $C>0$ 使得不等式
         \begin{equation}\label{3-2-1}
-            c\int_0^T\left| u(t_0+t,x_0-at) \right|^2\d t \le  \sum_{k\in \Z} |c_k|^2
+            \int_0^T\left| u(t_0+t,x_0-at) \right|^2\d t \le C  \sum_{k\in \Z} |c_k|^2
         \end{equation}
         成立.
         \item[\rm{(2)}] 定义集合
         \begin{equation*}
-            \Gamma=\lbrace n:n=k^2+mk+m^2, m\neq k\in \Z \rbrace.
+            \Gamma=\lbrace n:\exists m\neq k, m,k\in \Z \text{ s.t. }n=k^2+mk+m^2 \rbrace.
         \end{equation*}
         则对任意的 $T>0$ 以及 $a\notin \Gamma$, 存在常数 $C>0$ 使得不等式
         \begin{equation}\label{3-2-2}
@@ -994,12 +1017,12 @@ $$
     \end{equation*}
     解得较大的根 $t=2\left(\frac{a}{3}\right)^{1 /2}$,
     所以当 $|k|> 2\left(\frac{a}{3}\right)^{1 /2}$ 时, $k=m^3-am$ 的解 $m$ 只有一个. 这说明此时有 $d_k=c_k e^{i(k^3t_0+kx_0)}$. 记
-    \begin{equation*}
-        \Pi_a:=\lbrace k\in \Z : \forall m\in \Z, m\neq k, k^2+mk+m^2\neq a \rbrace.
-    \end{equation*}
+    \begin{equation}\label{pia}
+        \Pi_a:=\lbrace k\in \Z : \exists m\neq k,m\in \Z \text{ s.t. } k^2+km+m^2=a \rbrace.
+    \end{equation}
     则式 \eqref{3-2-4}可写作
     \begin{equation*}
-        u(t_0+t,x_0-at)=\sum_{l\in \lbrace j^3-aj:j\in \Z  \rbrace}e_l e^{ilt}=\sum_{k\in \Pi_a} d_k e^{i(k^3-ak)t}+\sum_{l\in \lbrace j^3-aj: j\notin \Pi_a, j\in \Z\rbrace} e_l e^{ilt},
+        u(t_0+t,x_0-at)=\sum_{l\in \lbrace j^3-aj:j\in \Z  \rbrace}e_l e^{ilt}=\sum_{k\notin \Pi_a} d_k e^{i(k^3-ak)t}+\sum_{l\in \lbrace j^3-aj: j\in \Pi_a, j\in \Z\rbrace} e_l e^{ilt},
     \end{equation*}  
     其中
     \begin{equation*}
@@ -1027,7 +1050,7 @@ $$
     \end{equation*}
     \end{remark}
     
-    定理 \ref{thm3-2-1} 是KdV方程 \eqref{kdv-l} 关于一个线段的能观测性, 接下来我们讨论两个或多个线段的可观测性. 当 $a\le 0$ 时, 线段的能观测性已经被定理 \ref{thm3-2-1} 证明, 在接下来对多线段的讨论中, 我们只需要考虑 $ a>0 $, 或者更准确地说, 讨论 $a\in \Z \backslash \Pi_a$ 的情形. 
+    定理 \ref{thm3-2-1} 是KdV方程 \eqref{kdv-l} 关于一个线段的能观测性, 接下来我们讨论两个或多个线段的可观测性. 当 $a\le 0$ 时, 线段的能观测性已经被定理 \ref{thm3-2-1} 证明, 在接下来对多线段的讨论中, 我们只需要考虑 $ a>0 $ 且为正整数, 或者更准确地说, $a\in \Gamma$ 的情形, . 
     
     在定理 \ref{thm3-2-1} 中, 我们对序列 $\lbrace k^3-ak\rbrace$ 进行过讨论, 为方便后续的讨论, 我们将函数 $y=x^3-ax$ 的性质整理如下:
     \begin{enumerate}
@@ -1059,20 +1082,12 @@ $$
     \end{figure}
     上述性质具体可见图 \ref{fig5}. 
 
-    
-    \begin{theorem}
-    给定任意的 $T>0$, 考虑方程 \eqref{kdv-l} 的解. 设 $(t_1,x_1), (t_2,x_2)\in \R\times \T$, $0<a_1<a_2$ 为两个不同的实数, 且满足下述条件之一  
-\begin{itemize}
-    \item [\rm{(1)}] $a_2>4a_1$.
-    \item [\rm{(2)}] $a_2-a_1<\frac{L^2}{4}$, 其中 $L$ 是椭圆 $x^2+xy+y^2=a_1$ 外的整点离椭圆的最小距离.
-\end{itemize}
- 若对所有 $t\in (0,T)$ 都有
+        \begin{theorem}
+    给定任意的 $T>0$, 考虑方程 \eqref{kdv-l} 的解. 设 $(t_1,x_1), (t_2,x_2)\in \R\times \T$, $0<a_1<a_2$ 为两个不同的正整数, 且满足 $a_2>4a_1$. 则由 
     \begin{equation*}
-        u(t_1+t,x_1-a_1t)=u(t_2+t,x_2-a_2t)=0,
+        u(t_1+t,x_1-a_1t)=u(t_2+t,x_2-a_2t)=0,\quad \forall t\in (0,T)
     \end{equation*}
-    则 $u$ 是平凡解, 即 $u_0=0$. 
-    
-    进一步地, 存在一个常数 $C>0$ 使得不等式
+    可推出$u$ 是平凡解, 即 $u_0=0$. 更确切地说, 存在一个常数 $C>0$ 使得不等式
     \begin{equation}\label{3-2-10}
         \sum_{k\in\Z} |c_k|^2\le C\int_0^T|u(t_1+t,x_1-a_1t)|^2+|u(t_2+t,x_2-a_2t)|^2 \d t
     \end{equation}
@@ -1109,7 +1124,7 @@ $$
   \sum_{k\in\Z}^\infty|d_{1,k}|^2+\sum_{k\in\Z}^\infty|d_{2,k}|^2\asymp \int_0^T |u(t_1+t,x_1-a_1t)|^2 + |u(t_2+t,x_2-a_2t)|^2\d t
 \end{equation}
     
-     (1) $a_2>4a_1$. 我们需要证明对任意的 $k\in\Z$, 都有 $c_k=0$. 固定 $k\in \Z$, 若 $k\in \Pi_{a_1}\cup \Pi_{a_2}$, 则由定理 \ref{thm3-2-1} 可知 $c_k=0$. 因此在接下来的证明中我们设 $k\in \Z \backslash \left(\Pi_{a_1}\cup \Pi_{a_2}\right)$. 此时只需要考虑 $k\in \left[0, 2\left(\frac{a_1}{3}\right)^{1 /2}\right]$ 的情形, 见图 \ref{fig6}.
+      我们需要证明对任意的 $k\in\Z$, 都有 $c_k=0$. 固定 $k\in \Z$, 若 $k\notin \Pi_{a_1}\cap \Pi_{a_2}$, 则由定理 \ref{thm3-2-1} 可知 $c_k=0$. 因此在接下来的证明中我们设 $k\in  \left(\Pi_{a_1}\cap \Pi_{a_2}\right)$. 此时只需要考虑 $k\in \left[0, 2\left(\frac{a_1}{3}\right)^{1 /2}\right]$ 的情形, 见图 \ref{fig6}.
           \begin{figure}[ht]
         \centering
          \begin{tikzpicture}[scale=1.3]
@@ -1128,15 +1143,98 @@ $$
         \caption{函数$y=x^3-a_1x$ 和 $y=x^3-a_2 x$ 的图像.}
         \label{fig6}
     \end{figure}
-     因为 $k\notin \Pi_{a_2} $, 所以必然存在另一个不同的 $k'$ 使得 $k^3-a_2k={k'}^3-a_2k'$, 但是这样的 $|k'|\ge\left(\frac{a_2}{3}\right)^{1 /2}>2\left(\frac{a_2}{3}\right)^{1 /2}$, 所以 $k'\in \Pi_{a_1}$. 这说明使得 $k^3-a_2k=k'^3-a_2k'$ (或等价地, $k^2+k'k+k'^2=a_2$) 的 $k'$ 都有 $c_{k'}=0$, 而根据定理 \ref{thm3-2-1} 有
+     因为 $k\in \Pi_{a_2} $, 所以必然存在另一个不同的 $k'$ 使得 $k^3-a_2k={k'}^3-a_2k'$, 但是这样的 $|k'|\ge\left(\frac{a_2}{3}\right)^{1 /2}>2\left(\frac{a_2}{3}\right)^{1 /2}$, 所以 $k'\notin \Pi_{a_1}$. 这说明使得 $k^3-a_2k=k'^3-a_2k'$ (或等价地, $k^2+k'k+k'^2=a_2$) 的 $k'$ 都有 $c_{k'}=0$, 而根据定理 \ref{thm3-2-1} 有
      \begin{equation*}
          d_{2,k}=\sum\limits_{\substack{k'\neq k\in \Z,\\ k^2+mk+m^2=a_2}} c_{k'}e^{i(k'^3t_2+k'x_0)}+c_k e^{i(k^3t_2+kt_2)}=0
      \end{equation*}
      上式的第一部分由 $c_{k'}=0$ 可得 $\sum_{\substack{k'\neq k\in \Z,\\ k^2+mk+m^2=a_2}} c_{k'}e^{i(k'^3t_2+k'x_0)}=0$, 进而 $c_k=0$. 所以 $u_0=0$.
   
-  由上面的论证可知, 对任意的 $k\in \Z$, 有 $d_{1,k}=c_k^{i(k^3t_1+kx_1)}$ 或 $d_{2,k}=c_k^{i(k^3t_2+kx_2)}$ 成立, 所以 $|c_k|=|d_{1,k}|$ 或 $|c_k|=|d_{2,k}|$, 再结合式 \eqref{3-2-9} 即得不等式 \eqref{3-2-10} 成立.   
+  由上面的论证可知, 对任意的 $k\in \Z$, 有 $d_{1,k}=c_k^{i(k^3t_1+kx_1)}$ 或 $d_{2,k}=c_k^{i(k^3t_2+kx_2)}$ 成立, 所以 $|c_k|=|d_{1,k}|$ 或 $|c_k|=|d_{2,k}|$, 所以
+  \begin{equation*}
+      \sum_{k\in \Z}|c_k|^2\le \sum_{k\in \Z}|d_{1,k}|^2+\sum_{k\in\Z}|d_{2,k}|^2.
+  \end{equation*}
+  上式和式 \eqref{3-2-9} 可得不等式 \eqref{3-2-10} 成立.   
+      \end{proof}
+    
+  \iffalse  \begin{theorem}
+    给定任意的 $T>0$, 考虑方程 \eqref{kdv-l} 的解. 设 $(t_1,x_1), (t_2,x_2)\in \R\times \T$, $0<a_1<a_2$ 为两个不同的正整数, 且满足下述条件之一  
+\begin{itemize}
+    \item [\rm{(1)}] $a_2>4a_1$.
+    \item [\rm{(2)}] $a_2-a_1<L$, 其中 $L$ 是椭圆 $x^2+xy+y^2=a_1$ 外的整点离椭圆的最小距离.
+\end{itemize}
+ 则由 
+    \begin{equation*}
+        u(t_1+t,x_1-a_1t)=u(t_2+t,x_2-a_2t)=0,\quad \forall t\in (0,T)
+    \end{equation*}
+    可推出$u$ 是平凡解, 即 $u_0=0$. 更确切地说, 存在一个常数 $C>0$ 使得不等式
+    \begin{equation}\label{3-2-10}
+        \sum_{k\in\Z} |c_k|^2\le C\int_0^T|u(t_1+t,x_1-a_1t)|^2+|u(t_2+t,x_2-a_2t)|^2 \d t
+    \end{equation}
+    成立.
+    \end{theorem}
+    \begin{proof}
+    首先我们注意到, 对任意给定的整数 $k$, 若对所有方程 \eqref{kdv-l} 的解都满足定理条件可推出 $c_k=0$, 则一定也可以推出 $c_{-k}=0$. 事实上, 若存在 $c_{-k}\neq 0$ 且满足定理条件的解 $u(t,x)$, 令 $v(t,x)=\overline{u(t,x)}$, 则可得 $v(t,x)$ 的第 $k$ 个傅里叶系数不为零.
+    所以, 我们只需要考虑 $k\ge 0$ 的情形.
+    
+    定义
+    \begin{equation*}
+        \begin{array}{ll}
+                        d_{1,k}=\sum\limits_{\substack{
+                m\in \Z,  \\
+                k^2+mk+m^2 = a_1 }} 
+             c_me^{i(m^3t_1+mx_1)}, & k\in \Z, \\
+                        d_{2,k}=\sum\limits_{\substack{
+                m\in \Z,  \\
+                k^2+mk+m^2 = a_2 }} 
+             c_me^{i(m^3t_2+mx_2)}, & k\in \Z. 
+        \end{array}
+    \end{equation*}
+    由定理 \ref{thm3-2-1} 可得
+\begin{equation}\label{3-2-7}
+    \int_0^T |u(t_1+t,x_1-a_1t)|^2\d t\asymp \sum_{k\in\Z}^\infty|d_{1,k}|^2,
+\end{equation}
+以及
+\begin{equation}\label{3-2-8}
+    \int_0^T |u(t_2+t,x_2-a_2t)|^2\d t\asymp \sum_{k\in\Z}^\infty|d_{2,k}|^2.
+\end{equation}
+
+式 \eqref{3-2-7} 和 式 \eqref{3-2-8}相加可得
+\begin{equation}\label{3-2-9}
+  \sum_{k\in\Z}^\infty|d_{1,k}|^2+\sum_{k\in\Z}^\infty|d_{2,k}|^2\asymp \int_0^T |u(t_1+t,x_1-a_1t)|^2 + |u(t_2+t,x_2-a_2t)|^2\d t
+\end{equation}
+    
+     (1) $a_2>4a_1$. 我们需要证明对任意的 $k\in\Z$, 都有 $c_k=0$. 固定 $k\in \Z$, 若 $k\notin \Pi_{a_1}\cap \Pi_{a_2}$, 则由定理 \ref{thm3-2-1} 可知 $c_k=0$. 因此在接下来的证明中我们设 $k\in  \left(\Pi_{a_1}\cap \Pi_{a_2}\right)$. 此时只需要考虑 $k\in \left[0, 2\left(\frac{a_1}{3}\right)^{1 /2}\right]$ 的情形, 见图 \ref{fig6}.
+          \begin{figure}[ht]
+        \centering
+         \begin{tikzpicture}[scale=1.3]
+           % axes 
+           \draw[very thick,->] (-3.5,0) -- (3.5,0) node[right] {$x$};
+           \draw[very thick,->] (0,-4) -- (0,4) node[above] {$y$};
+           \draw (-0.2,-0.01) node[below] {\small $O$};
+           % functions
+         \draw plot[domain=-1.8:1.8, smooth] (\x, \x*\x*\x-1*\x);
+         \draw plot[domain=-2.1:2.1, smooth] (\x, \x*\x*\x-4.2*\x);
+         \draw[dashed] (0.7,0) node[above] {$k$} -- (0.7,-2.62);
+         \draw[dashed] (-1.8,-2.62) -- (1.6,-2.62);
+         \draw[dashed] (1.6,-2.62) -- (1.6,2.53);
+         \draw (1.6,0) node[above right] {$k'$};
+        \end{tikzpicture}
+        \caption{函数$y=x^3-a_1x$ 和 $y=x^3-a_2 x$ 的图像.}
+        \label{fig6}
+    \end{figure}
+     因为 $k\in \Pi_{a_2} $, 所以必然存在另一个不同的 $k'$ 使得 $k^3-a_2k={k'}^3-a_2k'$, 但是这样的 $|k'|\ge\left(\frac{a_2}{3}\right)^{1 /2}>2\left(\frac{a_2}{3}\right)^{1 /2}$, 所以 $k'\notin \Pi_{a_1}$. 这说明使得 $k^3-a_2k=k'^3-a_2k'$ (或等价地, $k^2+k'k+k'^2=a_2$) 的 $k'$ 都有 $c_{k'}=0$, 而根据定理 \ref{thm3-2-1} 有
+     \begin{equation*}
+         d_{2,k}=\sum\limits_{\substack{k'\neq k\in \Z,\\ k^2+mk+m^2=a_2}} c_{k'}e^{i(k'^3t_2+k'x_0)}+c_k e^{i(k^3t_2+kt_2)}=0
+     \end{equation*}
+     上式的第一部分由 $c_{k'}=0$ 可得 $\sum_{\substack{k'\neq k\in \Z,\\ k^2+mk+m^2=a_2}} c_{k'}e^{i(k'^3t_2+k'x_0)}=0$, 进而 $c_k=0$. 所以 $u_0=0$.
   
-  (2) $a_2-a_1<\frac{L^2}{4}$. 给定椭圆 $l_1:x^2+xy+y^2=a_1$ 和椭圆 $l_2:x^2+xy+y^2=a_2$, 若 $k\notin \Pi_{a_1}$, 则存在 $k'\neq k,k\in \Z$ 使得 $k^2+kk'+k'^2=a_1$, 所以 $(k,k')$ 是椭圆 $l_1$ 的整数解.
+  由上面的论证可知, 对任意的 $k\in \Z$, 有 $d_{1,k}=c_k^{i(k^3t_1+kx_1)}$ 或 $d_{2,k}=c_k^{i(k^3t_2+kx_2)}$ 成立, 所以 $|c_k|=|d_{1,k}|$ 或 $|c_k|=|d_{2,k}|$, 所以
+  \begin{equation*}
+      \sum_{k\in \Z}|c_k|^2\le \sum_{k\in \Z}|d_{1,k}|^2+\sum_{k\in\Z}|d_{2,k}|^2.
+  \end{equation*}
+  上式和式 \eqref{3-2-9} 可得不等式 \eqref{3-2-10} 成立.   
+  
+  (2) $a_2-a_1<L^2$. 给定椭圆 $l_1:x^2+xy+y^2=a_1$ 和椭圆 $l_2:x^2+xy+y^2=a_2$, 若 $k\in \Pi_{a_1}$, 则存在 $k'\neq k,k\in \Z$ 使得 $k^2+kk'+k'^2=a_1$, 所以 $(k,k')$ 是椭圆 $l_1$ 的整数解.
   
        \begin{figure}[ht]
         \centering
@@ -1154,7 +1252,7 @@ $$
            \draw (0,1.73)node[below right] {$k'$};
            \draw (0,2.17)node[below right] {$k''$};
         \end{tikzpicture}
-        \caption{椭圆 $x^2+xy+y^2=a_1$ 和 $x^2+xy+y^2=a_2$ 的图像.}
+        \caption{椭圆 $x^2+xy+y^2=a_1$ 和 $x^2+xy+y^2=a_2$.}
         \label{fig7}
     \end{figure}
   
@@ -1162,53 +1260,66 @@ $$
   \begin{equation}
       d(x):=\frac{\sqrt{4a_2-3x^2}-\sqrt{4a_1-3x^2}}{2}.
   \end{equation}
-  该函数是点 $(x,y)\in l_1$ 与 $(x,y')\in l_2, yy'>0$ 的距离, 易知 $d(x)$ 最大值为 $2\sqrt{a_2-a_1}$. 当 $2\sqrt{a_2-a_1}<L$ 时, 说明对任意的整点 $(k,k')\in l_1$, 满足 $(k,k'')\in l_2$ 的点都不是整点, 即 $k\in \Pi_{a_2}$ (见图 \ref{fig7}). 不等式 \eqref{3-2-10} 的证明同 (1).
-  
-  
-\iffalse  以及满足 $x^2+xy+y^2=a_1$ 的点 $A=(x,y)$, 作水平和竖直线段与 $x^2+xy+y^2=a_2$ 交于$B$ 和 $C$, 见图 \ref{fig7}. 设
-  $d_A=\min \lbrace|AB|,|AC|\rbrace$, 定义
-  \begin{equation*}
-      L:=\max\limits_{A\in l_1} d_A.
-  \end{equation*}
-  
-  下面我们说明, 当 $L<1$ 时定理的结论成立. 任取 $k\in \left[0,2\left(\frac{a}{3}\right)^{1 /2}\right]$ 且 $k\in \Z \backslash \left(\Pi_{a_1}\cup\Pi_{a_2}\right)$, 过点 $(k,0)$ 作竖直线交两个椭圆于 $E,F,G,H$, 如图 \ref{fig7} 所示. 由 $k\notin \Pi_{a_1}$ 知, $E$ 和 $G$ 至少有一个是整点, 同理 $F$ 和 $H$ 至少有一个整点. 但是由于 $|EF|,|GH|$ 的长度都小于 $1$, 所以整点只可能是仅有 $E$ 和 $H$ 或仅有 $F$ 和 $G$. 
-  \begin{enumerate}
-      \item [(i)] 若 $E$ 和 $H$ 为整点
-  \end{enumerate}
-  
-  则存在 $k'\neq k,k\in\Z$ 且 $(k,k')\in l_1$, 设 $E=(k,k')$. 过 $E$ 作竖直线交于 另一点 $G=(k,k'')$. 若 $|EF|<1$, 则说明 $F$ 的纵坐标不是整数, 此时若 $G$ 的纵坐标 $k''$ 也不是整点, 则说明
-  
+  该函数是点 $(x,y)\in l_1$ 与 $(x,y')\in l_2, yy'>0$ 的距离, 易知 $d(x)$ 最大值为 $\sqrt{a_2-a_1}$. 当 $\sqrt{a_2-a_1}<L$ 时, 说明对任意的整点 $(k,k')\in l_1$, 满足 $(k,k'')\in l_2$ 的点都不是整点, 即 $k\notin \Pi_{a_2}$ (见图 \ref{fig7}). 不等式 \eqref{3-2-10} 的证明同 (1).
+      \end{proof}
+      
+\begin{theorem}
+给定任意的 $T>0$, 考虑方程 \eqref{kdv-l} 的解. 设 $(t_1,x_1), (t_2,x_2),(t_3,x_3)\in \R\times \T$, $0<a_1<a_2<a_3$ 为三个不同的实数, 且满足 $a_3 - a_1 <1$. 则由 
+\begin{equation*}
+    u(t_1+t,x_1-a_1t)=u(t_2+t,x_2-a_2 t)=u(t_3+t,x_3-a_3t)=0, \quad \forall t\in (0,T)
+\end{equation*}
+可推出 $u$ 是平凡解, 即 $u_0=0$. 更确切地说, 存在一个常数 $C>0$ 使得不等式
+\begin{equation}
+            \sum_{k\in\Z} |c_k|^2\le C\int_0^T\sum\limits_{i=1}^3|u(t_i+t,x_i-a_it)|^2 \d t
+\end{equation}
+成立.
+\end{theorem}
+
+\begin{proof}
+给定椭圆 $l_i:x^2+xy+y^2=a_i,i=1,2,3$. 任取 $k\in \left[-2\left(\frac{a}{3}\right)^{1 /2},2\left(\frac{a}{3}\right)^{1 /2}\right]$, 思路同前一定理, 只要证明对任意的 $k$ 都存在一个 $i$ 使得 $k\notin \Pi_{a_i}$ 即可. 
+
+我们用反证法,假设 $k\in \left(\Pi_{a_1}\cap\Pi_{a_2}\cap \Pi_{a_3}\right)$, 过点 $(k,0)$ 作竖直线交三个椭圆于 $E,F,G,H,I,J$, 如图 \ref{fig8} 所示.
       \begin{figure}[ht]
         \centering
         \begin{tikzpicture}[scale=1.3]
            % axes 
-           \draw[very thick,->] (-4,0) -- (4,0) node[right] {$x$};
-           \draw[very thick,->] (0,-4) -- (0,4) node[above] {$y$};
+           \draw[very thick,->] (-4.5,0) -- (4.5,0) node[right] {$x$};
+           \draw[very thick,->] (0,-4.5) -- (0,4.5) node[above] {$y$};
            \draw (-0.2,-0.01) node[below] {\small $O$};
            \draw[rotate=-45] (0,0) ellipse (4 cm and 2.3094 cm);
            \draw[rotate=-45] (0,0) ellipse (4.5 cm and 2.598076 cm);
-           \draw[thick] (2.38,1.23) node[right]{$B$} -- (2,1.23)node[below]{$A$} -- (2,1.67) node[right]{$C$};
-           \draw (1.5,-4) -- (1.5,4);
-           \draw (-4,1.73)--(4,1.73);
-           \draw (1.5,1.73)node[below left] {$E$};
-           \draw (-4,2.17)--(4,2.17);
-           \draw (1.5,2.17)node[above right] {$F$};
+           \draw[rotate=-45] (0,0) ellipse (5 cm and 2.88675 cm);
+           \draw (1.5,-4.5) -- (1.5,4.5);
+           %\draw (-4,1.75)--(4,1.75);
+           %\draw (-4,2.16)--(4,2.16);
+           %\draw (-4, 2.53) -- (4, 2.53);
+           %\draw (-4,-3.27) -- (4,-3.27);
+           %\draw (-4,-3.65)--(4,-3.65);
+           %\draw (-4, -4.04) -- (4,-4.04);
+           \draw (1.5,1.75)node[below left] {$E$};;
+           \draw (1.5,2.16)node[below left] {$F$};
+           \draw (1.5,2.53)node[below left] {$G$};
            \draw (1.5,0)node[below right] {$k$};
-           \draw (0,1.73)node[below right] {$k'$};
-           \draw (0,2.17)node[below right] {$?$};
-           \draw (-4,-3.27) -- (4,-3.27);
-           \draw (-4,-3.65)--(4,-3.65);
-           \draw (1.5,-3.27)node[above right]{$G$};
-           \draw (1.5,-3.68)node[above right]{$H$};
+           \draw (1.5,-3.27)node[below left]{$H$};
+           \draw (1.5,-3.65)node[below left]{$I$};
+           \draw (1.5,-4.04)node[below left]{$J$};
+          \draw (1.5,1.75)node[circle, fill, inner sep=1.5pt]{};
+          \draw (1.5,2.16)node[circle, fill, inner sep=1.5pt]{};
+          \draw (1.5,2.53)node[circle,fill, inner sep=1.5pt]{};
+          \draw (1.5,-3.27)node [circle,fill,inner sep =1.5pt]{};
+          \draw (1.5,-3.65)node[circle,fill, inner sep=1.5pt]{};
+          \draw (1.5,-4.04)node [circle,fill,inner sep =1.5pt]{};
         \end{tikzpicture}
-        \caption{椭圆 $x^2+xy+y^2=a_1$ 和 $x^2+xy+y^2=a_2$ 的图像.}
-        \label{fig7}
+        \caption{椭圆 $l_1,l_2$ 和 $l_3$.}
+        \label{fig8}
     \end{figure}
+     由 $k\in \Pi_{a_1}$ 知, $E$ 和 $H$ 至少有一个是整点, 同理由 $k\in \Pi_{a_2}$ 知 $F$ 和 $I$ 至少有一个整点, 由 $k\in \Pi_{a_3}$ 知 $G$ 和 $J$ 至少有一个整点. 但由于 $|EF|,|GH|$ 的长度都小于 $1$ (利用条件 $a_3-a_1<1$ ), 所以 $E$ 和 $F$ 不可能同时为整点, $H$ 和 $I$ 也不可能同时为整点. 所以整点只可能只有 $E$ 和 $I$ 或 $F$ 和 $G$ 两种情况. 不妨设整点是 $E$ 和 $I$. 因为 $I$ 为整点, $|IJ|<1$, 所以 $J$ 不可能为整点, 所以 $G$ 必为整点. 这样我们就得到了 $E$ 和 $G$ 为整点. 这与 $|EG|<1$ 矛盾, 所以假设不成立, 即至少有一个 $P_{a_i}$ 使得 $k\notin \Pi_{a_i}$.
+\end{proof}
    \fi 
 
      
      
-    \end{proof}
+
     
    % \section{常数估计}
     %\section{经典结果的新证明}
