@@ -14,34 +14,52 @@
 \renewcommand\d{\ensuremath{\,\mathrm{d}}}
 \newcommand\Q{\ensuremath{\mathbb{Q}}}
 \newcommand\C{\ensuremath{\mathbb{C}}}
+\renewcommand\thesubfigure{(\alph{subfigure})}
 
 % Some theorem environment settings
-\usepackage{ntheorem,tikz,mathabx,tkz-euclide}
+\usepackage{ntheorem,tikz,mathabx,tkz-euclide,caption,subcaption}
 \theoremseparator{.}
 \newtheorem{theorem}{定理}[chapter]
 \newenvironment{proof}{{\noindent\itshape 证明}.}{\hfill $\Box$\par}
-\theorembodyfont{\upshape}
-\newtheorem{remark}{注}
 \newtheorem*{question}{Question}
-\newtheorem{definition}{定义}[chapter]
+
 \newtheorem{proposition}{性质}[chapter]
 \newtheorem{corollary}{推论}[chapter]
 \newtheorem{lemma}{引理}[chapter]
+\theorembodyfont{\upshape}
+\newtheorem{remark}{注}
+\newtheorem{definition}{定义}[chapter]
 \newtheorem{exercise}{Exercise}[section]
 \newtheorem*{solution}{Solution}
 \newtheorem{example}{例}
 
 
-\cugthesistitle{中国地质大学研究生学位论文 \LaTeXe{} 模板}{\cugthesis\ \LaTeXe{} 模板}
+\cugthesistitle{KdV方程能观测不等式}{KdV方程能观测不等式}
 \cugthesisauthor{王允磊}{Zhenyu Wang}
-\studentid{1201711347}
+\studentid{1201910835}
 \cugthesismajor{数学与应用数学}{Mathematics and Applied Mathematics}
 \cugthesisteacher{王明}{Ming Wang}
 \educatingunit{数学与物理学院}
 \cugthesisdate{2022}{1}
 
-\cugabstract{中文摘要}{English Abstract}
-\cugkeywords{关键字}{Keywords} 
+\cugabstract{本文主要研究线性 KdV 方程的能观测不等式, 即用某些时刻或时间段内函数在局部空间上的信息给出整个函数在某些赋范空间中的上界.   
+
+对于分布在全空间的线性 KdV 方程,  我们受到 Amrein-Berthier 不确定性原理证明的启发, 借助不依赖于非观测区域有界性的希尔伯特空间方法给出了两点时刻能观测不等式的一般判据.  由该判据, 我们首次得到了观测区域为可测集外的能观测不等式. 通过与唯一延拓性相结合, 我们还得到了非观测区域为一类满足一定密度条件且测度大小可以无限的集合类的两点时刻能观测不等式. 
+
+
+对于分布在周期情形下的线性 KdV 方程, 受到薛定谔方程关于移动观测点可观测性研究的启发, 我们首先得到了 KdV 方程关于单个移动观测点的可观测性, 并建立了相应的充分必要判据. 在此基础上, 我们对两个移动观测点的情形进行了详细地讨论, 这里的情形与薛定谔方程完全不同, 我们利用图论的描述方法 给出了两个移动观测点可观测性的等价陈述. 最后, 我们利用数的素因式分解和函数图像的性质给出了 KdV 方程关于两个移动观测点可观测性的判定定理
+
+最后, 我们利用HUM方法将上述能观测不等式中的结果转化为方程的可控性定理.}{
+We mainly consider the linear KdV equations on $\R$ and $\T$. In this paper, we present new observability inequalities, which give the upper bounds of the norm of the solutions through information obtained by some part of the region in some time.
+
+For the linear KdV equations on $\R$, inspired by the proof of the Amrein-Berthier uncertainty principle, we give the general criterion of observability inequalities by means of the Hilbert space method, which does not depend on the boundedness of the non-observable region. By this criterion, we obtained new observability inequalities at two time points from measuable sets. Combined with the unique continuation property, , we obtained new observability inequalities at two time points from some sets which satisfy some density condition, and these sets may have infinite measure.
+
+
+For the linear KdV equation on $\R$, inspired by the study of the Schrödinger equation on the observability of moving observation points, we give the observability of the KdV equation with respect to a single moving observation point, and established the corresponding sufficient and necessary criteria . Further, we discuss the situation of two moving observation points in detail. This situation is completely different from the Schrödinger equation, and we give the equivalent statement of the observability of two moving observation points through the language of graph theory. Finally, we use the prime factorization and the properties of the function to give the criterions for the observability of two moving points.
+
+Finally, we use the HUM method to convert the results above into the controllability theorems.
+}
+\cugkeywords{KdV 方程; 能观测不等式; 不确定性原理; 唯一延拓性; 紧算子; 可控性.}{KdV equations; observability inequality; uncertainty principle; unique continuation property; controllability.} 
 \begin{document}
     \makefrontpages 
     % 你的正文
@@ -54,8 +72,19 @@
     \end{equation}
     其中 $u=u(t,x)$是一个关于时间变量 $t$和空间变量$x$ 的实值函数. 它同时包含了色散项和非线性项, 是人们研究色散与非线性之间的相互作用的重要模型.
     
-    KdV 方程的非线性项 $u\partial_x u$让它在各个函数空间中适定性的证明变得不平凡. 关于 KdV 方程在Sobolev空间 $H^s(\R)$ 和 $H^s(\T)$ 中适定性的研究, 早期的结果见 \cite{bona1975initial, kato1979cauchy,cohen1979existence,ginibre1990existence,kenig1993well}. Bourgain 在1993年发表的论文\cite{bourgain1993fourier} 中, 利用新空间 $X^{s,b}$ 有效地刻画了方程的色散特性以及它与线性方程间的偏移量, 由此证明了方程在 $s\ge 0$ 时两种空间下的局部适定性. Kenig, Ponce 和 Vega 在此结果的基础上结合他们发现的双线性估计 \cite{kenig1996bilinear}, 将局部适定性在 $\R$ 和 $\T$ 情形下的范围分别扩大到 $s\ge -\frac{3}{4}$ 和 $s\ge -\frac{1}{2}$. Bourgain 建立了\cite{bourgain1997periodic} 初值具有有界傅里叶变换的全局适定性, 证明中用到了 KdV 系统的可积性.
+    KdV 方程有许多变种, 其中最简单的便是不带非线性项 $u\partial_xu$ 的线性 KdV 方程:
+    \begin{equation}
+        \partial_tu+\partial_x^3u=0.
+    \end{equation}
+    由于其舍去了非线性项, 通常情况下方程解的性质更易于得到, 然后在此基础上进一步研究方程 \eqref{kdv} 是否仍保持相应的性质. 另一方面, 许多时候非线性项并不局限于 $u\partial_x u$ 一种形式, 例如下面的方程
+    \begin{equation}
+        \partial_tu +\partial_x^3u+\partial_x f(u)=0,
+    \end{equation}
+    其中 $f(u)$ 为 $u$ 的多项式, 具有该形式的 $KdV$ 方程被称作广义 KdV 方程(gKdV). 在研究 KdV 方程的某些性质时, 非线性项 $\partial_x f(u)$ 的具体形式可能不会起到本质作用.
     
+    
+   \iffalse KdV 方程的非线性项 $u\partial_x u$让它在各个函数空间中适定性的证明变得不平凡. 关于 KdV 方程在Sobolev空间 $H^s(\R)$ 和 $H^s(\T)$ 中适定性的研究, 早期的结果见 \cite{bona1975initial, kato1979cauchy,cohen1979existence,ginibre1990existence,kenig1993well}. Bourgain 在1993年发表的论文\cite{bourgain1993fourier} 中, 利用新空间 $X^{s,b}$ 有效地刻画了方程的色散特性以及它与线性方程间的偏移量, 由此证明了方程在 $s\ge 0$ 时两种空间下的局部适定性. Kenig, Ponce 和 Vega 在此结果的基础上结合他们发现的双线性估计 \cite{kenig1996bilinear}, 将局部适定性在 $\R$ 和 $\T$ 情形下的范围分别扩大到 $s\ge -\frac{3}{4}$ 和 $s\ge -\frac{1}{2}$. Bourgain 建立了\cite{bourgain1997periodic} 初值具有有界傅里叶变换的全局适定性, 证明中用到了 KdV 系统的可积性. Tao 等人用 $I$--方法证明了 $s>-\frac{3}{4}$ 的全局适定性, 并要求解映射在 $H^s$上一致连续时 $-\frac{3}{4}$ 是临界点. Guo 则给出 \cite{guo2009global} 了全空间情形 $s=-\frac{3}{4}$ 的全局适定性.
+    \fi
     
     
     
@@ -97,7 +126,7 @@
     \label{fig2}
   \end{figure}
     
-    近五十年来, 人们对色散方程唯一延拓性和能观测不等式的建立做了大量的研究, 并发展出许多方法. 特别地, 这些方法被广泛运用于两类最重要的色散方程 -- 薛定谔方程和 KdV 方程当中. 这两类方程, 在唯一延拓性和能观测不等式的研究进展中, 所运用的方法相互影响, 所得到的的结果亦有许多相似之处. 一方面, 由于两类方程有许多共同点, 同一种形式的唯一延拓性或能观测不等式往往能够同时对两类方程建立. 另一方面, 它们在色散程度以及非线性项上的区别, 使得即使我们建立的是形式上相同的结果, 有时却必须采用完全不同的方法. 
+    近五十年来, 人们对色散方程唯一延拓性和能观测不等式的建立做了大量的研究, 并发展出许多方法. 特别地, 这些方法被广泛运用于两类最重要的色散方程 -- 薛定谔方程和 KdV 方程当中. 在唯一延拓性和能观测不等式的研究进展中, 这两大类方程所运用的方法相互影响, 所得到的的结果亦有许多相似之处. 一方面, 由于两类方程有许多共同点, 同一种形式的唯一延拓性或能观测不等式往往能够同时对两类方程建立. 另一方面, 它们在色散程度以及非线性项上的区别, 使得即使我们建立的是形式上相同的结果, 有时却必须采用完全不同的方法. 
     因此, 在接下来对唯一延拓性和能观测不等式发展历史的回顾中, 我们不仅讨论 KdV 方程, 也将薛定谔方程相应的发展历程一并对比讨论.
 \subsection{全空间情形}    
     上世纪八十年代, Saut 和 Scheurer \cite{saut1980theoreme,Saut1987UniqueCF} 考虑了一维全空间中, 形如
@@ -109,7 +138,7 @@
         R(t,x,D)=\sum_{j=0}^{2k}r_j(t,x)D^j,\quad r_j\in L_{\rm{loc}}^\infty(R,L^2_{\rm{loc}}(\R)).
     \end{equation*}
     他们用 Carleman 估计证明了: 若 $u\in L^2_{\rm{loc}}(\R,H_{\rm{loc}}^{2k+1}(\R))$ 是方程 $Lu=0$ 的解, 且在 $\R_t\times\R_x $ 的一个开子集 $\Omega$ 内为零, 则其在 $\Omega$ 的纵向区域内均为零. 该结论用于 KdV 方程可得, 当 $u\in L_{\rm{loc}}^\infty (\R, H^3(\R))$ 是方程 \eqref{kdv} 的解且在 $\R_t\times \R_x$ 的开子集内为零时, $u$ 恒为零. 另一方面, Tataru \cite{tataru1995carleman} 也用 Carleman 估计证明了一定条件下薛定谔方程的唯一延拓性. 进一步地, Isakov \cite{isakov1993carleman} 用 Carleman 估计证明了一大类具有非齐次主项发展方程的唯一延拓性. 
-    1992 年, Zhang \cite{Zhang1992UniqueCF} 利用傅里叶变换的逆散射方法以及 Miura 变换证明了 KdV 方程在一定条件下两点时刻同一半轴上的唯一延拓性: $u(t,x)$ 在 $\lbrace t_0,t_1\rbrace\times (c,\infty)$ (或 $\lbrace t_0,t_1\rbrace \times (-\infty,c)$) 上为零, $c$ 为一常数, 则 $u$ 恒为零. 1997年, Bourgain \cite{bourgain1997compactness} 利用实轴上具有紧支撑函数的傅里叶变换在复平面的解析性质, 证明了形如 
+    1992 年, Zhang \cite{Zhang1992UniqueCF} 利用傅里叶变换的逆散射方法以及 Miura 变换证明了 KdV 方程在一定条件下两点时刻同一半轴上的唯一延拓性: $u(t,x)$ 在 $\lbrace t_0,t_1\rbrace\times (c,\infty)$ (或 $\lbrace t_0,t_1\rbrace \times (-\infty,c)$) 上为零, $c$ 为一常数, 则 $u$ 恒为零. 1997年, Bourgain  \cite{bourgain1997compactness} 利用实轴上具有紧支撑函数的傅里叶变换在复平面的解析性质, 证明了形如 
     \begin{equation*}
         \partial_t u+ \partial_x^3u+\partial_x F(u) = 0, \quad F(u) \text{ 为多项式}
     \end{equation*}
@@ -138,7 +167,7 @@
     \end{equation}
     成立, 更详细的介绍见\cite{Havin2012, Jaming2007NazarovsUP,Nazarov1993}. 注意到薛定谔方程 \eqref{sch} 的解满足关系式\cite{Linares2014Ponce}
     \begin{equation}
-        (2it)^{\frac{n}{2}}e^{-i|x|^2 / 4t} u(x,t) = \widehat{e^{i|\cdot|^2 /4t}u_0}(x /2t), \quad\text{任意 }t>0.\label{idn}
+        (2it)^{\frac{n}{2}}e^{-i|x|^2 / 4t} u(x,t) = \widehat{e^{i|\cdot|^2 /4t}u_0}(x /2t), \quad\forall t>0.\label{idn}
     \end{equation}
     该等式说明解函数 $u(t,x)$ 在 $t$ 时刻与初始函数 $u_0$的傅里叶变换只相差一个模为 $1$ 的因子. 有了 \eqref{idn} 式, 能观测不等式 \eqref{schobs} 可以由 \eqref{uncertainty} 推出. 同样的方法可以得到如下观测区域为可测集外的能观测不等式: 设 $A,B\subset \R^n$为测度有限的可测集, 即 $|A|,|B|<\infty$, 则对任意的 $t>0$和任意满足方程 \eqref{sch} 的解都有
     \begin{equation}
@@ -147,17 +176,64 @@
     成立, 其中 $A^c$表示集合 $A$ 在全空间 $\R^n$ 中的补集, $C(t,|A|,|B|)$ 是常数.
     
     KdV方程作为最重要的色散方程之一,  一个自然的想法便是对其也建立类似的能观测不等式. 特别地, 我们的前两个主要结果便是对下述的线性KdV方程
-    \begin{equation}
-        \partial_t u+\partial_x^3 u=0,\quad u(0,x)=u_0(x)\in L^2(\R),\label{kdv-r}
-    \end{equation} 
+    \begin{equation*}
+        \partial_t u+\partial_x^3 u=0,\quad u(0,x)=u_0(x)\in L^2(\R),
+    \end{equation*} 
     尝试建立能观测不等式 \eqref{schobs-2}. 但是KdV方程 \eqref{kdv-r} 不同于薛定谔方程, 没有类似于式 \eqref{idn} 的关系式, 所以上述关于薛定谔方程的能观测不等式 \eqref{schobs} (亦或 \eqref{schobs-2})对KdV方程不适用. 然而就在不久之前, Ze Li 和 Ming Wang 证明了下述关于线性KdV方程 \eqref{kdv-r} 形如式 \eqref{schobs-2} 能观测不等式: 存在一个常数 $C>0$ 使得对于任意的 $r_1,r_2,t>0$ 和任意满足方程 \eqref{kdv-r} 的解 $u(t,x)\in C([0,\infty);L^2(\R))$, 都有
     \begin{equation}
         \int_{\R}|u_0(x)|^2\d x\le Ce^{Ct^{-\frac{4}{3}}\left(r_1^4+r_2^4\right)}\left(\int
         _{|x|\ge r_1}|u_0(x)|^2\d x+\int _{|x|\ge r_2}|u(t,x)|^2\d x\right).\label{kdvobs-1}
     \end{equation}
-    该能观测不等式的证明利用了初始函数为紧支撑的KdV方程解的定量解析光滑效应, 以及解析函数的某种定量唯一延拓不等式.
+    该能观测不等式的证明利用了初始函数为紧支撑的KdV方程解的定量解析光滑效应, 以及解析函数的某种定量唯一延拓不等式. 
    
-   \subsection{周期情形}
+   \subsection{有界情形}
+   在线性色散方程中, 由 HUM 方法可得精确可控性与能观测不等式的等价性. 而方程控制理论中精确可控性的研究早于能观测不等式的研究, 并且有着丰富的结果. 故接下来我们首先介绍能观测不等式早期以精确可控性的形式出现的研究进展. Russell 和 Zhang 首先考虑    \cite{russell1993controllability} 了线性 KdV 方程
+   \begin{equation}
+       \left\lbrace\begin{array}{ll}
+           \partial_t u+\partial_{x}^3u=0, & 0<x<2\pi,0<t<T, \\
+           \partial_x^k u(t,0)=\partial_x^ku(t,2\pi), & k\in \lbrace0,2\rbrace,\\
+           \partial_x u(t,2\pi)-\partial_x u(t,0)=h(t), & 0<t<T,
+       \end{array}\right.
+   \end{equation}
+   并在解满足 $[u]:=\int_0^{2\pi}u\d x=0$ 的情形下证明了某种精确可控性. Roiser \cite{rosier1997exact}在此基础上考虑了线性 KdV 方程
+   \begin{equation}
+       \left\lbrace
+       \begin{array}{ll}
+           \partial_t u+\partial_x u+\partial_x^3 u=0, &  \\
+           u(t,0)=u(t,L)=0, & \\
+           u_x(t,L)=h(t),&\\
+           u(0,x)=u_0,
+       \end{array}
+       \right.
+   \end{equation}
+   并证明了当 $L\notin \mathcal{N}:=\lbrace 2\pi \sqrt{\frac{k^2+kl+l^2}{3}}: k,l\in \N_+\rbrace$ 时, 控制项 $h(t)$ 的精确可控性.  在 \cite{coron2004exact} 中, 对临界值 $\mathcal{N}$ 中的情形进行了补充讨论, 并得到了初值和目标函数小范围内的精确可控性. 
+   
+   上述结果都建立在控制函数所在区域不随时间变化的情形下, 即能观测不等式的观测区域不随时间变化. 实际上, 人们发现当控制区域 $\omega=\omega(t)$ 随时间变化时, 可以减少观测区域的维度. Khapalov 首先给出了 \cite{khapalov1995exact,khapalov2017mobile}  抛物和双曲偏微分方程中观测点随时间移动的能观测性定理. Jaming 利用动力学方法给出了\cite{jaming2018dynamical} 几大类常见线性偏微分方程中观测点随时间移动的能观测性定理.
+   最近, Jaming 和 Komornik 考虑了\cite{jaming2020moving} 薛定谔方程
+   \begin{equation}
+   \left\lbrace
+   \begin{array}{ll}
+              \partial_t u+ i\partial_x^2 u = 0,  & (t,x)\in \R \times (0,2\pi),  \\
+       u(t,0)=u(t,2\pi), & t\in \R,\\
+       \partial_x(t,0)=\partial_x(t,2\pi), & t\in \R,\\
+       u(0,x)=u_0(x), & x\in (0,2\pi),
+   \end{array}
+   \right.
+   \end{equation}
+   并用非调和的傅里叶方法 (Ingham 不等式) 证明了当 $a\notin \Z$时, 对任意的 $T>0$ 和方程的解 $u(t,x)$ 都有能观测不等式
+   \begin{equation}
+       \int_0^{2\pi}|u_0|^2\d x \le C \int_0^T u(t_0+t,x_0-at) \d t
+   \end{equation}
+   成立. 在此之前, 人们给出的薛定谔有界区域情形下能观测不等式的观测区域都是一段区间, 并且不随时间移动. 
+ 
+ \section{主要结果}
+ 论文分成两大部分, 第一部分 (第二章) 主要介绍全空间下线性 KdV 方程两点时刻能观测不等式. 第二部分 (第三章) 主要介绍有界区域下线性 KdV 方程观测点随时间移动的可观测性.
+ 
+ 在第二章的全空间情形中, 第一节首先给出了两个新的两点时刻能观测不等式, 即定理 \ref{thm-1} 和定理 \ref{thm-2}. 定理 \ref{thm-1} 给出了观测区域为可测集外的两点时刻能观测不等式, 定理 \ref{thm-2} 给出了观测区域为满足某一密度条件 (见定义 \ref{def-1}) 和半轴条件的两点时刻能观测不等式. 第一节中用具体的例子表明前者突破了非观测区域有界的限制, 而后者则突破了非观测区域测度有限的限制, 所以这两个结果不互相包含. 由于两个定理的证明在大的框架下思想相同, 所以 第二节先给出了两点时刻能观测不等式的一般建立方法, 即性质 \ref{prop-T}. 第三节给出了定理 \ref{thm-1} 的完整证明, 第四节给出了定理 \ref{thm-2} 的完整证明.
+ 
+\iffalse 在第三章的有界区域情形中, 第一节首先介绍了 Ingham 不等式及其推广形式, 第二节介绍并证明观测点随时间移动的能观测性定理的主要结果, 即定理 \ref{thm3-2-1}, 定理 \ref{thm-3-2-2} 和定理 \ref{thm-3-2-3}. 定理 \ref{thm3-2-1}
+ 给出了单个观测点随时间移动的能观测不等式, 证明遵循了 \cite{jaming2020moving} 中对薛定谔方程的处理方法, 即利用观测线段所构成的函数其傅里叶系数的一致分离性. 定理 \ref{thm-3-2-2} 利用Eisenstein 整环的唯一分解性给出了观测区域为两个不同速率移动观测点的能观测不等式判定方法, 并给出了此情形下最简单的反例, 两个移动观测点观测值为零无法推出解函数为零. 由于基于整环唯一分解性的判定方法在大数情形下缺乏可行性, 定理 \ref{thm-3-2-3} 利用 KdV 方程的色散特性给出了更加容易的判定方法.
+ \fi 
 
     
 
@@ -198,15 +274,17 @@
     
     对集合 $A$, $|A|$ 表示 $A$ 的测度或者元素个数, 可结合上下文确定. 
     
-    Sobolev 空间. s
     
 
 
     % 更多内容
-    \chapter{在$\R$上的情形}
+    \chapter{全空间情形的可观测性}
     本章考虑全空间 $\R $上的线性KdV方程
+        \begin{equation}
+        \partial_t u+\partial_x^3 u=0,\quad u(0,x)=u_0(x)\in L^2(\R),\label{kdv-r}
+    \end{equation} 
     并建立相应的两点时刻能观测不等式能观测不等式. 
-    \section{能观测不等式}
+    \section{两点时刻能观测不等式}
   由于本章的两个结果所用的证明方法在结构上相同, 我们在本节先陈述这两个结果, 比较他们的异同, 它们的证明被放在本章的第二, 三, 四节. 
   
   下述定理是全空间情形的第一个结果.
@@ -262,7 +340,7 @@
     在定理 \ref{thm-1} 的证明中, $A$ 和 $B$ 均为测度有限可测集这一假设是必要的, 它在步骤(2)和(3)的证明中都需要被用到. 通过对步骤(2) 
     
     更进一步地观察, 我们发现, 如果 $A$ 和 $B$ 满足某种密度条件, 仍然可以保证算子 $T$ 是紧算子. 由于在该密度条件下, $A$ 和 $B$ 的测度可以不是有限的, 我们便可以建立KdV方程新的两点能观测不等式, 这就得到了我们的第二个主要结果. 为了陈述该结果, 我们首先给出关于一个关于集合密度的新定义.
-    \begin{definition}
+    \begin{definition}\label{def-1}
     设 $A\subset \R$ 为可测集, 若其满足条件
     \begin{equation*}
          \varlimsup_{x\to \infty}|A\cap[x,x+1]|\cdot|x|^{\alpha}\lesssim 1,
@@ -887,55 +965,12 @@ $$
 的解.
 由定理 \ref{thm-2} 关于 $A$ 和 $B$ 的假设: 对于 $\tau=0,t$, $\mathrm{supp }\,u(\tau,\cdot)\subset (-\infty,c)$ 或 $(c,\infty)$ 成立. 从而可以利用引理 \ref{lem-ucp}, 得到 $u(\tau,\cdot)\equiv 0$. 特别地, 这说明 $f=0$. 但这与 $\|f\|_{L^2(\R)}=1$ (见 \eqref{equ-51-5}) 矛盾. 这样我们便完成了定理的证明. $\hfill\Box$
 %
-   
-    \chapter{在 $\T$ 上的情形}
-    
-     本章我们考虑周期情形的线性KdV方程
-    \begin{align}\label{kdv-l}
-        \left\lbrace \begin{array}{ll}\partial_t u +\partial_x^3u=0, & (t,x)\in \R\times (0,2\pi), \\
-        \partial_x^ku(t,0)=\partial_x^k u(t,2\pi), & 0\le k\le 2,\\
-        u(0,x)=u_0(x), & x\in (0,2\pi).
-        \end{array}\right.
-    \end{align}
-    本章的主要结果是给出方程 \eqref{kdv-l} 新的能观测不等式.
-    \section{Ingham不等式}
-    设 $I$ 为一区间, 且 $|I|=2\pi$, 则我们可以将著名的Parseval公式写作
-    \begin{equation*}
-        \frac{1}{|I|} \int_I \left| \sum_{k\in \Z} c_k e^{ikx}\right|^2 \d x = \sum_{k\in \Z} |c_k|^2.
-    \end{equation*}
-    该公式对于 $|I|=2k\pi, k\in \N$ 也正确, 由此易知, 对于任意满足 $2k\pi <|I|<(2k+2)\pi,k\in\N$ 的区间 $I$, 都有
-    \begin{equation*}
-        2k\pi \sum_{k\in \Z}|c_k|^2 \le \int _I \left| \sum_{k\in \Z}c_ke^{ikx} \right|^2\d x \le (2k+2)\pi  \sum_{k\in\Z }|c_k|^2. 
-    \end{equation*}
-    自然地, 给定一个区间 $I$, 是否存在常数 $c,C>0$, 使得对任意的平方可和序列 $\left\{c_k\right\}_{k\in \Z}$都有关系式
-    \begin{equation}
-        c \sum_{k\in \Z} |c_k|^2 \le \int _I \left| \sum_{k\in \Z} c_k e^{ikx} \right|^2 \d x \le C \sum_{k\in \Z}|c_k|^2
-    \end{equation}
-    或其等价形式
-    \begin{equation}\label{3-1-2}
-        \int _I \left| \sum_{k\in \Z} c_k e^{ikx} \right|^2 \d x\asymp \sum_{k\in \Z}|c_k|^2
-    \end{equation}
-    成立呢? 若成立, 则上式可看作Parseval公式在区间 $I$ 上的推广. 
-    
-    为了建立上述Parseval公式的推广, Ingham \cite{Ingham1936} 证明了下述定理
-    \begin{theorem}\label{thm-ingham}
-    设 $\Lambda$ 为一族实数集, 且该实数族满足条件
-    \begin{equation}\label{3-1-1}
-        \gamma(\Lambda)=\inf\lbrace |\lambda_1-\lambda_2|: \lambda_1\neq \lambda_2, \lambda_1,\lambda_2\in \Lambda\rbrace>0,
-    \end{equation}
-     则对任意满足 $|I|>2\pi /\gamma$ 的区间 $I$都有关系式 \eqref{3-1-2} 成立.
 
-我们称满足条件 \eqref{3-1-1} 的实数集为一致分离集.
-    \end{theorem}
-    
-    条件 $|I|> 2\pi /\gamma$ 是对所有满足 \eqref{3-1-1} 实数族的一致最佳条件, 但在某些特殊情形下, 这一条件可以被改进. Haraux \cite{Haraux1989} 给出了下述定理.
-    
-    \begin{theorem}\label{thm-haraux}
-    设 $\Lambda$ 为一致分离集, 且 $F\subset \Lambda$ 为有限子集, 则关系式 \eqref{3-1-2} 在 $|I|> \frac{2\pi}{\gamma(\Lambda \backslash F)}$ 的条件下也成立.
-    \end{theorem}
-    
-    \section{能观测不等式}
-    
+   \input{chapter3}
+   \input{chapter4}
+
+\iffalse    \section{能观测不等式}
+    首先我们给出关于一个移动观测点的能观测不等式成立的条件, 下述定理的证明遵循了 \cite{jaming2020moving} 中对薛定谔方程关于移动观测点能观测性的证明.
     \begin{theorem}\label{thm3-2-1}
     设 $(t_0,x_0)\in \R\times \T$, $a\in \R$. 则方程 \eqref{kdv-l} 的解满足:
     \begin{enumerate}
@@ -965,6 +1000,11 @@ $$
              c_me^{i(m^3t_0+mx_0)},\quad k\in \Z.
         \end{equation*}
         实际上, 当 $|k|> 2\left(\frac{a}{3}\right)^{1 /2}$ 时, 有 $d_k=c_k e^{i (k^3t_0+kx_0)}$.
+        
+        此时存在 $u\neq 0$ 使得
+        \begin{equation*}
+            u(t_0+t,x_0-at)=0, \quad\forall t\in \R.
+        \end{equation*}
     \end{enumerate}
     \end{theorem}
     
@@ -1037,22 +1077,232 @@ $$
         \sum_{k\in \Z}|d_k|^2\asymp  \sum_{k\in \Pi_a}|d_k|^2+\sum_{l\in \lbrace j^3-aj: j \notin \Pi_a,j\in\Z\rbrace }|e_l|^2.
     \end{equation}
     由式 \eqref{3-2-5} 和式 \eqref{3-2-6} 可得关系式 \eqref{3-2-3}.
+    
+    固定 $k\in \Pi_a$, 
+    \begin{enumerate}
+    \item [(i)] 解函数为实值函数的情形. 若 $a\neq k^2$, 设 $m\neq k$ 且 $k^3-ak=m^3-am$, 则易知 $m\neq -k$, 令
+    \begin{align*}
+        u_0(x)&= e^{-i(k^3t_0+kx_0)} e^{ikx} + e^{i(k^3t_0+kx_0)} e^{-ikx}\\
+        &-e^{-i(m^3t_0+mx_0)}e^{imx}-e^{i(m^3t_0+mx_0)}e^{-imx},
+    \end{align*}
+    则 $u\neq 0$ 且
+    \begin{equation*}
+        u(t_0+t,x_0-at)=0,\quad\forall t\in \R.
+    \end{equation*}
+    若 $a=k^2$, 令
+    \begin{equation*}
+        u_0(x)=e^{-i(k^3t_0+kx_0)}e^{ikx} + e^{i(k^3t_0+kx_0)}e^{-ikx}-2,
+    \end{equation*}
+    则 $u\neq 0$ 且
+    \begin{equation*}
+        u(t_0+t,x_0-at)=0,\quad\forall t\in\R.
+    \end{equation*}
+    \item [(ii)] 解函数为复值函数. 则函数的选取更加简单, 可在 $a\neq k^2$ 时取 $$u_0(x)= e^{-i(k^3t_0+kx_0)} e^{ikx}-e^{-i(m^3t_0+mx_0)}e^{imx}$$以及在 $a=k^2$ 时取 $$u_0(x)=e^{-i(k^3t_0+kx_0)}e^{ikx} -1.$$
+    \end{enumerate}
     \end{proof}
     
-    \begin{remark}
+
     式 \eqref{3-2-2} 可等价地写作
     \begin{equation*}
         \int_{\T}|u_0(x)|^2\d x\le C\int_0^T\int_{\T}\delta(x-at)|u(t,x)|^2\d x\d t.
     \end{equation*}
     该式可看作KdV方程 \eqref{kdv-l} 的解关于观测点随时间移动的能观测不等式. 例如, 令 $a=0\notin \Gamma$, 则有
     \begin{equation*}
-        \int_{\T}|u_0(x)|^2\d x\le C\int_{t_0}^{t_0+T} |u(t,x_0)|^2\d t.
+        \int_{\T}|u_0(x)|^2\d x\le C\int_{t_0}^{t_0+T} |u(t,x_0-at)|^2\d t.
     \end{equation*}
-    \end{remark}
+ 
+
+ {\bf 集合 $\Gamma$ 的刻画}. 根据 $\Gamma$ 的定义, $a\in\Gamma$ 当且仅当 $x^2+xy+y^2=a$ 有不在对角线上的整数解. 实际上, 若正整数 $a$ 可以写作 $a=m^2+m\cdot m+m^2=3m^2$, 则其一定可以写作 $a=m^2+m\cdot (-2m)+(-2m)^2$, 所以 $a\in\Gamma$ 当且仅当 $x^2+xy+y^2=a$ 有整数解. 而对于 $x^2+xy+y^2=a$ 这样的不定方程的解的问题.
+ 
+ 实际上, 设 $\omega=e^{\frac{2\pi i}{3}}$, 对任意满足 $p\equiv 1\pmod{3}$ 的素数 $p$, 可将其表示为 $p=(m-n\omega)(m-n\overline{\omega})$. 由 $\Z$ 和 $\omega$ 扩张成的环 $\Z[\omega]$ 称作 Eisenstein 整环, 它是一个主理想整环, 其中的素因子称为 Eisenstein 素数. Fermat 等人证明了, $p=m^2+mn+n^2,m,n\in\Z$ 当且仅当素数 $p$ 是 Eisenstein 素数 $m-n\omega$的模方, 即$p=(m-n\omega)(m-n\overline{\omega})$. 我们可以将其概括为下述定理.
+ 
+  \begin{theorem}\label{thm-prime}
+ 素数 $p$ 可写作
+ \begin{equation*}
+     p=m^2+mn+n^2,\quad m,n\in\Z,
+ \end{equation*}
+ 当且仅当 $p\equiv 1\pmod{3}$ 或 $p=3$, 且这样的分解在 $m\ge n\ge 0$ 时是唯一的.
+ \end{theorem}
+ 
+ 由定理 \ref{thm-prime}易得下述推论.
+ \begin{corollary}\label{crc-1}
+ 对任意的正整数 $a$, 它可以写作
+ \begin{equation*}
+     a=m^2+mn+n^2,\quad m,n\in\Z,
+ \end{equation*}
+  当且仅当其满足下述的素数分解
+ \begin{equation}\label{prime-decomp}
+     a=3^r\prod_{i=1}^{r_1}p_i^{s_i}\prod_{j=1}^{r_2}q_i^{t_j},
+ \end{equation}
+ 其中 $p_i\equiv 1\pmod{3}, q_j\equiv 2\pmod{3}, 2|t_j,i=1,\cdots,r_1,j=1,\dots,r_2$.
+ \end{corollary}
+
+ \begin{corollary}
+ $a\in\Gamma$ 当且仅当 $a\equiv 1\pmod{3}$ 或 $a=3^rm,r\in \N_{+},m\equiv 1 \pmod{3}$.
+ \end{corollary}
+ \begin{corollary}
+ 若 $a\in \Gamma$, 则
+ \begin{equation}
+     |\Pi_a|=\cdot 2^r\prod_{i=1}^r3^{s_i},
+ \end{equation}
+ 其中 $r,s_i$ 同推论 \ref{crc-1}.
+ \end{corollary}
+ \begin{proof}
+ 首先我们考虑 $a$ 为素数 $p$ 的情形, 并设 $m^2+mn+n^2=p$ 的整数解 $(m,n)$ 的第一个分量 $m\ge 0$.
+ \begin{enumerate}
+     \item [(i)] $p=3$. 则满足 $m^2+mn+n^2=3$ 的全部整数解有
+     \begin{equation*}
+         (1,1),(1,-2),(-1,-1),(-1,2).
+     \end{equation*}
+     所以 $|\Pi_3|=4$.
+     \item [(ii)] $p\equiv 1\pmod{3}$. 设 $(m,n)$ 为满足 $m^2+mn+n^2=p,m> n\ge 0$的一个整数解, 则全部整数解为
+     \begin{equation*}
+         \begin{array}{cc}
+           (m,n),(m,-(m+n)),(-m,-n),(-m,m+n),(-(m+n),m),(m+n,-m)   &  \\
+            (n,m),(n,-(m+n)),(-n,-m),(-n,m+n),(-(m+n),n),(m+n,-n).  & 
+         \end{array}
+     \end{equation*}
+     所以 $m,n,-m,-n,m+n,-(m+n)\in \Pi_p$ $|\Pi_p|=6$.
+ \end{enumerate}
+ 若 $a$ 可写作推论 \ref{crc-1} 中的形式, 则由整环 $\Z [\omega]$ 的唯一分解性质可得
+ $$|\Pi_a|=2(r+1)\times 6\prod_{i=1}^{r_1}\left(s_i+1\right).$$
+ \end{proof}
+
     
-    定理 \ref{thm3-2-1} 是KdV方程 \eqref{kdv-l} 关于一个线段的能观测性, 接下来我们讨论两个或多个线段的可观测性. 当 $a\le 0$ 时, 线段的能观测性已经被定理 \ref{thm3-2-1} 证明, 在接下来对多线段的讨论中, 我们只需要考虑 $ a>0 $ 且为正整数, 或者更准确地说, $a\in \Gamma$ 的情形, . 
+定理 \ref{thm3-2-1} 是KdV方程 \eqref{kdv-l} 关于一个线段的能观测性, 接下来我们讨论两个线段的可观测性. 当 $a\le 0$ 以及 $a$ 不为整数 ($\Gamma$ 中的元素一定是大于 $0$ 的整数) 时, 线段的能观测性已经被定理 \ref{thm3-2-1} 证明, 在后续对两个线段的讨论中, 我们只需要考虑 $ a>0 $ 且为正整数, 或者更准确地说, $a\in \Gamma$ 的情形. 
     
-    在定理 \ref{thm3-2-1} 中, 我们对序列 $\lbrace k^3-ak\rbrace$ 进行过讨论, 为方便后续的讨论, 我们将函数 $y=x^3-ax$ 的性质整理如下:
+\begin{definition}
+设 $a\in \Z$, $p$ 为素数, 定义 $e_p(a)$ 为 $a$ 的素数分解中 $p$ 的指数, 它满足
+\begin{equation*}
+    p^{e_p(a)}|a,p^{e_p(a)+1}\nmid a.
+\end{equation*}
+\end{definition}
+ \begin{theorem}\label{thm-3-2-2}
+ 给定任意的 $T>0$, 考虑方程 \eqref{kdv-r} 的解. 设 $(t_1,x_1),(t_2,x_2)\in \R\times \T$, $a_1,a_2$ 为两个不同的正整数. 
+ \begin{enumerate}
+     \item[\rm{(1)}] 若存在 $p\equiv 2\pmod{3}$ 以及正整数 $e\in \N_{+}$ 使得 $e_p(a_1)\neq e_p(a_2)$, 则由 
+    \begin{equation*}
+        u(t_1+t,x_1-a_1t)=u(t_2+t,x_2-a_2t)=0,\quad \forall t\in (0,T))
+    \end{equation*}
+    可推出$u$ 是平凡解, 即 $u_0=0$. 更确切地说, 存在一个常数 $C>0$ 使得不等式   
+    \begin{equation}
+        \sum_{k\in\Z} |c_k|^2\le C\int_0^T|u(t_1+t,x_1-a_1t)|^2+|u(t_2+t,x_2-a_2t)|^2 \d t \label{3-2-10}
+    \end{equation}
+    \item [\rm{(3)}] 存在 $a_1,a_2\in \Gamma$ 使得 $u\neq 0$, 且
+     \begin{equation*}
+        u(t_1+t,x_1-a_1t)=u(t_2+t,x_2-a_2t)=0,\quad \forall t\in (0,T).
+    \end{equation*}
+ \end{enumerate}
+ \end{theorem}
+ \begin{proof}
+    定义
+    \begin{equation*}
+        \begin{array}{ll}
+                        d_{1,k}=\sum\limits_{\substack{
+                m\in \Z,  \\
+                k^2+mk+m^2 = a_1 }} 
+             c_me^{i(m^3t_1+mx_1)}, & k\in \Z, \\
+                        d_{2,k}=\sum\limits_{\substack{
+                m\in \Z,  \\
+                k^2+mk+m^2 = a_2 }} 
+             c_me^{i(m^3t_2+mx_2)}, & k\in \Z. 
+        \end{array}
+    \end{equation*}
+    由定理 \ref{thm3-2-1} 可得
+\begin{equation}\label{3-2-7}
+    \int_0^T |u(t_1+t,x_1-a_1t)|^2\d t\asymp \sum_{k\in\Z}^\infty|d_{1,k}|^2,
+\end{equation}
+以及
+\begin{equation}\label{3-2-8}
+    \int_0^T |u(t_2+t,x_2-a_2t)|^2\d t\asymp \sum_{k\in\Z}^\infty|d_{2,k}|^2.
+\end{equation}
+式 \eqref{3-2-7} 和 式 \eqref{3-2-8}相加可得
+\begin{equation}\label{3-2-9}
+  \sum_{k\in\Z}^\infty|d_{1,k}|^2+\sum_{k\in\Z}^\infty|d_{2,k}|^2\asymp \int_0^T |u(t_1+t,x_1-a_1t)|^2 + |u(t_2+t,x_2-a_2t)|^2\d t
+\end{equation}
+ 
+(1) 不妨令 $e_p(a_1)>e_p(a_2)$, 我们只需证明 $k\in \Pi_{a_1}$ 时 $k\notin \Pi_{a_2}$ 即可推出 $u=0$. 令 $a_1=k^2+km+m^2,k\neq m$, 因为 $a_1\in \Gamma$, 所以可令 $e_p(a_1)=2e$, 则$p^{2e} |a_1$. 因为 $p\equiv 1 \pmod{3}$,  其为Eisenstein 素数, 所以在整环 $Z[\omega]$ 中 $p^{e}|k+m\omega$ 且 $p^e | k-m\omega$. 下面我们用反证法, 假设 $k\in \Pi_{a_2}$, 则存在 $l\neq k$ 使得 $a_2=k^2+kl+l^2$ 成立. 由 $p^{2e} \nmid a_2$ 可知 $p^e \nmid k$, 这与 $p^e| k$ 矛盾, 所以 $k\notin \Pi_{a_2}$. 
+
+上述证明说明对任意整数 $k$ 必有 $|c_k|=|d_{1,k}|$ 或 $|c_k|=|d_{2,k}|$, 所以  
+  \begin{equation*}
+      \sum_{k\in \Z}|c_k|^2\le \sum_{k\in \Z}|d_{1,k}|^2+\sum_{k\in\Z}|d_{2,k}|^2.
+  \end{equation*}
+  上式和式 \eqref{3-2-9} 可得不等式 \eqref{3-2-10} 成立.
+
+(2) 首先我们考虑可能的最简单情形, 即存在 $m,n,l,s\in \Z$ 满足不定方程组 
+\begin{equation}\label{dio}
+    \left\lbrace\begin{array}{ll}
+        m^2+ms+s^2=a_1, & m\neq s, \\
+        n^2+nl+l^2=a_1, & n\neq l,\\
+        m^2+mn+n^2=a_2, & m\neq n,\\
+        s^2+sl+l^2=a_2, & s\neq l,
+    \end{array}\right.
+\end{equation}
+ 设$x=x_1+a_1 t$ 与 $x=x_2+a_2t$ 相交于 $(t_0,x_0)$.此时只要令
+\begin{align*}
+    u_0(x) &= e^{-imx_0+m^3t_0}e^{imx}-e^{-i(sx_0+s^3t_0)}e^{isx}-e^{-i(nx_0+n^3t_0}e^{inx}+e^{-i(lx_0+l^3t_0)}e^{ilx}.
+\end{align*}
+则
+\begin{align*}
+    u(t,x) &=e^{-i(mx_0+m^3t_0)}e^{imx}e^{im^3t}-e^{-i(sx_0+s^3t_0)}e^{isx}e^{is^3t}\\
+    &-e^{-i(nx_0+n^3t_0}e^{inx}e^{in^3t}+e^{i(lx_0+l^3t_0)}e^{ilx}e^{il^3t}.
+\end{align*}
+带入 $t_0+t,x_0-at$ 可得 
+\begin{align*}
+    u(t_0+t,x_0-at) &= e^{-i(mx_0+m^3t_0)}e^{im(x_0-at)}e^{im^3(t_0+t)}-e^{-i(sx_0+s^3t_0)}e^{is(x_0-at)}e^{is^3(t_0+t)}\\
+    &-e^{-i(nx_0+n^3t_0}e^{in(x_0-at)}e^{in^3(t_0+t)}+e^{i(lx_0+l^3t_0)}e^{il(x_0-at)}e^{il^3(t_0+t)}\\
+    &= e^{i(m^3-am)t} -e^{i(s^3-as)t}-e^{i(n^3-an)t}+e^{i(l^3-al)t}.
+\end{align*}
+当 $a=a_1$ 时, 由其满足的不定方程组 \eqref{dio} 前两式可知上式最后一行第一项与第二项相消, 第三项与第四项相消. 同理, 当 $a=a_2$ 时, 由不定方程组的后两式可知上式最后一行第一项与第三项相消, 第二项与第四项相消.
+
+接下来便是找到满足不定方程组 \eqref{dio} 的整数 $a_1,a_2,m,s,n,l$. 简单的计算可知, 当
+\begin{equation*}
+    a_1=7,a_2=13,m=1,s=-3,n=3,l=-1
+\end{equation*}
+时, 是不定方程组 \eqref{dio} 的解. 若要求函数为实值函数, 取初始函数为 $u_0+\overline{u_0}$ 即可.
+ \end{proof}
+ 
+ 对于 $a_1,a_2\in \Gamma$ 的情形, 我们只需要讨论 $\Pi_{a_1}\cap \Pi_{a_2}\neq \emptyset$ 中的 $k$ 以及相应 $c_k$ 的取值情形. 为了后续定理叙述的方便, 我们将 $\Pi_{a_1}\cap \Pi_{a_2}$ 中的数视作节点, 若其中存在两个不同的节点 $k$ 和 $k'$ 使得 $k^3-a_1k=k'^3-a_1k$ (或 $k^2+kk'+k'^2=a_1$), 我们在两个节点之间用红色的线段连接. 类似地, 若 $\Pi_{a_1}\cap \Pi_{a_2}$ 存在两个不同的节点 $l$ 和 $l'$ 使得 $l^3-a_2l=l'^3-a_2l$, 我们在两个节点之间用蓝色线段连接. 这些节点和线段就构成了节点个数为 $|\Pi_{a_1}\cap \Pi_{a_2}|$ 且具有二染色边的图, 记作 $G(a_1,a_2)$. 例如定理 \ref{thm-3-2-2} 中, 节点 $1,-3,3,-1$ 之间的连线可表示为图 \ref{red-blue-example}.
+ 
+ \begin{figure}[htbp]
+     \centering
+     \begin{tikzpicture}
+     \draw (0,0)node[circle, fill, inner sep=1.5pt]{};
+     \draw (0,0)node[below left] {$-3$};
+     \draw (0,2)node[circle, fill, inner sep=1.5pt]{};
+     \draw (0,2)node[above left] {$1$};
+     \draw (2,0)node[circle, fill, inner sep=1.5pt]{};
+     \draw (2,0)node[below right] {$-1$};
+     \draw (2,2)node[circle, fill, inner sep=1.5pt]{};
+     \draw (2,2)node[above right] {$3$};
+     \draw[red] (0,0)--(0,2);
+     \draw[red] (2,0)--(2,2);
+     \draw [blue] (0,0)--(2,0);
+     \draw[blue] (0,2)--(2,2);
+     \end{tikzpicture}
+     \caption{图 $G(7,13)$ 中节点 $1,-3,3,-1$ 构成的子图}
+     \label{red-blue-example}
+ \end{figure}
+ 对于一个图 $G(a_1,a_2)$, 若存在红蓝交错的圈, 且圈中每个节点只被圈经过一次, 则称该圈为交错简单圈. 图 \ref{red-blue-example} 就是一个交错简单圈. 由此受到启发, 我们有下述关于两个线段能观测性的充要判定条件.
+ 
+\begin{theorem}
+给定任意的 $T>0$, 考虑方程 \eqref{kdv-r} 的解. 设 $(t_1,x_1),(t_2,x_2)\in \R\times \T$, $a_1,a_2$ 为两个不同的正整数且 $a_1,a_2\in \Gamma$, $\Pi_{a_1}\cap \Pi_{a_2}\neq \emptyset$. 则下述两个命题等价:
+\begin{enumerate}
+    \item[\rm{(1)}] 由 
+    \begin{equation*}
+        u(t_1+t,x_1-a_1 t)=u(t_2+t,x_2-a_2t)=0,\quad \forall t\in \R
+    \end{equation*}
+    可推出 $u$ 是平凡解,  且不等式 \eqref{3-2-10} 成立.
+    \item [\rm{(2)}] 图 $G(a_1,a_2)$ 中有交错简单圈.
+\end{enumerate}
+\end{theorem}
+
+
+
+ 
+ 上述讨论是基于 $a_1$ 和 $a_2$ 在 $\Z [\omega]$ 中的唯一分解. 实际上, 对 $\Z [\omega]$ 中的大数进行唯一分解是一件困难的事情. 接下来我们将给出一个更加容易的判定准则. 
+    
+在定理 \ref{thm3-2-1} 中, 我们对序列 $\lbrace k^3-ak\rbrace$ 进行过讨论, 为方便后续的讨论, 我们将函数 $y=x^3-ax$ 的性质整理如下:
     \begin{enumerate}
         \item [(1)] 该函数有两个极值点, 分别是 $x=-\left(\frac{a}{3}\right)^{1 /2}$ 和 $x=\left(\frac{a}{3}\right)^{1 /2}$, 极值分别是 $2\left(\frac{a}{3}\right)^{3 /2}$ 和 $-2\left(\frac{a}{3}\right)^{3 /2}$. 
         \item[(2)] 该函数与 $y=2\left(\frac{a}{3}\right)^{3 /2}$ 轴有两个交点, 分别是 $\left(-\left(\frac{a}{3}\right)^{1 /2},2\left(\frac{a}{3}\right)^{3 /2}\right)$ 和 $\left(2\left(\frac{a}{3}\right)^{1 /2},2\left(\frac{a}{3}\right)^{3 /2}\right)$.
@@ -1080,49 +1330,20 @@ $$
         \caption{函数 $y=x^3-ax$, $a>0$ 的图像.}
         \label{fig5}
     \end{figure}
-    上述性质具体可见图 \ref{fig5}. 
-
-        \begin{theorem}
-    给定任意的 $T>0$, 考虑方程 \eqref{kdv-l} 的解. 设 $(t_1,x_1), (t_2,x_2)\in \R\times \T$, $0<a_1<a_2$ 为两个不同的正整数, 且满足 $a_2>4a_1$. 则由 
+    上述性质具体可见图 \ref{fig5}. 根据这些性质, 我们可以得到下述判定定理.
+        \begin{theorem}\label{thm-3-2-3}
+    给定任意的 $T>0$, 考虑方程 \eqref{kdv-l} 的解. 设 $(t_1,x_1), (t_2,x_2)\in \R\times \T$, $a_1,a_2$ 为两个不同的正整数, 且满足 $a_2>4a_1>0$. 则由 
     \begin{equation*}
         u(t_1+t,x_1-a_1t)=u(t_2+t,x_2-a_2t)=0,\quad \forall t\in (0,T)
     \end{equation*}
-    可推出$u$ 是平凡解, 即 $u_0=0$. 更确切地说, 存在一个常数 $C>0$ 使得不等式
-    \begin{equation}\label{3-2-10}
-        \sum_{k\in\Z} |c_k|^2\le C\int_0^T|u(t_1+t,x_1-a_1t)|^2+|u(t_2+t,x_2-a_2t)|^2 \d t
-    \end{equation}
+    可推出$u$ 是平凡解, 即 $u_0=0$. 更确切地说, 存在一个常数 $C>0$ 使得不等式\eqref{3-2-10}
     成立.
     \end{theorem}
     \begin{proof}
     首先我们注意到, 对任意给定的整数 $k$, 若对所有方程 \eqref{kdv-l} 的解都满足定理条件可推出 $c_k=0$, 则一定也可以推出 $c_{-k}=0$. 事实上, 若存在 $c_{-k}\neq 0$ 且满足定理条件的解 $u(t,x)$, 令 $v(t,x)=\overline{u(t,x)}$, 则可得 $v(t,x)$ 的第 $k$ 个傅里叶系数不为零.
     所以, 我们只需要考虑 $k\ge 0$ 的情形.
-    
-    定义
-    \begin{equation*}
-        \begin{array}{ll}
-                        d_{1,k}=\sum\limits_{\substack{
-                m\in \Z,  \\
-                k^2+mk+m^2 = a_1 }} 
-             c_me^{i(m^3t_1+mx_1)}, & k\in \Z, \\
-                        d_{2,k}=\sum\limits_{\substack{
-                m\in \Z,  \\
-                k^2+mk+m^2 = a_2 }} 
-             c_me^{i(m^3t_2+mx_2)}, & k\in \Z. 
-        \end{array}
-    \end{equation*}
-    由定理 \ref{thm3-2-1} 可得
-\begin{equation}\label{3-2-7}
-    \int_0^T |u(t_1+t,x_1-a_1t)|^2\d t\asymp \sum_{k\in\Z}^\infty|d_{1,k}|^2,
-\end{equation}
-以及
-\begin{equation}\label{3-2-8}
-    \int_0^T |u(t_2+t,x_2-a_2t)|^2\d t\asymp \sum_{k\in\Z}^\infty|d_{2,k}|^2.
-\end{equation}
 
-式 \eqref{3-2-7} 和 式 \eqref{3-2-8}相加可得
-\begin{equation}\label{3-2-9}
-  \sum_{k\in\Z}^\infty|d_{1,k}|^2+\sum_{k\in\Z}^\infty|d_{2,k}|^2\asymp \int_0^T |u(t_1+t,x_1-a_1t)|^2 + |u(t_2+t,x_2-a_2t)|^2\d t
-\end{equation}
+
     
       我们需要证明对任意的 $k\in\Z$, 都有 $c_k=0$. 固定 $k\in \Z$, 若 $k\notin \Pi_{a_1}\cap \Pi_{a_2}$, 则由定理 \ref{thm3-2-1} 可知 $c_k=0$. 因此在接下来的证明中我们设 $k\in  \left(\Pi_{a_1}\cap \Pi_{a_2}\right)$. 此时只需要考虑 $k\in \left[0, 2\left(\frac{a_1}{3}\right)^{1 /2}\right]$ 的情形, 见图 \ref{fig6}.
           \begin{figure}[ht]
@@ -1316,9 +1537,16 @@ $$
      由 $k\in \Pi_{a_1}$ 知, $E$ 和 $H$ 至少有一个是整点, 同理由 $k\in \Pi_{a_2}$ 知 $F$ 和 $I$ 至少有一个整点, 由 $k\in \Pi_{a_3}$ 知 $G$ 和 $J$ 至少有一个整点. 但由于 $|EF|,|GH|$ 的长度都小于 $1$ (利用条件 $a_3-a_1<1$ ), 所以 $E$ 和 $F$ 不可能同时为整点, $H$ 和 $I$ 也不可能同时为整点. 所以整点只可能只有 $E$ 和 $I$ 或 $F$ 和 $G$ 两种情况. 不妨设整点是 $E$ 和 $I$. 因为 $I$ 为整点, $|IJ|<1$, 所以 $J$ 不可能为整点, 所以 $G$ 必为整点. 这样我们就得到了 $E$ 和 $G$ 为整点. 这与 $|EG|<1$ 矛盾, 所以假设不成立, 即至少有一个 $P_{a_i}$ 使得 $k\notin \Pi_{a_i}$.
 \end{proof}
    \fi 
-
-     
-     
+{   \color{red}
+\section{常数估计}
+精确计算出Ingham不等式的常数
+\section{经典结果的新证明}
+利用前面的结果给出开区域的能观测不等式以及给出显式的常数以来
+\chapter{可控制性}
+\section{HUM方法}
+\section{精确可控性}
+ }    
+ \fi 
 
     
    % \section{常数估计}

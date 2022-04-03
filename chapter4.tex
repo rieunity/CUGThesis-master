@@ -1,0 +1,173 @@
+\chapter{偏微分方程控制论中的应用}
+本章主要介绍第二章和第三章中的结果在偏微分方程控制理论中的应用.
+
+本章第一节主要利用第二章与第三章的结果, 得到KdV方程的可控性定理. 本章第二节是对周期情形下非线性结果的进一步讨论, 并得到非线性情形下关于的可控性定理.
+
+\section{基本概念与HUM方法}
+设 $\mathbb{K}$ 为 $\C$ 或 $\R$, $\mathcal{H}(\Omega)$ 为定义域在 $\Omega\subset \R^n$ 上的函数构成的希尔伯特空间, 其内积和范数分别表示为 $\langle \cdot,\cdot \rangle_{\mathcal{H}(\Omega)}$ 和 $\|\cdot\|_{\mathcal{H}(\Omega)}$. 设 $U$ 为 $\mathcal{H}$ 上的线性算子. 
+
+
+考虑下述线性方程:
+\begin{equation}
+    \left\lbrace\begin{array}{ll}
+        \partial_t \Phi+U\Phi=0, & \Phi=\Phi(t)\in C([0,T];\mathcal{H}(\Omega)), \\
+         \Phi(0)=\Phi_0,& \Phi_0\in \mathcal{H}(\Omega). 
+    \end{array}
+    \right.\label{controllability-abstract-equation}
+\end{equation}
+对于不同的初始值 $\Phi_0$, 可以得到相应的 $\Phi(T)$. 在偏微分方程的控制理论中, 我们通常对上述方程加一个外界控制, 使得其能在 $T$ 时刻得到给定的 $\Phi(T)$. 对给定初始值 $\Phi_0$ 和目标函数 $\Phi_1$ 的方程 \eqref{controllability-abstract-equation}, 若存在这样的外界控制使得 $\Phi(T)=\Phi_1$, 则说明方程具有某种可控性. 为了更加清晰明确地描述方程的可控性, 下面给出相关定义. 
+\begin{definition}
+ 考虑下述带有控制项 $f\in C([0,T];\mathcal{H}(\Omega))$ 的方程
+\begin{equation}
+        \partial_t \Phi+P\Phi=f, 
+    \label{controllability-abstract-equation-nonhomogeneous}  
+\end{equation}
+$P=P(u,\partial_x u,\cdots,\partial_x^m u)$ 为线性或非线性的偏微分算子. 若对任意 $\Phi_0,\Phi_1\in \mathcal{H}(\Omega)$, 都可以选取合适的 $f$ 使得 $\Phi(0)=\Phi_0, \Phi(T)=\Phi_1$, 则我们称方程 \eqref{controllability-abstract-equation-nonhomogeneous} 精确可控. 若固定 $\Phi_1=0$, 即对任意的 $\Phi_0$ 都存在控制函数 $f$ 使得 $\Phi(T)=0$, 则称方程 \eqref{controllability-abstract-equation-nonhomogeneous} 零值可控. 
+\end{definition}
+
+\begin{definition}
+ 我们称算子 $U$ 为斜自伴随, 如果其满足
+\begin{equation*}
+    \langle Uf,g\rangle = - \langle f,Ug\rangle,\quad \forall f,g\in \mathcal{H}(\Omega).
+\end{equation*}
+\end{definition}
+
+\begin{proposition}\label{null-equiv-exact}
+对于带有控制项 $f\in C([0,T];\mathcal{H}(\Omega))$ 的线性方程
+\begin{equation}
+    \partial_t\Phi+U\Phi=f,\label{control-fukk}
+\end{equation}
+若 $U$ 在 $\mathcal{H}(\Omega)$ 上生成自同构 $e^{-tU}$ 构成的强连续群, 则其零值可控性与精确可控性等价.
+\end{proposition}
+\begin{proof}
+由定义知精确可控性包含零值可控性, 我们只要说明零值可控性能够推出精确可控性. 任给 $\Phi_0,\Phi_1\in \mathcal{H}(\Omega)$, 考虑方程
+\begin{equation}
+    \left\lbrace
+    \begin{array}{ll}
+        \partial_t\Psi+U\Psi=0, &   \\
+         \Psi(T)=\Phi_1.& 
+    \end{array}
+    \right.
+\end{equation}
+由 $U$ 的性质可知上述方程有解, 记作 $\Psi(t)$. 由方程的零值可控性知, 存在控制函数 $f$ 使得初值为 $\Phi_0-\Psi(0)$ 的方程 \eqref{control-fukk} 的解函数 $\Phi^{(1)}$ 满足 $\Phi^{(1)}(T)=0$. 进而 $\Phi(t)=\Psi(t)+\Phi^{(1)}(t)$ 即是方程 \eqref{control-fukk} 的解, 且 $\Phi_(0)=\Phi_0,\Phi(T)=\Phi_1$. 
+\end{proof}
+
+希尔伯特唯一性方法 (Hilbert Uniqueness Method, 简称HUM方法), 是一种由能观测不等式得到线性方程可控性的方法. 具体来说, 考虑初值为 $\Phi_0$ 的线性方程 \eqref{controllability-abstract-equation}
+的解 $\Phi(t)$, 假设存在常数 $C>0$ 使得能观测不等式
+\begin{equation}
+    \|\Phi_0\|_{\mathcal{H}(\Omega)}^2\le C\int_0^T\langle \Phi(t),\chi_{\omega} \Phi(t)\rangle_{\mathcal{H}(\Omega)}\d t 
+\end{equation}
+成立, 其中 $\omega\subset \Omega$. 设方程 \eqref{controllability-abstract-equation} 的对偶方程为
+\begin{equation}
+    \left\lbrace
+    \begin{array}{ll}
+        \partial_t \Psi+U\Psi=\chi_{\omega}\Phi, &  \\
+         \Psi(T)=0.& 
+    \end{array}
+    \right.\label{tired}
+\end{equation}
+将方程 \eqref{tired}两边同时与 ${\Phi}$ 作内积, 并在 $[0,T]$ 上积分可得
+\begin{equation*}
+    \int_0^T\langle \Phi,\partial_t \Psi\rangle+\langle \Phi,U\Psi\rangle =\int_0^T\langle \Phi,\chi_{\omega}\Phi\rangle \d t.
+\end{equation*}
+上式左边经分部积分以及 $U$ 的斜自伴随性可得
+\begin{equation*}
+    -\langle \Phi_0,\Psi_0\rangle=\int_0^T\langle \Phi,\chi_{\omega}\Phi\rangle\ge \frac{1}{C}\|\Phi_0\|^2_{\mathcal{H}(\Omega)},
+\end{equation*}
+上式第二个关系用到能观测不等式. 令 $\Psi_0=-S\Phi_0$, 则有
+\begin{equation}
+    \frac{1}{C}\|\Phi_0\|^2_{\mathcal{H}(\Omega)}\le\langle \Phi_0, S\Phi_0\rangle \le T\|\phi_0\|^2_{\mathcal{H}(\Omega)}, 
+\end{equation}
+这里用到了条件 $\langle \Phi,\chi_{\omega}\Phi\rangle\le \|\Phi\|^2_{\mathcal{H}(\Omega)}$, 这对于许多常见的希尔伯特空间是正确的.
+上式说明我们所定义的线性映射 $S$ 是有界且可逆映射, 这说明对于任意的 $\Psi_0$, 都存在控制 $\Phi_0=-S^{-1}\Psi_0$ 使得方程 \eqref{tired} 成立, 即具有零值可控性. 若 $U$ 还在 $\mathcal{H}(\Omega)$ 上构成强连续群, 则由性质 \ref{null-equiv-exact} 可得精确可控性.
+
+\section{脉冲控制函数下的方程可控性}
+首先, 我们考虑全空间 $\R$ 中线性KdV方程 \eqref{kdv-r}, 由第二章的主要结果可知, 对某些满足条件的可测集 $A$ 和 $B$, 我们可以建立能观测不等式 \eqref{kdvobs-2}, 为叙述方便, 这里将该不等式重新写作
+     \begin{equation}
+         \int_{\R} |u_0|^2 \d x\le C\left(\int_{A^c}|u(t_1,x)|^2\d x+\int_{B^c}|u(t_2,x)|^2\d x\right),\label{kdv-r-4}
+     \end{equation}
+     其中 $0\le t_1<t_2\le T$.
+在本章的第一节中, 我们详细介绍了HUM方法, 在那里我们用到的能观测不等式建立在一段时间上. 同样地, 利用HUM方法, 我们也 可以由两点时刻能观测不等式得到相应的可控性定理. 我们首先以全空间中的KdV方程为例, 给出其完整的证明, 从证明中可以看到观测时间从一段时间变成两点时刻对证明步骤没有本质的影响. 
+
+\begin{theorem}
+考虑方程
+\begin{equation}
+    \left\lbrace\begin{array}{ll}
+        \partial_t u +\partial_x^3u=\delta(t-t_1)\chi_{A^c}h_1(x)+\delta(t-t_2)\chi_{B^c}h_2(x), & (t,x)\in (0,T)\times \R \\
+        u(0,x)=u_0(x),& x\in \R,
+    \end{array}\right.\label{kdv-r-dual}
+\end{equation}
+其中 $u_0(x),h_1(x),h_2(x)\in L^2(\R)$. 记 $u(t,x;u_0,h_1,h_2)$ 为方程 \eqref{kdv-r-dual} 的解. 设 $A$ 与 $B$ 是 $\R$ 中满足能观测不等式 \eqref{kdv-r-4} 的可测集, $0\le t_1<t_2\le T$. 
+则对任意的 $u_0(x)\in L^2(\R)$ 和 $u_1(x)\in L^2(\R)$, 存在一对控制函数 $(h_1,h_2)\in L^2(\R)\times L^2(\R)$ 使得
+\begin{equation*}
+    u(T,x;u_0,h_1,h_2)=u_1(x), \quad x\in \R,
+\end{equation*}
+且
+\begin{equation}
+    \|h_1\|^2_{L^2(\R)}+\|h_2\|^2_{L^2(\R)}\le 2C \|u_1-e^{-\partial_x^3 T}u_0\|^2_{L^2(\R)},
+\end{equation}
+其中常数 $C$ 与不等式 \eqref{kdv-r-4} 中常数相同.
+\end{theorem}
+\begin{proof}
+考虑方程 \eqref{kdv-r} 的对偶方程
+\begin{equation}
+        \left\lbrace\begin{array}{ll}
+        \partial_t v +\partial_x^3v=\delta(t-t_1)\chi_{A^c}u(t,x)+\delta(t-t_2)\chi_{B^c}u(t,x), & (t,x)\in (0,T)\times \R \\
+        v(T,x)=0,& x\in \R,
+    \end{array}\right.\label{kdv-r-dual-2}
+\end{equation}
+记 $v(0,x)=-S u_0(x)$. 若能够证明 $S$ 为双射, 则对任意的 $v(0,x)$, 都可取 $u_0(x)=S^{-1}v(0,x)$, 且 $ h_1(x)=u(t_1,x),h_2(x)=u(t_2,x)$, 使得方程 \eqref{kdv-r-dual-2} 成立. 换句话说, 对方程 \eqref{kdv-r-dual} 以及任意的初始函数 $u_0(x)$, 存在一对控制函数 $(h_1,h_2)\in L^2(\R)\times L^2(\R)$ 使得
+\begin{equation*}
+    u(T,x;u_0,h_1,h_2)=0,\quad x\in\R
+\end{equation*}
+且
+\begin{equation*}
+     \|h_1\|^2_{L^2(\R)}+\|h_2\|^2_{L^2(\R)}\le 2 \|S^{-1}u_0\|^2_{L^2(\R)}.
+\end{equation*}
+对于 $u(T,x;u_0,h_1,h_2)=u_1(x)\neq 0$ 的情形, 则可令 $\tilde{u}(t,x)=u(t,x)-u(T,x)e^{-\partial_x^3(t-T)}$, 新的函数 $\tilde{u}(t,x)$ 满足方程 \eqref{kdv-r-dual-2} 且 $\tilde{u}(T,x)=0$.
+
+由上述分析可知, 我们只需要证明 $S$ 是双射且 $\|S^{-1}\|\le C$. 方程 \eqref{kdv-r-dual-2} 两边同时乘以 $\overline{u}$ 并积分, $u$ 为满足方程 \eqref{kdv-r} 的解, 可得
+\begin{equation*}
+    \int_0^T\int_{\R} \overline{u}(\partial_t v+\partial_x^3 v)\d x\mathrm{d}t=\int_{A^c}|u(t_1,x)|^2\d x+\int_{B^c}|u(t_2,x)|^2 \d x.
+\end{equation*}
+等式右边经分部积分可得
+\begin{equation*}
+    -\int_{\R} \overline{u_0}(x)v(0,x)\d x =\int_{A^c}|u(t_1,x)|^2\d x\mathrm{d}t+\int_{B^c}|u(t_2,x)|^2 \d x\mathrm{d}t.
+\end{equation*}
+进而由上式以及能观测不等式 \eqref{kdv-r-4}可得
+\begin{equation*}
+    2\|u_0\|^2_{L^2(\R)}\ge\langle u_0,Su_0 \rangle_{L^2(\R)}\ge C^{-1}\|u_0\|^2_{L^2(\R)}.
+\end{equation*}
+所以 $S$ 必为双射且 $\|S^{-1}\|\le C$.
+\end{proof}
+
+\begin{remark}
+上述定理可以理解为: 对任意的 $u_0,u_1\in L^2(\R)$, 都存在一对控制函数 $(h_1,h_2)\in L^2(\R)\times L^(\R)$ 使得方程 \eqref{kdv-r-dual} 的解从 $u_0$ 经时间 $T$ 到达 $u_1$. 实际上, 根据方程右边的示性函数可知, 我们只需要给出控制 $(h_1,h_2)$ 在 $A^c\times B^c$ 上的分布即可. 该控制仅在时间 $t_1$ 和 $t_2$ 时刻以 脉冲的形式出现.
+\end{remark}
+
+
+由第三章定理 \ref{thm-3-3-1} 知, 对于周期边界情形下的线性KdV方程, 若 $a\notin \Gamma$, 则对任意固定的 $\tau>0$, 我们有能观测不等式 
+ \begin{equation}
+     \int_{\T}|u_0|^2\d x\le C\int_{0}^\tau |u(t_0+t,x_0-at)|^2\d t,\label{holyshit}
+ \end{equation}
+ 其中 $C=C(\tau, a)$ 是依赖于 $\tau$ 和 $a$ 的常数.
+ 
+同样地, 我们也可以利用该能观测不等式以及HUM方法建立相应的可控性定理:
+\begin{theorem}
+ 考虑方程
+ \begin{equation}
+     \left\lbrace\begin{array}{ll}
+         \partial_t u+\partial_x^3u=\delta (x-x_0+at) \chi_{[t_0,t_0+\tau]}(t) h(t), & (t,x)\in (0,T)\times \T\\
+         u(0,x)=u_0(x), & x\in \T,
+     \end{array}\right.\label{kdv-l-control}
+ \end{equation}
+ 其中 $u_0(x),h(t)\in L^2(\R)$, $t_0$ 和 $x_0$ 分别是两个任意给定的时刻与位置. 记 $u(t,x;u_0,h)$ 为方程 \eqref{kdv-l-control} 的解. 设 $a\notin \Gamma$ {{\rm{(}}即满足定理 \rm{\ref{thm-3-3-1} (2))}}, $0<\tau\le T$. 则对任意 $u_0(x)\in L^2(\T)$ 和 $u_1(x)\in L^2(\T)$, 以及任意的 $\tau$ 存在控制函数 $h\in L^2([t_0,t_0+\tau];\C)$ 使得 
+ \begin{equation}
+     u(T,x;u_0,h)=u_1(x),\quad x\in \T,
+ \end{equation}
+ 且 
+ \begin{equation}
+     \|h\|^2_{L^2([t_0,t_0+\tau];\C)}\le C\| u_1-W(T)u_0\|^2_{L^2(\T)},
+ \end{equation} 其中 $W(t) $ 是由 $-\partial_x^3$ 生成的 $L^2(\T)$ 上的强连续群.
+\end{theorem}
+
